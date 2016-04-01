@@ -100,6 +100,11 @@ if(TARGET === 'build') {
       // `.filter(...)`.
       vendor: Object.keys(pkg.dependencies)
     },
+    output: {
+      path: PATHS.build,
+      filename: '[name].[chunkhash].js',
+      chunkFilename: '[chunkhash].js'
+    },
     plugins: [
       // Extract vendor and manifest files
       new webpack.optimize.CommonsChunkPlugin({
