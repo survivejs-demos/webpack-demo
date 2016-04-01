@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "description": "See [SurviveJS - Webpack](http://survivejs.com/webpack_react/introduction/) to learn how/why this configuration works.",
   "scripts": {
+    "stats": "webpack --profile --json > stats.json",
     "build": "webpack",
     "start": "webpack-dev-server"
   },
