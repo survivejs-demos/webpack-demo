@@ -7,6 +7,7 @@ const NpmInstallPlugin = require('npm-install-webpack-plugin');
 // Detect how npm is run and branch based on that
 const TARGET = process.env.npm_lifecycle_event;
 const PATHS = {
+  react: path.join(__dirname, 'node_modules/react/dist/react.min.js'),
   app: path.join(__dirname, 'app'),
   build: path.join(__dirname, 'build')
 };
@@ -28,16 +29,16 @@ const common = {
     })
   ],
   module: {
-     loaders: [
-       {
-         // Test expects a RegExp! Note the slashes!
-         test: /\.css$/,
-         loaders: ['style', 'css'],
-         // Include accepts either a path or an array of paths.
-         include: PATHS.app
-       }
-     ]
-   }
+    loaders: [
+      {
+        // Test expects a RegExp! Note the slashes!
+        test: /\.css$/,
+        loaders: ['style', 'css'],
+        // Include accepts either a path or an array of paths.
+        include: PATHS.app
+      }
+    ]
+  }
 };
 
 // Default configuration. We will return this if
@@ -72,7 +73,17 @@ if(TARGET === 'start' || !TARGET) {
       new NpmInstallPlugin({
         save: true // --save
       })
-    ]
+    ],
+    module: {
+      noParse: [
+        PATHS.react
+      ]
+    },
+    resolve: {
+      alias: {
+        react: PATHS.react
+      }
+    }
   });
 }
 
