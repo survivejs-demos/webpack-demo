@@ -4,6 +4,9 @@ const merge = require('webpack-merge');
 const webpack = require('webpack');
 const NpmInstallPlugin = require('npm-install-webpack-plugin');
 
+// Load *package.json* so we can use `dependencies` from there
+const pkg = require('./package.json');
+
 // Detect how npm is run and branch based on that
 const TARGET = process.env.npm_lifecycle_event;
 const PATHS = {
@@ -21,7 +24,8 @@ const common = {
   },
   output: {
     path: PATHS.build,
-    filename: 'bundle.js'
+    // Output using the entry name
+    filename: '[name].js'
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -89,7 +93,18 @@ if(TARGET === 'start' || !TARGET) {
 
 if(TARGET === 'build') {
   module.exports = merge(common, {
+    // Define vendor entry point needed for splitting
+    entry: {
+      // Set up an entry chunk for our vendor bundle.
+      // You can filter out dependencies here if needed with
+      // `.filter(...)`.
+      vendor: Object.keys(pkg.dependencies)
+    },
     plugins: [
+      // Extract vendor and manifest files
+      new webpack.optimize.CommonsChunkPlugin({
+        names: ['vendor', 'manifest']
+      }),
       // Setting DefinePlugin affects React library size!
       // DefinePlugin replaces content "as is" so we need some
       // extra quotes for the generated code to make sense
