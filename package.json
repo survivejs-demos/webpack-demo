@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "description": "See [SurviveJS - Webpack](http://survivejs.com/webpack_react/introduction/) to learn how/why this configuration works.",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "start": "webpack-dev-server"
   },
   "keywords": [],
   "author": "Juho Vepsäläinen",
@@ -11,6 +12,7 @@
   "devDependencies": {
     "html-webpack-plugin": "^2.15.0",
     "webpack": "^1.12.14",
+    "webpack-dev-server": "^1.14.1",
     "webpack-merge": "^0.8.4"
   }
 }
