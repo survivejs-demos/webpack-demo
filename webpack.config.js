@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const merge = require('webpack-merge');
 const webpack = require('webpack');
+const NpmInstallPlugin = require('npm-install-webpack-plugin');
 
 // Detect how npm is run and branch based on that
 const TARGET = process.env.npm_lifecycle_event;
@@ -67,7 +68,10 @@ if(TARGET === 'start' || !TARGET) {
       port: process.env.PORT
     },
     plugins: [
-      new webpack.HotModuleReplacementPlugin()
+      new webpack.HotModuleReplacementPlugin(),
+      new NpmInstallPlugin({
+        save: true // --save
+      })
     ]
   });
 }
