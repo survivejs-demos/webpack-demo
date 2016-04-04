@@ -73,6 +73,9 @@ if(TARGET === 'start' || !TARGET) {
           loaders: ['style', 'css'],
           include: PATHS.app
         }
+      ],
+      noParse: [
+        PATHS.react
       ]
     },
     plugins: [
@@ -81,11 +84,6 @@ if(TARGET === 'start' || !TARGET) {
         save: true // --save
       })
     ],
-    module: {
-      noParse: [
-        PATHS.react
-      ]
-    },
     resolve: {
       alias: {
         react: PATHS.react
