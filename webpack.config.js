@@ -5,7 +5,7 @@ const webpack = require('webpack');
 const NpmInstallPlugin = require('npm-install-webpack-plugin');
 const validate = require('webpack-validator');
 
-const tasks = require('./lib/tasks');
+const parts = require('./lib/parts');
 
 // Load *package.json* so we can use `dependencies` from there
 const pkg = require('./package.json');
@@ -51,17 +51,17 @@ switch(process.env.npm_lifecycle_event) {
           chunkFilename: '[chunkhash].js'
         }
       },
-      tasks.clean(PATHS.build),
-      tasks.setEnvironment({
+      parts.clean(PATHS.build),
+      parts.setEnvironment({
         key: 'process.env.NODE_ENV',
         value: 'production'
       }),
-      tasks.extractBundle({
+      parts.extractBundle({
         name: 'vendor',
         entries: Object.keys(pkg.dependencies)
       }),
-      tasks.extractCSS(PATHS.app),
-      tasks.minify()
+      parts.extractCSS(PATHS.app),
+      parts.minify()
     );
   case 'start':
   default:
@@ -76,13 +76,13 @@ switch(process.env.npm_lifecycle_event) {
           })
         ]
       },
-      tasks.devServer({
+      parts.devServer({
         // Customize host/port here if needed
         host: process.env.HOST,
         port: process.env.PORT
       }),
-      tasks.setupCSS(PATHS.app),
-      tasks.dontParse({
+      parts.setupCSS(PATHS.app),
+      parts.dontParse({
         name: 'react',
         path: PATHS.react
       })
