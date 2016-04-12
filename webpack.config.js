@@ -41,7 +41,15 @@ switch(process.env.npm_lifecycle_event) {
   default:
     config = merge(
       common,
-      developmentDefaults(PATHS),
+      {
+        devtool: 'eval-source-map',
+        plugins: [
+          new webpack.HotModuleReplacementPlugin(),
+          new NpmInstallPlugin({
+            save: true // --save
+          })
+        ]
+      },
       devServer({
         // Customize host/port here if needed
         host: process.env.HOST,
@@ -76,18 +84,6 @@ function commonConfiguration(paths) {
     plugins: [
       new HtmlWebpackPlugin({
         title: 'Webpack demo'
-      })
-    ]
-  };
-}
-
-function developmentDefaults(paths) {
-  return {
-    devtool: 'eval-source-map',
-    plugins: [
-      new webpack.HotModuleReplacementPlugin(),
-      new NpmInstallPlugin({
-        save: true // --save
       })
     ]
   };
