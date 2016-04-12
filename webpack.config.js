@@ -42,7 +42,7 @@ switch(process.env.npm_lifecycle_event) {
         name: 'vendor',
         entries: Object.keys(pkg.dependencies)
       }),
-      extractCSS(PATHS),
+      extractCSS(PATHS.app),
       minify()
     );
   case 'start':
@@ -165,7 +165,7 @@ function setEnvironment(options) {
   };
 }
 
-function extractCSS(paths) {
+function extractCSS(path) {
   return {
     module: {
       loaders: [
@@ -173,7 +173,7 @@ function extractCSS(paths) {
         {
           test: /\.css$/,
           loader: ExtractTextPlugin.extract('style', 'css'),
-          include: paths.app
+          include: path
         }
       ]
     },
