@@ -26,7 +26,16 @@ switch(process.env.npm_lifecycle_event) {
   case 'stats':
     config = merge(
       common,
-      productionDefaults(PATHS),
+      {
+        output: {
+          path: PATHS.build,
+          filename: '[name].[chunkhash].js',
+          chunkFilename: '[chunkhash].js'
+        },
+        plugins: [
+          new CleanWebpackPlugin([PATHS.build])
+        ]
+      },
       setEnvironment({
         key: 'process.env.NODE_ENV',
         value: 'production'
@@ -35,7 +44,8 @@ switch(process.env.npm_lifecycle_event) {
         name: 'vendor',
         entries: Object.keys(pkg.dependencies)
       }),
-      extractCSS(PATHS)
+      extractCSS(PATHS),
+      minify()
     );
   case 'start':
   default:
@@ -147,24 +157,6 @@ function dontParse(options) {
   };
 }
 
-function productionDefaults(paths) {
-  return {
-    output: {
-      path: paths.build,
-      filename: '[name].[chunkhash].js',
-      chunkFilename: '[chunkhash].js'
-    },
-    plugins: [
-      new CleanWebpackPlugin([paths.build]),
-      new webpack.optimize.UglifyJsPlugin({
-        compress: {
-          warnings: false
-        }
-      })
-    ]
-  };
-}
-
 function setEnvironment(options) {
   const env = {};
 
@@ -208,6 +200,18 @@ function extractBundle(options) {
       // needed for reliable caching.
       new webpack.optimize.CommonsChunkPlugin({
         names: [options.name, 'manifest']
+      })
+    ]
+  };
+}
+
+function minify() {
+  return {
+    plugins: [
+      new webpack.optimize.UglifyJsPlugin({
+        compress: {
+          warnings: false
+        }
       })
     ]
   };
