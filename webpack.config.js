@@ -31,11 +31,9 @@ switch(process.env.npm_lifecycle_event) {
           path: PATHS.build,
           filename: '[name].[chunkhash].js',
           chunkFilename: '[chunkhash].js'
-        },
-        plugins: [
-          new CleanWebpackPlugin([PATHS.build])
-        ]
+        }
       },
+      clean(PATHS.build),
       setEnvironment({
         key: 'process.env.NODE_ENV',
         value: 'production'
@@ -199,6 +197,14 @@ function extractBundle(options) {
       new webpack.optimize.CommonsChunkPlugin({
         names: [options.name, 'manifest']
       })
+    ]
+  };
+}
+
+function clean(path) {
+  return {
+    plugins: [
+      new CleanWebpackPlugin([path])
     ]
   };
 }
