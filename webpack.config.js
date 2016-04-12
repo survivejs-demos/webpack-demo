@@ -47,7 +47,10 @@ switch(process.env.npm_lifecycle_event) {
         host: process.env.HOST,
         port: process.env.PORT
       }),
-      dontParseReact(PATHS)
+      dontParse({
+        name: 'react',
+        path: PATHS.react
+      })
     );
 }
 
@@ -126,17 +129,19 @@ function devServer(options) {
   };
 }
 
-function dontParseReact(paths) {
+function dontParse(options) {
+  const alias = {};
+
+  alias[options.name] = options.path;
+
   return {
     module: {
       noParse: [
-        paths.react
+        options.path
       ]
     },
     resolve: {
-      alias: {
-        react: paths.react
-      }
+      alias: alias
     }
   };
 }
