@@ -5,12 +5,11 @@ const webpack = require('webpack');
 const NpmInstallPlugin = require('npm-install-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const validate = require('webpack-validator');
 
 // Load *package.json* so we can use `dependencies` from there
 const pkg = require('./package.json');
 
-// Detect how npm is run and branch based on that
-const TARGET = process.env.npm_lifecycle_event;
 const PATHS = {
   react: path.join(__dirname, 'node_modules/react/dist/react.min.js'),
   app: path.join(__dirname, 'app'),
@@ -18,30 +17,47 @@ const PATHS = {
   style: path.join(__dirname, 'app/main.css')
 };
 
-const common = {
-  // Entry accepts a path or an object of entries.
-  // We'll be using the latter form given it's
-  // convenient with more complex configurations.
-  entry: {
-    app: PATHS.app,
-    style: PATHS.style
-  },
-  output: {
-    path: PATHS.build,
-    // Output using the entry name
-    filename: '[name].js'
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      title: 'Webpack demo'
-    })
-  ]
-};
+const common = commonConfiguration(PATHS);
+var config;
 
-// Default configuration. We will return this if
-// Webpack is called outside of npm.
-if(TARGET === 'start' || !TARGET) {
-  module.exports = merge(common, {
+// Detect how npm is run and branch based on that
+switch(process.env.npm_lifecycle_event) {
+  case 'build':
+  case 'stats':
+    config = merge(common, productionConfiguration(PATHS));
+  case 'start':
+  default:
+    config = merge(common, developmentConfiguration(PATHS));
+}
+
+module.exports = validate(config);
+
+// Configuration fragments, these could be split to multiple
+// files if needed.
+function commonConfiguration(paths) {
+  return {
+    // Entry accepts a path or an object of entries.
+    // We'll be using the latter form given it's
+    // convenient with more complex configurations.
+    entry: {
+      app: paths.app,
+      style: paths.style
+    },
+    output: {
+      path: paths.build,
+      // Output using the entry name
+      filename: '[name].js'
+    },
+    plugins: [
+      new HtmlWebpackPlugin({
+        title: 'Webpack demo'
+      })
+    ]
+  };
+}
+
+function developmentConfiguration(paths) {
+  return {
     devtool: 'eval-source-map',
     devServer: {
       // Enable history API fallback so HTML5 History API based
@@ -71,11 +87,11 @@ if(TARGET === 'start' || !TARGET) {
         {
           test: /\.css$/,
           loaders: ['style', 'css'],
-          include: PATHS.app
+          include: paths.app
         }
       ],
       noParse: [
-        PATHS.react
+        paths.react
       ]
     },
     plugins: [
@@ -86,14 +102,14 @@ if(TARGET === 'start' || !TARGET) {
     ],
     resolve: {
       alias: {
-        react: PATHS.react
+        react: paths.react
       }
     }
-  });
+  };
 }
 
-if(TARGET === 'build' || TARGET === 'stats') {
-  module.exports = merge(common, {
+function productionConfiguration(paths) {
+  return {
     // Define vendor entry point needed for splitting
     entry: {
       // Set up an entry chunk for our vendor bundle.
@@ -102,7 +118,7 @@ if(TARGET === 'build' || TARGET === 'stats') {
       vendor: Object.keys(pkg.dependencies)
     },
     output: {
-      path: PATHS.build,
+      path: paths.build,
       filename: '[name].[chunkhash].js',
       chunkFilename: '[chunkhash].js'
     },
@@ -112,14 +128,14 @@ if(TARGET === 'build' || TARGET === 'stats') {
         {
           test: /\.css$/,
           loader: ExtractTextPlugin.extract('style', 'css'),
-          include: PATHS.app
+          include: paths.app
         }
       ]
     },
     plugins: [
       // Output extracted CSS to a file
       new ExtractTextPlugin('[name].[chunkhash].css'),
-      new CleanWebpackPlugin([PATHS.build]),
+      new CleanWebpackPlugin([paths.build]),
       // Extract vendor and manifest files
       new webpack.optimize.CommonsChunkPlugin({
         names: ['vendor', 'manifest']
@@ -141,5 +157,5 @@ if(TARGET === 'build' || TARGET === 'stats') {
         }
       })
     ]
-  });
+  };
 }
