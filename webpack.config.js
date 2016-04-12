@@ -17,7 +17,25 @@ const PATHS = {
   style: path.join(__dirname, 'app/main.css')
 };
 
-const common = commonConfiguration(PATHS);
+const common = {
+  // Entry accepts a path or an object of entries.
+  // We'll be using the latter form given it's
+  // convenient with more complex configurations.
+  entry: {
+    app: PATHS.app,
+    style: PATHS.style
+  },
+  output: {
+    path: PATHS.build,
+    // Output using the entry name
+    filename: '[name].js'
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: 'Webpack demo'
+    })
+  ]
+};
 var config;
 
 // Detect how npm is run and branch based on that
@@ -72,30 +90,6 @@ switch(process.env.npm_lifecycle_event) {
 }
 
 module.exports = validate(config);
-
-// Configuration fragments, these could be split to multiple
-// files if needed.
-function commonConfiguration(paths) {
-  return {
-    // Entry accepts a path or an object of entries.
-    // We'll be using the latter form given it's
-    // convenient with more complex configurations.
-    entry: {
-      app: paths.app,
-      style: paths.style
-    },
-    output: {
-      path: paths.build,
-      // Output using the entry name
-      filename: '[name].js'
-    },
-    plugins: [
-      new HtmlWebpackPlugin({
-        title: 'Webpack demo'
-      })
-    ]
-  };
-}
 
 function setupCSS(path) {
   return {
