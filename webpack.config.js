@@ -47,6 +47,7 @@ switch(process.env.npm_lifecycle_event) {
         host: process.env.HOST,
         port: process.env.PORT
       }),
+      setupCSS(PATHS.app),
       dontParse({
         name: 'react',
         path: PATHS.react
@@ -83,22 +84,26 @@ function commonConfiguration(paths) {
 function developmentDefaults(paths) {
   return {
     devtool: 'eval-source-map',
-    module: {
-      loaders: [
-        // Define development specific CSS setup
-        {
-          test: /\.css$/,
-          loaders: ['style', 'css'],
-          include: paths.app
-        }
-      ]
-    },
     plugins: [
       new webpack.HotModuleReplacementPlugin(),
       new NpmInstallPlugin({
         save: true // --save
       })
     ]
+  };
+}
+
+function setupCSS(path) {
+  return {
+    module: {
+      loaders: [
+        {
+          test: /\.css$/,
+          loaders: ['style', 'css'],
+          include: path
+        }
+      ]
+    }
   };
 }
 
