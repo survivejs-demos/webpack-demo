@@ -3,8 +3,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const merge = require('webpack-merge');
 const webpack = require('webpack');
 const NpmInstallPlugin = require('npm-install-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const validate = require('webpack-validator');
 
 const tasks = require('./lib/tasks');
