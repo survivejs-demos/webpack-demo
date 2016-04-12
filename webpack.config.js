@@ -142,7 +142,6 @@ function devServer(options) {
 
 function dontParse(options) {
   const alias = {};
-
   alias[options.name] = options.path;
 
   return {
@@ -159,7 +158,6 @@ function dontParse(options) {
 
 function setEnvironment(options) {
   const env = {};
-
   env[options.key] = JSON.stringify(options.value);
 
   return {
