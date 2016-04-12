@@ -24,10 +24,31 @@ var config;
 switch(process.env.npm_lifecycle_event) {
   case 'build':
   case 'stats':
-    config = merge(common, productionConfiguration(PATHS));
+    config = merge(
+      common,
+      productionDefaults(PATHS),
+      setEnvironment({
+        key: 'process.env.NODE_ENV',
+        value: 'production'
+      }),
+      extractBundle({
+        name: 'vendor',
+        entries: Object.keys(pkg.dependencies)
+      }),
+      extractCSS(PATHS)
+    );
   case 'start':
   default:
-    config = merge(common, developmentConfiguration(PATHS));
+    config = merge(
+      common,
+      developmentDefaults(PATHS),
+      devServer({
+        // Customize host/port here if needed
+        host: process.env.HOST,
+        port: process.env.PORT
+      }),
+      dontParseReact(PATHS)
+    );
 }
 
 module.exports = validate(config);
@@ -56,9 +77,30 @@ function commonConfiguration(paths) {
   };
 }
 
-function developmentConfiguration(paths) {
+function developmentDefaults(paths) {
   return {
     devtool: 'eval-source-map',
+    module: {
+      loaders: [
+        // Define development specific CSS setup
+        {
+          test: /\.css$/,
+          loaders: ['style', 'css'],
+          include: paths.app
+        }
+      ]
+    },
+    plugins: [
+      new webpack.HotModuleReplacementPlugin(),
+      new NpmInstallPlugin({
+        save: true // --save
+      })
+    ]
+  };
+}
+
+function devServer(options) {
+  return {
     devServer: {
       // Enable history API fallback so HTML5 History API based
       // routing works. This is a good default that will come
@@ -78,28 +120,19 @@ function developmentConfiguration(paths) {
       //
       // 0.0.0.0 is available to all network devices
       // unlike default localhost
-      host: process.env.HOST,
-      port: process.env.PORT
+      host: options.host,
+      port: options.port
     },
+  };
+}
+
+function dontParseReact(paths) {
+  return {
     module: {
-      loaders: [
-        // Define development specific CSS setup
-        {
-          test: /\.css$/,
-          loaders: ['style', 'css'],
-          include: paths.app
-        }
-      ],
       noParse: [
         paths.react
       ]
     },
-    plugins: [
-      new webpack.HotModuleReplacementPlugin(),
-      new NpmInstallPlugin({
-        save: true // --save
-      })
-    ],
     resolve: {
       alias: {
         react: paths.react
@@ -108,20 +141,38 @@ function developmentConfiguration(paths) {
   };
 }
 
-function productionConfiguration(paths) {
+function productionDefaults(paths) {
   return {
-    // Define vendor entry point needed for splitting
-    entry: {
-      // Set up an entry chunk for our vendor bundle.
-      // You can filter out dependencies here if needed with
-      // `.filter(...)`.
-      vendor: Object.keys(pkg.dependencies)
-    },
     output: {
       path: paths.build,
       filename: '[name].[chunkhash].js',
       chunkFilename: '[chunkhash].js'
     },
+    plugins: [
+      new CleanWebpackPlugin([paths.build]),
+      new webpack.optimize.UglifyJsPlugin({
+        compress: {
+          warnings: false
+        }
+      })
+    ]
+  };
+}
+
+function setEnvironment(options) {
+  const env = {};
+
+  env[options.key] = JSON.stringify(options.value);
+
+  return {
+    plugins: [
+      new webpack.DefinePlugin(env)
+    ]
+  };
+}
+
+function extractCSS(paths) {
+  return {
     module: {
       loaders: [
         // Extract CSS during build
@@ -134,27 +185,23 @@ function productionConfiguration(paths) {
     },
     plugins: [
       // Output extracted CSS to a file
-      new ExtractTextPlugin('[name].[chunkhash].css'),
-      new CleanWebpackPlugin([paths.build]),
-      // Extract vendor and manifest files
-      new webpack.optimize.CommonsChunkPlugin({
-        names: ['vendor', 'manifest']
-      }),
-      // Setting DefinePlugin affects React library size!
-      // DefinePlugin replaces content "as is" so we need some
-      // extra quotes for the generated code to make sense
-      new webpack.DefinePlugin({
-        'process.env.NODE_ENV': '"production"'
+      new ExtractTextPlugin('[name].[chunkhash].css')
+    ]
+  };
+}
 
-        // You can set this to '"development"' or
-        // JSON.stringify('development') for your
-        // development target to force NODE_ENV to development mode
-        // no matter what
-      }),
-      new webpack.optimize.UglifyJsPlugin({
-        compress: {
-          warnings: false
-        }
+function extractBundle(options) {
+  const entry = {};
+  entry[options.name] = options.entries;
+
+  return {
+    // Define vendor entry point needed for splitting.
+    entry: entry,
+    plugins: [
+      // Extract bundle and manifest files. Manifest is
+      // needed for reliable caching.
+      new webpack.optimize.CommonsChunkPlugin({
+        names: [options.name, 'manifest']
       })
     ]
   };
