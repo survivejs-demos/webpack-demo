@@ -69,7 +69,6 @@ switch(process.env.npm_lifecycle_event) {
       {
         devtool: 'eval-source-map',
         plugins: [
-          new webpack.HotModuleReplacementPlugin(),
           new NpmInstallPlugin({
             save: true // --save
           })
