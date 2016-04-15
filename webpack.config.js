@@ -52,10 +52,10 @@ switch(process.env.npm_lifecycle_event) {
         }
       },
       parts.clean(PATHS.build),
-      parts.setEnvironment({
-        key: 'process.env.NODE_ENV',
-        value: 'production'
-      }),
+      parts.setFreeVariable(
+        'process.env.NODE_ENV',
+        'production'
+      ),
       parts.extractBundle({
         name: 'vendor',
         entries: Object.keys(pkg.dependencies)
