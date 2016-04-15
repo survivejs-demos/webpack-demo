@@ -63,6 +63,7 @@ switch(process.env.npm_lifecycle_event) {
       parts.extractCSS(PATHS.app),
       parts.minify()
     );
+    break;
   default:
     config = merge(
       common,
