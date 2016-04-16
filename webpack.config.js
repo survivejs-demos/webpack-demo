@@ -1,7 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const merge = require('webpack-merge');
-const webpack = require('webpack');
 const NpmInstallPlugin = require('npm-install-webpack-plugin');
 const validate = require('webpack-validator');
 
