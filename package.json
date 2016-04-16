@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "description": "See [SurviveJS - Webpack](http://survivejs.com/webpack_react/introduction/) to learn how/why this configuration works.",
   "scripts": {
-    "deploy": "gh-pages -d build",
     "stats": "webpack --profile --json > stats.json",
-    "build": "webpack",
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server",
+    "deploy": "gh-pages -d build",
+    "build": "webpack"
   },
   "keywords": [],
   "author": "Juho Vepsäläinen",
