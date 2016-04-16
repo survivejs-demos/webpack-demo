@@ -1,8 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const merge = require('webpack-merge');
-const NpmInstallPlugin = require('npm-install-webpack-plugin');
 const validate = require('webpack-validator');
+const NpmInstallPlugin = require('npm-install-webpack-plugin');
 
 const parts = require('./lib/parts');
 
@@ -12,8 +12,8 @@ const pkg = require('./package.json');
 const PATHS = {
   react: path.join(__dirname, 'node_modules/react/dist/react.min.js'),
   app: path.join(__dirname, 'app'),
-  build: path.join(__dirname, 'build'),
-  style: path.join(__dirname, 'app/main.css')
+  style: path.join(__dirname, 'app/main.css'),
+  build: path.join(__dirname, 'build')
 };
 
 const common = {
@@ -21,12 +21,11 @@ const common = {
   // We'll be using the latter form given it's
   // convenient with more complex configurations.
   entry: {
-    app: PATHS.app,
-    style: PATHS.style
+    style: PATHS.style,
+    app: PATHS.app
   },
   output: {
     path: PATHS.build,
-    // Output using the entry name
     filename: '[name].js'
   },
   plugins: [
@@ -35,6 +34,7 @@ const common = {
     })
   ]
 };
+
 var config;
 
 // Detect how npm is run and branch based on that
@@ -59,8 +59,8 @@ switch(process.env.npm_lifecycle_event) {
         name: 'vendor',
         entries: Object.keys(pkg.dependencies)
       }),
-      parts.extractCSS(PATHS.app),
-      parts.minify()
+      parts.minify(),
+      parts.extractCSS(PATHS.app)
     );
     break;
   default:
@@ -74,15 +74,15 @@ switch(process.env.npm_lifecycle_event) {
           })
         ]
       },
+      parts.dontParse({
+        name: 'react',
+        path: PATHS.react
+      }),
+      parts.setupCSS(PATHS.app),
       parts.devServer({
         // Customize host/port here if needed
         host: process.env.HOST,
         port: process.env.PORT
-      }),
-      parts.setupCSS(PATHS.app),
-      parts.dontParse({
-        name: 'react',
-        path: PATHS.react
       })
     );
 }
