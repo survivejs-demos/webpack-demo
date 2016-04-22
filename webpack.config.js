@@ -12,7 +12,10 @@ const pkg = require('./package.json');
 const PATHS = {
   react: path.join(__dirname, 'node_modules/react/dist/react.min.js'),
   app: path.join(__dirname, 'app'),
-  style: path.join(__dirname, 'app/main.css'),
+  style: [
+    path.join(__dirname, 'node_modules/purecss'),
+    path.join(__dirname, 'app/main.css')
+  ],
   build: path.join(__dirname, 'build')
 };
 
@@ -60,7 +63,8 @@ switch(process.env.npm_lifecycle_event) {
         entries: Object.keys(pkg.dependencies)
       }),
       parts.minify(),
-      parts.extractCSS(PATHS.app)
+      parts.extractCSS(PATHS.style),
+      parts.purifyCSS([PATHS.app])
     );
     break;
   default:
@@ -73,7 +77,7 @@ switch(process.env.npm_lifecycle_event) {
         name: 'react',
         path: PATHS.react
       }),
-      parts.setupCSS(PATHS.app),
+      parts.setupCSS(PATHS.style),
       parts.devServer({
         // Customize host/port here if needed
         host: process.env.HOST,
