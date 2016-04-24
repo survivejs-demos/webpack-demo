@@ -1,7 +1,7 @@
 {
   "name": "webpack-demo",
   "version": "0.0.0",
-  "description": "See [SurviveJS - Webpack](http://survivejs.com/webpack_react/introduction/) to learn how/why this configuration works.",
+  "description": "See [SurviveJS - Webpack](http://survivejs.com/webpack/introduction/) to learn how/why this configuration works.",
   "scripts": {
     "stats": "webpack --profile --json > stats.json",
     "start": "webpack-dev-server",
@@ -24,8 +24,5 @@
     "webpack-dev-server": "^1.14.1",
     "webpack-merge": "^0.8.4",
     "webpack-validator": "^1.0.2"
-  },
-  "dependencies": {
-    "react": "^0.14.8"
   }
 }

@@ -10,7 +10,6 @@ const parts = require('./lib/parts');
 const pkg = require('./package.json');
 
 const PATHS = {
-  react: path.join(__dirname, 'node_modules/react/dist/react.min.js'),
   app: path.join(__dirname, 'app'),
   style: [
     path.join(__dirname, 'node_modules/purecss'),
@@ -73,10 +72,6 @@ switch(process.env.npm_lifecycle_event) {
       {
         devtool: 'eval-source-map'
       },
-      parts.dontParse({
-        name: 'react',
-        path: PATHS.react
-      }),
       parts.setupCSS(PATHS.style),
       parts.devServer({
         // Customize host/port here if needed
