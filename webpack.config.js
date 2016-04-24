@@ -6,9 +6,6 @@ const NpmInstallPlugin = require('npm-install-webpack-plugin');
 
 const parts = require('./lib/parts');
 
-// Load *package.json* so we can use `dependencies` from there
-const pkg = require('./package.json');
-
 const PATHS = {
   app: path.join(__dirname, 'app'),
   style: [
@@ -59,7 +56,7 @@ switch(process.env.npm_lifecycle_event) {
       ),
       parts.extractBundle({
         name: 'vendor',
-        entries: Object.keys(pkg.dependencies)
+        entries: ['react']
       }),
       parts.minify(),
       parts.extractCSS(PATHS.style),
