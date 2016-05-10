@@ -23,7 +23,7 @@
     "webpack": "^1.13.0",
     "webpack-dev-server": "^1.14.1",
     "webpack-merge": "^0.12.0",
-    "webpack-validator": "^1.6.0"
+    "webpack-validator": "^1.7.0"
   },
   "dependencies": {
     "react": "^15.0.2"
