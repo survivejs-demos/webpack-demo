@@ -79,6 +79,7 @@ switch(process.env.npm_lifecycle_event) {
     );
 }
 
+// Run validator in quiet mode to avoid output in stats
 module.exports = validate(config, {
   quiet: true
 });
