@@ -12,20 +12,20 @@
   "author": "Juho Vepsäläinen",
   "license": "MIT",
   "devDependencies": {
-    "clean-webpack-plugin": "^0.1.10",
-    "css-loader": "^0.23.1",
+    "clean-webpack-plugin": "^0.1.13",
+    "css-loader": "^0.25.0",
     "extract-text-webpack-plugin": "^1.0.1",
     "gh-pages": "^0.11.0",
-    "html-webpack-plugin": "^2.22.0",
+    "html-webpack-plugin": "^2.24.0",
     "purifycss-webpack-plugin": "^2.0.3",
     "style-loader": "^0.13.1",
-    "webpack": "^1.13.1",
-    "webpack-dev-server": "^1.14.1",
-    "webpack-merge": "^0.14.0",
-    "webpack-validator": "^2.2.3"
+    "webpack": "^1.13.3",
+    "webpack-dev-server": "^1.16.2",
+    "webpack-merge": "^0.15.0",
+    "webpack-validator": "^2.2.9"
   },
   "dependencies": {
     "purecss": "^0.6.0",
-    "react": "^15.2.1"
+    "react": "^15.3.2"
   }
 }
