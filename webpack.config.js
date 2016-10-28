@@ -1,7 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const merge = require('webpack-merge');
-const validate = require('webpack-validator');
 
 const parts = require('./libs/parts');
 
@@ -79,7 +78,4 @@ switch(process.env.npm_lifecycle_event) {
     );
 }
 
-// Run validator in quiet mode to avoid output in stats
-module.exports = validate(config, {
-  quiet: true
-});
+module.exports = config;
