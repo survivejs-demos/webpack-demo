@@ -132,9 +132,12 @@ exports.purifyCSS = function(paths) {
       new PurifyCSSPlugin({
         basePath: process.cwd(),
         // `paths` is used to point PurifyCSS to files not
-        // visible to Webpack. You can pass glob patterns
-        // to it.
-        paths: paths
+        // visible to Webpack. This expects glob patterns so
+        // we adapt here.
+        paths: paths.map(path => `${path}/*`),
+        // Walk through only html files within node_modules. It
+        // picks up .js files by default!
+        resolveExtensions: ['.html']
       }),
     ]
   }
