@@ -43,7 +43,7 @@ exports.devServer = function(options) {
 exports.setupCSS = function(paths) {
   return {
     module: {
-      loaders: [
+      rules: [
         {
           test: /\.css$/,
           use: ['style-loader', 'css-loader'],
