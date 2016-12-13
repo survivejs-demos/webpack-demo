@@ -67,7 +67,10 @@ switch(process.env.npm_lifecycle_event) {
     config = merge(
       common,
       {
-        devtool: 'eval-source-map'
+        devtool: 'eval-source-map',
+        performance: {
+          hints: false
+        }
       },
       parts.setupCSS(PATHS.style),
       parts.devServer({
