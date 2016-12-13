@@ -32,13 +32,9 @@ const common = {
   ]
 };
 
-var config;
-
-// Detect how npm is run and branch based on that
-switch(process.env.npm_lifecycle_event) {
-  case 'build':
-  case 'stats':
-    config = merge(
+module.exports = function(env) {
+  if (['build', 'stats'].indexOf(env) >= 0) {
+    return merge(
       common,
       {
         devtool: 'source-map',
@@ -62,23 +58,21 @@ switch(process.env.npm_lifecycle_event) {
       parts.extractCSS(PATHS.style),
       parts.purifyCSS([PATHS.app])
     );
-    break;
-  default:
-    config = merge(
-      common,
-      {
-        devtool: 'eval-source-map',
-        performance: {
-          hints: false
-        }
-      },
-      parts.setupCSS(PATHS.style),
-      parts.devServer({
-        // Customize host/port here if needed
-        host: process.env.HOST,
-        port: process.env.PORT
-      })
-    );
-}
+  }
 
-module.exports = config;
+  return merge(
+    common,
+    {
+      devtool: 'eval-source-map',
+      performance: {
+        hints: false
+      }
+    },
+    parts.setupCSS(PATHS.style),
+    parts.devServer({
+      // Customize host/port here if needed
+      host: process.env.HOST,
+      port: process.env.PORT
+    })
+  );
+}
