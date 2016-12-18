@@ -14,9 +14,6 @@ const PATHS = {
 };
 
 const common = {
-  // Entry accepts a path or an object of entries.
-  // We'll be using the latter form given it's
-  // convenient with more complex configurations.
   entry: {
     style: PATHS.style,
     app: PATHS.app
@@ -33,16 +30,19 @@ const common = {
 };
 
 module.exports = function(env) {
-  if (enf === 'build') {
+  if (env === 'build') {
     return merge(
       common,
       {
         devtool: 'source-map',
         output: {
           path: PATHS.build,
-          publicPath: '/webpack-demo/',
           filename: '[name].[chunkhash].js',
-          chunkFilename: '[chunkhash].js'
+          // This is used for code splitting. The setup
+          // will work without but this is useful to set.
+          chunkFilename: '[chunkhash].js',
+          // Tweak this to match your GitHub project name
+          publicPath: '/webpack-demo/'
         }
       },
       parts.clean(PATHS.build),
@@ -64,6 +64,7 @@ module.exports = function(env) {
     common,
     {
       devtool: 'eval-source-map',
+      // Disable performance hints during development
       performance: {
         hints: false
       }
@@ -75,4 +76,4 @@ module.exports = function(env) {
       port: process.env.PORT
     })
   );
-}
+};
