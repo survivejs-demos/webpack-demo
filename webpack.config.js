@@ -33,7 +33,7 @@ const common = {
 };
 
 module.exports = function(env) {
-  if (['build', 'stats'].indexOf(env) >= 0) {
+  if (enf === 'build') {
     return merge(
       common,
       {
