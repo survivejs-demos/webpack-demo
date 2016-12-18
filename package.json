@@ -4,7 +4,7 @@
   "description": "See [SurviveJS - Webpack](http://survivejs.com/webpack/introduction/) to learn how/why this configuration works.",
   "scripts": {
     "stats": "webpack --env stats --profile --json > stats.json",
-    "start": "webpack-dev-server",
+    "start": "webpack-dev-server --env start",
     "deploy": "gh-pages -d build",
     "build": "webpack --env build"
   },
