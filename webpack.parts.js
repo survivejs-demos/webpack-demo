@@ -33,7 +33,7 @@ exports.devServer = function(options) {
       // Enable multi-pass compilation for enhanced performance
       // in larger projects. Good default.
       new webpack.HotModuleReplacementPlugin({
-        // Disabled as this won't work with React HMR and html-webpack-template
+        // Disabled as this won't work with html-webpack-template yet
         //multiStep: true
       })
     ]
@@ -98,6 +98,8 @@ exports.clean = function(path) {
   return {
     plugins: [
       new CleanWebpackPlugin([path], {
+        // Without `root` CleanWebpackPlugin won't point to our
+        // project and will fail to work.
         root: process.cwd()
       })
     ]
