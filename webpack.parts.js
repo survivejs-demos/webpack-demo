@@ -81,16 +81,19 @@ exports.setFreeVariable = function(key, value) {
 
 exports.extractBundle = function(options) {
   const entry = {};
-  entry[options.name] = options.entries;
+
+  // Set up entries if they have been provided.
+  if (options.entries) {
+    entry[options.name] = options.entries;
+  }
 
   return {
     // Define an entry point needed for splitting.
     entry: entry,
     plugins: [
-      // Extract bundle and manifest files. Manifest is
-      // needed for reliable caching.
+      // Extract bundle.
       new webpack.optimize.CommonsChunkPlugin({
-        names: [options.name, 'manifest']
+        names: [options.name]
       })
     ]
   };

@@ -54,6 +54,9 @@ module.exports = function(env) {
         name: 'vendor',
         entries: ['react']
       }),
+      parts.extractBundle({
+        name: 'manifest'
+      }),
       parts.minify(),
       parts.extractCSS(PATHS.style),
       parts.purifyCSS([PATHS.app])
