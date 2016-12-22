@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin');
 const merge = require('webpack-merge');
 
 const parts = require('./webpack.parts');
@@ -24,7 +25,8 @@ const common = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Webpack demo'
+      title: 'Webpack demo',
+      template: './index.ejs'
     })
   ]
 };
@@ -43,7 +45,12 @@ module.exports = function(env) {
           chunkFilename: '[chunkhash].js',
           // Tweak this to match your GitHub project name
           publicPath: '/webpack-demo/'
-        }
+        },
+        plugins: [
+          new InlineManifestWebpackPlugin({
+            name: 'webpackManifest'
+          })
+        ]
       },
       parts.clean(PATHS.build),
       parts.setFreeVariable(
