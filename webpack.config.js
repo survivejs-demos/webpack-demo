@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin');
 const merge = require('webpack-merge');
@@ -47,6 +48,7 @@ module.exports = function(env) {
           publicPath: '/webpack-demo/'
         },
         plugins: [
+          new webpack.HashedModuleIdsPlugin(),
           new InlineManifestWebpackPlugin({
             name: 'webpackManifest'
           })
@@ -77,7 +79,10 @@ module.exports = function(env) {
       // Disable performance hints during development
       performance: {
         hints: false
-      }
+      },
+      plugins: [
+        new webpack.NamedModulesPlugin()
+      ]
     },
     parts.setupCSS(PATHS.style),
     parts.devServer({
