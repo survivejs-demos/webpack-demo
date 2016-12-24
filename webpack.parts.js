@@ -46,10 +46,11 @@ exports.setupCSS = function(paths) {
       rules: [
         {
           test: /\.css$/,
-          use: ['style-loader', 'css-loader'],
           // Restrict extraction process to the given
           // paths.
-          include: paths
+          include: paths,
+
+          use: ['style-loader', 'css-loader']
         }
       ]
     }
@@ -118,13 +119,14 @@ exports.extractCSS = function(paths) {
         // Extract CSS during build
         {
           test: /\.css$/,
+          // Restrict extraction process to the given
+          // paths.
+          include: paths,
+
           loader: ExtractTextPlugin.extract({
             fallbackLoader: 'style-loader',
             loader: 'css-loader'
-          }),
-          // Restrict extraction process to the given
-          // paths.
-          include: paths
+          })
         }
       ]
     },
