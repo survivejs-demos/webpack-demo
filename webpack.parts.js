@@ -139,7 +139,7 @@ exports.purifyCSS = function(paths) {
         paths: paths.map(path => `${path}/*`),
         // Walk through only html files within node_modules. It
         // picks up .js files by default!
-        resolveExtensions: ['.html']
+        resolveExtensions: ['.html', '.js']
       }),
     ]
   }
