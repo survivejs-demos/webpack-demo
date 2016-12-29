@@ -1,31 +1,36 @@
 {
   "name": "webpack-demo",
-  "version": "0.0.0",
-  "description": "See [SurviveJS - Webpack](http://survivejs.com/webpack/introduction/) to learn how/why this configuration works.",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "stats": "webpack --env production --profile --json > stats.json",
-    "start": "webpack-dev-server --env development",
     "deploy": "gh-pages -d build",
+    "test:lint": "eslint . --cache",
+    "start": "webpack-dev-server --env development",
     "build": "webpack --env production"
   },
   "keywords": [],
-  "author": "Juho Vepsäläinen",
+  "author": "",
   "license": "MIT",
   "devDependencies": {
+    "babel-eslint": "^7.1.1",
     "clean-webpack-plugin": "^0.1.14",
     "css-loader": "^0.26.1",
-    "extract-text-webpack-plugin": "2.0.0-beta.4",
+    "eslint": "^3.12.2",
+    "eslint-loader": "^1.6.1",
+    "extract-text-webpack-plugin": "^2.0.0-beta.4",
     "gh-pages": "^0.12.0",
     "html-webpack-plugin": "^2.24.1",
-    "inline-manifest-webpack-plugin": "^3.0.1",
+    "postcss-loader": "^1.2.1",
     "purifycss-webpack-plugin": "^2.0.3",
+    "react": "^15.4.1",
     "style-loader": "^0.13.1",
-    "webpack": "2.2.0-rc.2",
-    "webpack-dev-server": "2.1.0-beta.12",
+    "stylelint": "^7.7.0",
+    "webpack": "^2.2.0-rc.2",
+    "webpack-dev-server": "^2.2.0-rc.0",
     "webpack-merge": "^2.0.0"
   },
   "dependencies": {
-    "purecss": "^0.6.1",
-    "react": "^15.4.1"
+    "purecss": "^0.6.1"
   }
 }

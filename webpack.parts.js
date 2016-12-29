@@ -1,7 +1,7 @@
 const webpack = require('webpack');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const PurifyCSSPlugin = require('purifycss-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 exports.devServer = function(options) {
   return {
@@ -38,9 +38,25 @@ exports.devServer = function(options) {
       })
     ]
   };
-}
+};
 
-exports.setupCSS = function(paths) {
+exports.lintJavaScript = function(paths) {
+  return {
+    module: {
+      rules: [
+        {
+          test: /\.js$/,
+          include: paths,
+
+          use: 'eslint-loader',
+          enforce: 'pre'
+        }
+      ]
+    }
+  };
+};
+
+exports.loadCSS = function(paths) {
   return {
     module: {
       rules: [
@@ -55,62 +71,7 @@ exports.setupCSS = function(paths) {
       ]
     }
   };
-}
-
-exports.minify = function() {
-  return {
-    plugins: [
-      new webpack.optimize.UglifyJsPlugin({
-        compress: {
-          warnings: false
-        }
-      })
-    ]
-  };
-}
-
-exports.setFreeVariable = function(key, value) {
-  const env = {};
-  env[key] = JSON.stringify(value);
-
-  return {
-    plugins: [
-      new webpack.DefinePlugin(env)
-    ]
-  };
-}
-
-exports.extractBundle = function(options) {
-  const entry = {};
-
-  // Set up entries if they have been provided.
-  if (options.entries) {
-    entry[options.name] = options.entries;
-  }
-
-  return {
-    // Define an entry point needed for splitting.
-    entry: entry,
-    plugins: [
-      // Extract bundle.
-      new webpack.optimize.CommonsChunkPlugin({
-        names: [options.name]
-      })
-    ]
-  };
-}
-
-exports.clean = function(path) {
-  return {
-    plugins: [
-      new CleanWebpackPlugin([path], {
-        // Without `root` CleanWebpackPlugin won't point to our
-        // project and will fail to work.
-        root: process.cwd()
-      })
-    ]
-  };
-}
+};
 
 exports.extractCSS = function(paths) {
   return {
@@ -132,24 +93,78 @@ exports.extractCSS = function(paths) {
     },
     plugins: [
       // Output extracted CSS to a file
-      new ExtractTextPlugin('[name].[chunkhash].css')
+      new ExtractTextPlugin('[name].[contenthash].css')
     ]
   };
-}
+};
 
 exports.purifyCSS = function(paths) {
   return {
     plugins: [
       new PurifyCSSPlugin({
-        basePath: process.cwd(),
+        // Our paths are absolute so Purify needs patching
+        // against that to work.
+        basePath: '/',
+
         // `paths` is used to point PurifyCSS to files not
         // visible to Webpack. This expects glob patterns so
         // we adapt here.
         paths: paths.map(path => `${path}/*`),
+
         // Walk through only html files within node_modules. It
         // picks up .js files by default!
         resolveExtensions: ['.html']
       }),
     ]
+  };
+};
+
+exports.lintCSS = function(paths) {
+  return {
+    module: {
+      rules: [
+        {
+          test: /\.css$/,
+          include: paths,
+
+          use: 'postcss-loader',
+          enforce: 'pre'
+        }
+      ]
+    }
+  };
+};
+
+exports.generateSourcemaps = function(type) {
+  return {
+    devtool: type
+  };
+};
+
+exports.extractBundle = function(options) {
+  const entry = {};
+
+  // Set up entries if they have been provided.
+  if (options.entries) {
+    entry[options.name] = options.entries;
   }
-}
+
+  return {
+    // Define an entry point needed for splitting.
+    entry: entry,
+    plugins: [
+      // Extract bundle.
+      new webpack.optimize.CommonsChunkPlugin({
+        names: [options.name]
+      })
+    ]
+  };
+};
+
+exports.clean = function(path) {
+  return {
+    plugins: [
+      new CleanWebpackPlugin([path])
+    ]
+  };
+};

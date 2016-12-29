@@ -1,73 +1,52 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin');
 const merge = require('webpack-merge');
 
 const parts = require('./webpack.parts');
 
 const PATHS = {
   app: path.join(__dirname, 'app'),
-  style: [
-    path.join(__dirname, 'node_modules', 'purecss'),
-    path.join(__dirname, 'app', 'main.css')
-  ],
   build: path.join(__dirname, 'build')
 };
 
-const common = {
-  entry: {
-    style: PATHS.style,
-    app: PATHS.app
+const common = merge(
+  {
+    entry: {
+      app: PATHS.app
+    },
+    output: {
+      path: PATHS.build,
+      chunkFilename: 'scripts/[chunkhash].js',
+      filename: '[name].js'
+    },
+    plugins: [
+      new HtmlWebpackPlugin({
+        title: 'Webpack demo'
+      })
+    ]
   },
-  output: {
-    path: PATHS.build,
-    filename: '[name].js'
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      title: 'Webpack demo',
-      template: './index.ejs'
-    })
-  ]
-};
+  parts.lintCSS(PATHS.app),
+  parts.lintJavaScript(PATHS.app)
+);
 
 module.exports = function(env) {
   if (env === 'production') {
     return merge(
       common,
       {
-        devtool: 'source-map',
         output: {
-          path: PATHS.build,
-          filename: '[name].[chunkhash].js',
-          // This is used for code splitting. The setup
-          // will work without but this is useful to set.
-          chunkFilename: '[chunkhash].js',
           // Tweak this to match your GitHub project name
           publicPath: '/webpack-demo/'
-        },
-        plugins: [
-          new webpack.HashedModuleIdsPlugin(),
-          new InlineManifestWebpackPlugin({
-            name: 'webpackManifest'
-          })
-        ]
+        }
       },
-      parts.clean(PATHS.build),
-      parts.setFreeVariable(
-        'process.env.NODE_ENV',
-        'production'
-      ),
       parts.extractBundle({
         name: 'vendor',
         entries: ['react']
       }),
-      parts.extractBundle({
-        name: 'manifest'
-      }),
-      parts.minify(),
-      parts.extractCSS(PATHS.style),
+      parts.clean(PATHS.build),
+      parts.generateSourcemaps('source-map'),
+      parts.extractCSS(),
       parts.purifyCSS([PATHS.app])
     );
   }
@@ -75,7 +54,6 @@ module.exports = function(env) {
   return merge(
     common,
     {
-      devtool: 'eval-source-map',
       // Disable performance hints during development
       performance: {
         hints: false
@@ -84,7 +62,8 @@ module.exports = function(env) {
         new webpack.NamedModulesPlugin()
       ]
     },
-    parts.setupCSS(PATHS.style),
+    parts.generateSourcemaps('eval-source-map'),
+    parts.loadCSS(),
     parts.devServer({
       // Customize host/port here if needed
       host: process.env.HOST,
