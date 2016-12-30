@@ -17,7 +17,7 @@ const common = merge(
     },
     output: {
       path: PATHS.build,
-      chunkFilename: 'scripts/[chunkhash].js',
+      chunkFilename: 'scripts/[name].js',
       filename: '[name].js'
     },
     plugins: [
@@ -36,13 +36,28 @@ module.exports = function(env) {
       common,
       {
         output: {
+          chunkFilename: 'scripts/[chunkhash].js',
+          filename: '[name].[chunkhash].js',
+
           // Tweak this to match your GitHub project name
           publicPath: '/webpack-demo/'
-        }
+        },
+        plugins: [
+          new webpack.HashedModuleIdsPlugin()
+        ]
       },
+      parts.setFreeVariable(
+        'process.env.NODE_ENV',
+        'production'
+      ),
+      parts.loadJavaScript(PATHS.app),
+      parts.minify(),
       parts.extractBundle({
         name: 'vendor',
         entries: ['react']
+      }),
+      parts.extractBundle({
+        name: 'manifest'
       }),
       parts.clean(PATHS.build),
       parts.generateSourcemaps('source-map'),

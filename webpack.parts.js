@@ -114,7 +114,7 @@ exports.purifyCSS = function(paths) {
         // Walk through only html files within node_modules. It
         // picks up .js files by default!
         resolveExtensions: ['.html']
-      }),
+      })
     ]
   };
 };
@@ -161,10 +161,56 @@ exports.extractBundle = function(options) {
   };
 };
 
+exports.loadJavaScript = function(paths) {
+  return {
+    module: {
+      rules: [
+        {
+          test: /\.js$/,
+          include: paths,
+
+          loader: 'babel-loader',
+          options: {
+            // Enable caching for improved performance during
+            // development.
+            // It uses default OS directory by default. If you need
+            // something more custom, pass a path to it.
+            // I.e., { cacheDirectory: '<path>' }
+            cacheDirectory: true
+          }
+        }
+      ]
+    }
+  };
+};
+
 exports.clean = function(path) {
   return {
     plugins: [
       new CleanWebpackPlugin([path])
+    ]
+  };
+};
+
+exports.minify = function() {
+  return {
+    plugins: [
+      new webpack.optimize.UglifyJsPlugin({
+        compress: {
+          warnings: false
+        }
+      })
+    ]
+  };
+};
+
+exports.setFreeVariable = function(key, value) {
+  const env = {};
+  env[key] = JSON.stringify(value);
+
+  return {
+    plugins: [
+      new webpack.DefinePlugin(env)
     ]
   };
 };
