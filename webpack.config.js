@@ -52,17 +52,19 @@ module.exports = function(env) {
       ),
       parts.loadJavaScript(PATHS.app),
       parts.minify(),
-      parts.extractBundle({
-        name: 'vendor',
-        entries: ['react']
-      }),
-      parts.extractBundle({
-        name: 'manifest'
-      }),
+      parts.extractBundles([
+        {
+          name: 'vendor',
+          entries: ['react']
+        },
+        {
+          name: 'manifest'
+        }
+      ]),
       parts.clean(PATHS.build),
       parts.generateSourcemaps('source-map'),
       parts.extractCSS(),
-      parts.purifyCSS([PATHS.app])
+      parts.purifyCSS(PATHS.app)
     );
   }
 

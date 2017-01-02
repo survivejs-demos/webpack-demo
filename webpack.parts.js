@@ -14,7 +14,10 @@ exports.devServer = function(options) {
       // Unlike the cli flag, this doesn't set
       // HotModuleReplacementPlugin!
       hot: true,
-      inline: true,
+
+      // Don't refresh if hot loading fails. If you want
+      // refresh behavior, set inline: true instead.
+      hotOnly: true,
 
       // Display only errors to reduce the amount of output.
       stats: 'errors-only',
@@ -99,6 +102,8 @@ exports.extractCSS = function(paths) {
 };
 
 exports.purifyCSS = function(paths) {
+  paths = Array.isArray(paths) ? paths : [paths];
+
   return {
     plugins: [
       new PurifyCSSPlugin({
@@ -141,22 +146,27 @@ exports.generateSourcemaps = function(type) {
   };
 };
 
-exports.extractBundle = function(options) {
+exports.extractBundles = function(bundles, options) {
   const entry = {};
+  const names = [];
 
-  // Set up entries if they have been provided.
-  if (options.entries) {
-    entry[options.name] = options.entries;
-  }
+  // Set up entries and names.
+  bundles.forEach(({ name, entries }) => {
+    if (entries) {
+      entry[name] = entries;
+    }
+
+    names.push(name);
+  });
 
   return {
     // Define an entry point needed for splitting.
-    entry: entry,
+    entry,
     plugins: [
-      // Extract bundle.
-      new webpack.optimize.CommonsChunkPlugin({
-        names: [options.name]
-      })
+      // Extract bundles.
+      new webpack.optimize.CommonsChunkPlugin(
+        Object.assign({}, options, { names })
+      )
     ]
   };
 };
