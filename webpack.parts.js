@@ -202,7 +202,7 @@ exports.clean = function(path) {
   };
 };
 
-exports.minify = function() {
+exports.minifyJavaScript = function() {
   return {
     plugins: [
       new webpack.optimize.UglifyJsPlugin({
@@ -224,3 +224,4 @@ exports.setFreeVariable = function(key, value) {
     ]
   };
 };
+

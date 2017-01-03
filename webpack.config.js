@@ -17,7 +17,6 @@ const common = merge(
     },
     output: {
       path: PATHS.build,
-      chunkFilename: 'scripts/[name].js',
       filename: '[name].js'
     },
     plugins: [
@@ -51,7 +50,7 @@ module.exports = function(env) {
         'production'
       ),
       parts.loadJavaScript(PATHS.app),
-      parts.minify(),
+      parts.minifyJavaScript(),
       parts.extractBundles([
         {
           name: 'vendor',

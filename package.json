@@ -25,17 +25,17 @@
     "eslint-loader": "^1.6.1",
     "extract-text-webpack-plugin": "^2.0.0-beta.4",
     "gh-pages": "^0.12.0",
-    "html-webpack-plugin": "^2.24.1",
+    "html-webpack-plugin": "^2.25.0",
     "postcss-loader": "^1.2.1",
     "purifycss-webpack-plugin": "^2.0.3",
-    "react": "^15.4.1",
     "style-loader": "^0.13.1",
-    "stylelint": "^7.7.0",
+    "stylelint": "^7.7.1",
     "webpack": "^2.2.0-rc.3",
     "webpack-dev-server": "^2.2.0-rc.0",
     "webpack-merge": "^2.0.0"
   },
   "dependencies": {
-    "purecss": "^0.6.1"
+    "purecss": "^0.6.1",
+    "react": "^15.4.1"
   }
 }
