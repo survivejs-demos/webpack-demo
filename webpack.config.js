@@ -70,10 +70,6 @@ module.exports = function(env) {
   return merge(
     common,
     {
-      // Disable performance hints during development
-      performance: {
-        hints: false,
-      },
       plugins: [
         new webpack.NamedModulesPlugin(),
       ],
