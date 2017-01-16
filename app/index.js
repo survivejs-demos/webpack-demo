@@ -1,7 +1,7 @@
 import 'react';
 import 'purecss';
 import './main.css';
-import component from './component';
+import { component } from './component';
 
 let demoComponent = component();
 
