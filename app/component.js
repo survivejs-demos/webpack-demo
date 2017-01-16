@@ -20,5 +20,5 @@ const treeShakingDemo = function () {
 
 export {
   component,
-  treeShakingDemo
+  treeShakingDemo,
 };

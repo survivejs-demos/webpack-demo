@@ -7,23 +7,23 @@ const parts = require('./webpack.parts');
 
 const PATHS = {
   app: path.join(__dirname, 'app'),
-  build: path.join(__dirname, 'build')
+  build: path.join(__dirname, 'build'),
 };
 
 const common = merge(
   {
     entry: {
-      app: PATHS.app
+      app: PATHS.app,
     },
     output: {
       path: PATHS.build,
-      filename: '[name].js'
+      filename: '[name].js',
     },
     plugins: [
       new HtmlWebpackPlugin({
-        title: 'Webpack demo'
-      })
-    ]
+        title: 'Webpack demo',
+      }),
+    ],
   },
   parts.lintCSS(PATHS.app),
   parts.lintJavaScript(PATHS.app)
@@ -39,11 +39,11 @@ module.exports = function(env) {
           filename: '[name].[chunkhash].js',
 
           // Tweak this to match your GitHub project name
-          publicPath: '/webpack-demo/'
+          publicPath: '/webpack-demo/',
         },
         plugins: [
-          new webpack.HashedModuleIdsPlugin()
-        ]
+          new webpack.HashedModuleIdsPlugin(),
+        ],
       },
       parts.setFreeVariable(
         'process.env.NODE_ENV',
@@ -54,11 +54,11 @@ module.exports = function(env) {
       parts.extractBundles([
         {
           name: 'vendor',
-          entries: ['react']
+          entries: ['react'],
         },
         {
-          name: 'manifest'
-        }
+          name: 'manifest',
+        },
       ]),
       parts.clean(PATHS.build),
       parts.generateSourcemaps('source-map'),
@@ -72,18 +72,18 @@ module.exports = function(env) {
     {
       // Disable performance hints during development
       performance: {
-        hints: false
+        hints: false,
       },
       plugins: [
-        new webpack.NamedModulesPlugin()
-      ]
+        new webpack.NamedModulesPlugin(),
+      ],
     },
     parts.generateSourcemaps('eval-source-map'),
     parts.loadCSS(),
     parts.devServer({
       // Customize host/port here if needed
       host: process.env.HOST,
-      port: process.env.PORT
+      port: process.env.PORT,
     })
   );
 };

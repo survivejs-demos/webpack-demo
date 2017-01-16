@@ -30,7 +30,7 @@ exports.devServer = function(options) {
       // 0.0.0.0 is available to all network devices
       // unlike default `localhost`.
       host: options.host, // Defaults to `localhost`
-      port: options.port // Defaults to 8080
+      port: options.port, // Defaults to 8080
     },
     plugins: [
       // Enable multi-pass compilation for enhanced performance
@@ -38,8 +38,8 @@ exports.devServer = function(options) {
       new webpack.HotModuleReplacementPlugin({
         // Disabled as this won't work with html-webpack-template yet
         //multiStep: true
-      })
-    ]
+      }),
+    ],
   };
 };
 
@@ -52,10 +52,10 @@ exports.lintJavaScript = function(paths) {
           include: paths,
 
           use: 'eslint-loader',
-          enforce: 'pre'
-        }
-      ]
-    }
+          enforce: 'pre',
+        },
+      ],
+    },
   };
 };
 
@@ -69,10 +69,10 @@ exports.loadCSS = function(paths) {
           // paths.
           include: paths,
 
-          use: ['style-loader', 'css-loader']
-        }
-      ]
-    }
+          use: ['style-loader', 'css-loader'],
+        },
+      ],
+    },
   };
 };
 
@@ -89,15 +89,15 @@ exports.extractCSS = function(paths) {
 
           loader: ExtractTextPlugin.extract({
             fallbackLoader: 'style-loader',
-            loader: 'css-loader'
-          })
-        }
-      ]
+            loader: 'css-loader',
+          }),
+        },
+      ],
     },
     plugins: [
       // Output extracted CSS to a file
-      new ExtractTextPlugin('[name].[contenthash].css')
-    ]
+      new ExtractTextPlugin('[name].[contenthash].css'),
+    ],
   };
 };
 
@@ -118,9 +118,9 @@ exports.purifyCSS = function(paths) {
 
         // Walk through only html files within node_modules. It
         // picks up .js files by default!
-        resolveExtensions: ['.html']
-      })
-    ]
+        resolveExtensions: ['.html'],
+      }),
+    ],
   };
 };
 
@@ -133,16 +133,16 @@ exports.lintCSS = function(paths) {
           include: paths,
 
           use: 'postcss-loader',
-          enforce: 'pre'
-        }
-      ]
-    }
+          enforce: 'pre',
+        },
+      ],
+    },
   };
 };
 
 exports.generateSourcemaps = function(type) {
   return {
-    devtool: type
+    devtool: type,
   };
 };
 
@@ -166,8 +166,8 @@ exports.extractBundles = function(bundles, options) {
       // Extract bundles.
       new webpack.optimize.CommonsChunkPlugin(
         Object.assign({}, options, { names })
-      )
-    ]
+      ),
+    ],
   };
 };
 
@@ -186,19 +186,19 @@ exports.loadJavaScript = function(paths) {
             // It uses default OS directory by default. If you need
             // something more custom, pass a path to it.
             // I.e., { cacheDirectory: '<path>' }
-            cacheDirectory: true
-          }
-        }
-      ]
-    }
+            cacheDirectory: true,
+          },
+        },
+      ],
+    },
   };
 };
 
 exports.clean = function(path) {
   return {
     plugins: [
-      new CleanWebpackPlugin([path])
-    ]
+      new CleanWebpackPlugin([path]),
+    ],
   };
 };
 
@@ -208,10 +208,10 @@ exports.minifyJavaScript = function({ useSourceMap }) {
       new webpack.optimize.UglifyJsPlugin({
         sourceMap: useSourceMap,
         compress: {
-          warnings: false
-        }
-      })
-    ]
+          warnings: false,
+        },
+      }),
+    ],
   };
 };
 
@@ -221,8 +221,8 @@ exports.setFreeVariable = function(key, value) {
 
   return {
     plugins: [
-      new webpack.DefinePlugin(env)
-    ]
+      new webpack.DefinePlugin(env),
+    ],
   };
 };
 

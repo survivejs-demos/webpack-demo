@@ -12,6 +12,10 @@ module.exports = {
     "allowImportExportEverywhere": true
   },
   "rules": {
+    "comma-dangle": [
+      "error",
+      "always-multiline"
+    ],
     "indent": [
       "error",
       2
