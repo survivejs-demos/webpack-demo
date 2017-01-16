@@ -50,7 +50,7 @@ module.exports = function(env) {
         'production'
       ),
       parts.loadJavaScript(PATHS.app),
-      parts.minifyJavaScript('source-map'),
+      parts.minifyJavaScript({ useSourceMap: true }),
       parts.extractBundles([
         {
           name: 'vendor',

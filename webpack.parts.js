@@ -202,11 +202,11 @@ exports.clean = function(path) {
   };
 };
 
-exports.minifyJavaScript = function(sourceMap) {
+exports.minifyJavaScript = function({ useSourceMap }) {
   return {
     plugins: [
       new webpack.optimize.UglifyJsPlugin({
-        sourceMap: sourceMap,
+        sourceMap: useSourceMap,
         compress: {
           warnings: false
         }
