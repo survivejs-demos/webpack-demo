@@ -3,13 +3,13 @@ module.exports = {
     "browser": true,
     "commonjs": true,
     "es6": true,
-    "node": true
+    "node": true,
   },
   "extends": "eslint:recommended",
   "parser": "babel-eslint",
   "parserOptions": {
     "sourceType": "module",
-    "allowImportExportEverywhere": true
+    "allowImportExportEverywhere": true,
   },
   "rules": {
     "comma-dangle": [
@@ -18,23 +18,23 @@ module.exports = {
     ],
     "indent": [
       "error",
-      2
+      2,
     ],
     "linebreak-style": [
       "error",
-      "unix"
+      "unix",
     ],
     "quotes": [
       "error",
-      "single"
+      "single",
     ],
     "semi": [
       "error",
-      "always"
+      "always",
     ],
     "no-unused-vars": [
-      "warn"
+      "warn",
     ],
-    "no-console": 0
-  }
+    "no-console": 0,
+  },
 };
