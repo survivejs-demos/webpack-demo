@@ -44,6 +44,7 @@ module.exports = function(env) {
         plugins: [
           new webpack.HashedModuleIdsPlugin(),
         ],
+        recordsPath: 'records.json',
       },
       parts.setFreeVariable(
         'process.env.NODE_ENV',
