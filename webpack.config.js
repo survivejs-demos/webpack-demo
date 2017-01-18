@@ -10,7 +10,7 @@ const PATHS = {
   build: path.join(__dirname, 'build'),
 };
 
-const common = merge(
+const common = merge([
   {
     entry: {
       app: PATHS.app,
@@ -26,12 +26,12 @@ const common = merge(
     ],
   },
   parts.lintCSS(PATHS.app),
-  parts.lintJavaScript(PATHS.app)
-);
+  parts.lintJavaScript(PATHS.app),
+]);
 
 module.exports = function(env) {
   if (env === 'production') {
-    return merge(
+    return merge([
       common,
       {
         output: {
@@ -64,11 +64,11 @@ module.exports = function(env) {
       parts.clean(PATHS.build),
       parts.generateSourcemaps('source-map'),
       parts.extractCSS(),
-      parts.purifyCSS(PATHS.app)
-    );
+      parts.purifyCSS(PATHS.app),
+    ]);
   }
 
-  return merge(
+  return merge([
     common,
     {
       plugins: [
@@ -81,6 +81,6 @@ module.exports = function(env) {
       // Customize host/port here if needed
       host: process.env.HOST,
       port: process.env.PORT,
-    })
-  );
+    }),
+  ]);
 };
