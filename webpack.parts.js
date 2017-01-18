@@ -124,7 +124,7 @@ exports.purifyCSS = function(paths) {
   };
 };
 
-exports.lintCSS = function(paths) {
+exports.lintCSS = function(paths, rules) {
   return {
     module: {
       rules: [
@@ -139,9 +139,7 @@ exports.lintCSS = function(paths) {
             plugins: function () {
               return [
                 require('stylelint')({
-                  rules: {
-                    'color-hex-case': 'lower',
-                  },
+                  rules: rules,
                   // Ignore node_modules CSS
                   ignoreFiles: 'node_modules/**/*.css'
                 })

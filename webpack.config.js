@@ -25,7 +25,12 @@ const common = merge([
       }),
     ],
   },
-  parts.lintCSS(PATHS.app),
+  parts.lintCSS(
+    PATHS.app,
+    {
+      'color-hex-case': 'lower',
+    }
+  ),
   parts.lintJavaScript(PATHS.app),
 ]);
 
