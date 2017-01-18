@@ -50,9 +50,9 @@ exports.lintJavaScript = function(paths) {
         {
           test: /\.js$/,
           include: paths,
+          enforce: 'pre',
 
           use: 'eslint-loader',
-          enforce: 'pre',
         },
       ],
     },
@@ -131,9 +131,23 @@ exports.lintCSS = function(paths) {
         {
           test: /\.css$/,
           include: paths,
-
-          use: 'postcss-loader',
           enforce: 'pre',
+
+          loader: 'postcss-loader',
+          options: {
+            ident: 'postcss',
+            plugins: function () {
+              return [
+                require('stylelint')({
+                  rules: {
+                    'color-hex-case': 'lower',
+                  },
+                  // Ignore node_modules CSS
+                  ignoreFiles: 'node_modules/**/*.css'
+                })
+              ];
+            }
+          }
         },
       ],
     },
