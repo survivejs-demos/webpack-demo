@@ -50,6 +50,7 @@ module.exports = function(env) {
         ],
         recordsPath: 'records.json',
       },
+      parts.clean(PATHS.build),
       parts.setFreeVariable(
         'process.env.NODE_ENV',
         'production'
@@ -66,7 +67,6 @@ module.exports = function(env) {
           name: 'manifest',
         },
       ]),
-      parts.clean(PATHS.build),
       parts.generateSourcemaps('source-map'),
       parts.extractCSS(),
       parts.purifyCSS(PATHS.app),
