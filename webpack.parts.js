@@ -43,7 +43,7 @@ exports.devServer = function(options) {
   };
 };
 
-exports.lintJavaScript = function(paths) {
+exports.lintJavaScript = function({ paths, options }) {
   return {
     module: {
       rules: [
@@ -52,7 +52,8 @@ exports.lintJavaScript = function(paths) {
           include: paths,
           enforce: 'pre',
 
-          use: 'eslint-loader',
+          loader: 'eslint-loader',
+          options: options,
         },
       ],
     },
