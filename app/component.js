@@ -15,7 +15,7 @@ const component = function () {
 };
 
 const treeShakingDemo = function () {
-  return 'this should get shaked out';
+  return 'this should get shaken out';
 };
 
 export {
