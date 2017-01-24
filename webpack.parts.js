@@ -105,7 +105,7 @@ exports.extractCSS = function(paths) {
 exports.purifyCSS = function(paths) {
   return {
     plugins: [
-      new PurifyCSSPlugin({ paths }),
+      new PurifyCSSPlugin({ paths: paths }),
     ],
   };
 };
