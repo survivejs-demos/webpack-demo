@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
+const glob = require('glob');
 
 const parts = require('./webpack.parts');
 
@@ -76,7 +77,9 @@ module.exports = function(env) {
       parts.generateSourcemaps('source-map'),
       parts.lintJavaScript({ paths: PATHS.app }),
       parts.extractCSS(),
-      parts.purifyCSS(PATHS.app),
+      parts.purifyCSS(
+        glob.sync(path.join(PATHS.app, '*'))
+      ),
     ]);
   }
 
