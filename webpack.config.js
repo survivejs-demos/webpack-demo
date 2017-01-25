@@ -49,9 +49,6 @@ module.exports = function(env) {
         output: {
           chunkFilename: 'scripts/[chunkhash].js',
           filename: '[name].[chunkhash].js',
-
-          // Tweak this to match your GitHub project name
-          publicPath: '/webpack-demo/',
         },
         plugins: [
           new webpack.HashedModuleIdsPlugin(),
