@@ -26,7 +26,7 @@
     "glob": "^7.1.1",
     "html-webpack-plugin": "^2.26.0",
     "postcss-loader": "^1.2.2",
-    "purifycss-webpack": "^0.2.1",
+    "purifycss-webpack": "^0.3.0",
     "style-loader": "^0.13.1",
     "stylelint": "^7.7.1",
     "webpack": "^2.2.0",
