@@ -13,7 +13,7 @@ if(module.hot) {
   module.hot.accept('./component', () => {
     // We have to go through CommonJS here and capture the
     // default export explicitly!
-    const nextComponent = require('./component').default();
+    const nextComponent = require('./component').component();
 
     // Replace old content with the hot loaded one
     document.body.replaceChild(nextComponent, demoComponent);
