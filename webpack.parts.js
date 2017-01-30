@@ -93,7 +93,7 @@ exports.extractCSS = function(paths) {
     },
     plugins: [
       // Output extracted CSS to a file
-      new ExtractTextPlugin('[name].css'), // [contenthash]
+      new ExtractTextPlugin('[name].[contenthash].css'),
     ],
   };
 };
