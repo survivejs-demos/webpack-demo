@@ -46,6 +46,11 @@ module.exports = function(env) {
     return merge([
       common,
       {
+        performance: {
+          hints: 'warning', // 'error' or false too
+          maxEntrypointSize: 100000, // in kB
+          maxAssetSize: 50000, // in kB
+        },
         output: {
           chunkFilename: 'scripts/[chunkhash].js',
           filename: '[name].[chunkhash].js',
