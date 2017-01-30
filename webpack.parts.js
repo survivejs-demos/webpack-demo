@@ -84,7 +84,7 @@ exports.extractCSS = function(paths) {
           // paths.
           include: paths,
 
-          loader: ExtractTextPlugin.extract({
+          use: ExtractTextPlugin.extract({
             fallbackLoader: 'style-loader',
             loader: 'css-loader',
           }),
