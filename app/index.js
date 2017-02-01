@@ -1,21 +1,19 @@
-import 'react';
 import 'purecss';
 import './main.css';
-import { component } from './component';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Component from './component';
+import { AppContainer } from 'react-hot-loader';
 
-let demoComponent = component();
+const render = App => {
+  ReactDOM.render(
+    <AppContainer><App /></AppContainer>,
+    document.getElementById('app')
+  );
+};
 
-document.body.appendChild(demoComponent);
+render(Component);
 
-// HMR interface
-if(module.hot) {
-  // Capture hot update
-  module.hot.accept('./component', () => {
-    const nextComponent = component();
-
-    // Replace old content with the hot loaded one
-    document.body.replaceChild(nextComponent, demoComponent);
-
-    demoComponent = nextComponent;
-  });
+if (module.hot) {
+  module.hot.accept('./component', () => render(Component));
 }

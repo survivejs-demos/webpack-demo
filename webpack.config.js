@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackTemplate = require('html-webpack-template');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const glob = require('glob');
@@ -29,7 +30,11 @@ const common = merge([
     },
     plugins: [
       new HtmlWebpackPlugin({
+        template: HtmlWebpackTemplate,
         title: 'Webpack demo',
+        appMountId: 'app', // Generate #app where to mount
+        mobile: true, // Scale page on mobile
+        inject: false, // html-webpack-template requires this to work
       }),
     ],
   },
@@ -88,12 +93,17 @@ module.exports = function(env) {
   return merge([
     common,
     {
+      entry: {
+        // react-hot-loader has to run before app!
+        app: ['react-hot-loader/patch', PATHS.app],
+      },
       plugins: [
         new webpack.NamedModulesPlugin(),
       ],
     },
     parts.generateSourcemaps('eval-source-map'),
     parts.loadCSS(),
+    parts.loadJavaScript(PATHS.app),
     parts.devServer({
       // Customize host/port here if needed
       host: process.env.HOST,

@@ -1,24 +1,21 @@
-const component = function () {
-  const element = document.createElement('h1');
+import React from 'react';
 
-  element.className = 'pure-button';
-  element.innerHTML = 'Hello world';
-  element.onclick = () => {
-    import('./lazy').then((lazy) => {
-      element.textContent = lazy.default;
-    }).catch((err) => {
-      console.error(err);
-    });
-  };
+class Counter extends React.Component {
+  constructor(props) {
+    super(props);
 
-  return element;
-};
+    this.state = { amount: 0 };
+  }
+  render() {
+    return (
+      <div>
+        <spanm>Amount: {this.state.amount}</spanm>
+        <button onClick={() => this.setState(addOne)}>Add one</button>
+      </div>
+    );
+  }
+}
 
-const treeShakingDemo = function () {
-  return 'this should get shaken out';
-};
+const addOne = ({ amount }) => ({ amount: amount + 1 });
 
-export {
-  component,
-  treeShakingDemo,
-};
+export default Counter;
