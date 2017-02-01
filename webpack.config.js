@@ -44,6 +44,7 @@ const common = merge([
       'color-hex-case': 'lower',
     }
   ),
+  parts.loadJavaScript(PATHS.app),
 ]);
 
 module.exports = function(env) {
@@ -53,8 +54,8 @@ module.exports = function(env) {
       {
         performance: {
           hints: 'warning', // 'error' or false too
-          maxEntrypointSize: 100000, // in kB
-          maxAssetSize: 50000, // in kB
+          maxEntrypointSize: 200000, // in kB
+          maxAssetSize: 200000, // in kB
         },
         output: {
           chunkFilename: 'scripts/[chunkhash].js',
@@ -70,12 +71,11 @@ module.exports = function(env) {
         'production'
       ),
       parts.clean(PATHS.build),
-      parts.loadJavaScript(PATHS.app),
       parts.minifyJavaScript({ useSourceMap: true }),
       parts.extractBundles([
         {
           name: 'vendor',
-          entries: ['react'],
+          entries: ['react', 'react-dom'],
         },
         {
           name: 'manifest',
@@ -103,7 +103,6 @@ module.exports = function(env) {
     },
     parts.generateSourcemaps('eval-source-map'),
     parts.loadCSS(),
-    parts.loadJavaScript(PATHS.app),
     parts.devServer({
       // Customize host/port here if needed
       host: process.env.HOST,

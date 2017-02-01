@@ -117,7 +117,6 @@ exports.lintCSS = function(paths, rules) {
 
           loader: 'postcss-loader',
           options: {
-            ident: 'postcss',
             plugins: function () {
               return [
                 require('stylelint')({
