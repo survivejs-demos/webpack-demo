@@ -54,8 +54,8 @@ module.exports = function(env) {
       {
         performance: {
           hints: 'warning', // 'error' or false too
-          maxEntrypointSize: 200000, // in kB
-          maxAssetSize: 200000, // in kB
+          maxEntrypointSize: 200000, // in bytes
+          maxAssetSize: 200000, // in bytes
         },
         output: {
           chunkFilename: 'scripts/[chunkhash].js',
