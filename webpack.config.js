@@ -48,6 +48,8 @@ const common = merge([
 ]);
 
 module.exports = function(env) {
+  process.env.BABEL_ENV = env;
+
   if (env === 'production') {
     return merge([
       common,
