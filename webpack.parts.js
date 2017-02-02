@@ -133,7 +133,7 @@ exports.lintCSS = function(paths, rules) {
   };
 };
 
-exports.generateSourceMaps = function(type) {
+exports.generateSourceMaps = function({ type }) {
   return {
     devtool: type,
   };

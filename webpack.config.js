@@ -83,7 +83,7 @@ module.exports = function(env) {
           name: 'manifest',
         },
       ]),
-      parts.generateSourceMaps('source-map'),
+      parts.generateSourceMaps({ type: 'source-map' }),
       parts.lintJavaScript({ paths: PATHS.app }),
       parts.extractCSS(),
       parts.purifyCSS(
@@ -103,7 +103,7 @@ module.exports = function(env) {
         new webpack.NamedModulesPlugin(),
       ],
     },
-    parts.generateSourceMaps('eval-source-map'),
+    parts.generateSourceMaps({ type: 'eval-source-map' }),
     parts.loadCSS(),
     parts.devServer({
       // Customize host/port here if needed
