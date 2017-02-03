@@ -38,13 +38,13 @@ const common = merge([
       }),
     ],
   },
-  parts.lintCSS(
-    PATHS.app,
-    {
+  parts.lintCSS({
+    include: PATHS.app,
+    rules: {
       'color-hex-case': 'lower',
-    }
-  ),
-  parts.loadJavaScript(PATHS.app),
+    },
+  }),
+  parts.loadJavaScript({ include: PATHS.app }),
 ]);
 
 module.exports = function(env) {
@@ -111,7 +111,7 @@ module.exports = function(env) {
       port: process.env.PORT,
     }),
     parts.lintJavaScript({
-      paths: PATHS.app,
+      include: PATHS.app,
       options: {
         // Emit warnings over errors to avoid crashing
         // HMR on error.

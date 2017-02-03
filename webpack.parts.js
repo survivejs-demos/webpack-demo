@@ -3,7 +3,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const PurifyCSSPlugin = require('purifycss-webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
-exports.devServer = function(options) {
+exports.devServer = function({ host, port }) {
   return {
     devServer: {
       // Enable history API fallback so HTML5 History API based
@@ -25,8 +25,8 @@ exports.devServer = function(options) {
       //
       // 0.0.0.0 is available to all network devices
       // unlike default `localhost`.
-      host: options.host, // Defaults to `localhost`
-      port: options.port, // Defaults to 8080
+      host: host, // Defaults to `localhost`
+      port: port, // Defaults to 8080
     },
     plugins: [
       // Enable multi-pass compilation for enhanced performance
@@ -39,13 +39,14 @@ exports.devServer = function(options) {
   };
 };
 
-exports.lintJavaScript = function({ paths, options }) {
+exports.lintJavaScript = function({ include, exclude, options }) {
   return {
     module: {
       rules: [
         {
           test: /\.js$/,
-          include: paths,
+          include: include,
+          exclude: exclude,
           enforce: 'pre',
 
           loader: 'eslint-loader',
@@ -56,15 +57,14 @@ exports.lintJavaScript = function({ paths, options }) {
   };
 };
 
-exports.loadCSS = function(paths) {
+exports.loadCSS = function({ include, exclude } = {}) {
   return {
     module: {
       rules: [
         {
           test: /\.css$/,
-          // Restrict extraction process to the given
-          // paths.
-          include: paths,
+          include: include,
+          exclude: exclude,
 
           use: ['style-loader', 'css-loader'],
         },
@@ -73,16 +73,15 @@ exports.loadCSS = function(paths) {
   };
 };
 
-exports.extractCSS = function(paths) {
+exports.extractCSS = function({ include, exclude } = {}) {
   return {
     module: {
       rules: [
         // Extract CSS during build
         {
           test: /\.css$/,
-          // Restrict extraction process to the given
-          // paths.
-          include: paths,
+          include: include,
+          exclude: exclude,
 
           use: ExtractTextPlugin.extract({
             fallbackLoader: 'style-loader',
@@ -106,13 +105,14 @@ exports.purifyCSS = function(paths) {
   };
 };
 
-exports.lintCSS = function(paths, rules) {
+exports.lintCSS = function({ include, exclude, rules }) {
   return {
     module: {
       rules: [
         {
           test: /\.css$/,
-          include: paths,
+          include: include,
+          exclude: exclude,
           enforce: 'pre',
 
           loader: 'postcss-loader',
@@ -164,13 +164,14 @@ exports.extractBundles = function(bundles, options) {
   };
 };
 
-exports.loadJavaScript = function(paths) {
+exports.loadJavaScript = function({ include, exclude }) {
   return {
     module: {
       rules: [
         {
           test: /\.js$/,
-          include: paths,
+          include: include,
+          exclude: exclude,
 
           loader: 'babel-loader',
           options: {
