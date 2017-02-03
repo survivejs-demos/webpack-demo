@@ -91,6 +91,19 @@ exports.extractCSS = function({ include, exclude, loader }) {
   };
 };
 
+exports.autoprefix = function() {
+  return {
+    loader: 'postcss-loader',
+    options: {
+      plugins: function () {
+        return [
+          require('autoprefixer'),
+        ];
+      },
+    },
+  };
+};
+
 exports.purifyCSS = function({ paths }) {
   return {
     plugins: [
