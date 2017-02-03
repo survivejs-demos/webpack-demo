@@ -84,7 +84,7 @@ module.exports = function(env) {
         },
       ]),
       parts.generateSourceMaps({ type: 'source-map' }),
-      parts.lintJavaScript({ paths: PATHS.app }),
+      parts.lintJavaScript({ include: PATHS.app }),
       parts.extractCSS(),
       parts.purifyCSS({
         paths: glob.sync(path.join(PATHS.app, '*')),
