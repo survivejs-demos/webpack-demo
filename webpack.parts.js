@@ -92,7 +92,7 @@ exports.extractCSS = function({ include, exclude } = {}) {
   };
 };
 
-exports.purifyCSS = function(paths) {
+exports.purifyCSS = function({ paths }) {
   return {
     plugins: [
       new PurifyCSSPlugin({ paths: paths }),
