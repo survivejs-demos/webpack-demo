@@ -134,7 +134,7 @@ exports.generateSourceMaps = function({ type }) {
   };
 };
 
-exports.extractBundles = function(bundles, options) {
+exports.extractBundles = function({ bundles, options }) {
   const entry = {};
   const names = [];
 

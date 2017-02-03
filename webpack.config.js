@@ -74,15 +74,17 @@ module.exports = function(env) {
       ),
       parts.clean(PATHS.build),
       parts.minifyJavaScript({ useSourceMap: true }),
-      parts.extractBundles([
-        {
-          name: 'vendor',
-          entries: ['react', 'react-dom'],
-        },
-        {
-          name: 'manifest',
-        },
-      ]),
+      parts.extractBundles({
+        bundles: [
+          {
+            name: 'vendor',
+            entries: ['react', 'react-dom'],
+          },
+          {
+            name: 'manifest',
+          },
+        ],
+      }),
       parts.generateSourceMaps({ type: 'source-map' }),
       parts.lintJavaScript({ include: PATHS.app }),
       parts.extractCSS(),
