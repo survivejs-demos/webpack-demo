@@ -29,8 +29,6 @@ exports.devServer = function({ host, port }) {
       port: port, // Defaults to 8080
     },
     plugins: [
-      // Enable multi-pass compilation for enhanced performance
-      // in larger projects. Good default.
       new webpack.HotModuleReplacementPlugin({
         // Disabled as this won't work with html-webpack-template
         //multiStep: true
