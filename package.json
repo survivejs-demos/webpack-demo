@@ -41,6 +41,7 @@
     "webpack-merge": "^2.6.1"
   },
   "dependencies": {
+    "font-awesome": "^4.7.0",
     "purecss": "^0.6.2",
     "react": "^15.4.2",
     "react-dom": "^15.4.2"

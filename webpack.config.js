@@ -49,6 +49,7 @@ const common = merge([
       limit: 15000,
     },
   }),
+  parts.loadFonts(),
   parts.loadJavaScript({ include: PATHS.app }),
 ]);
 

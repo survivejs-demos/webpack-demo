@@ -1,3 +1,4 @@
+import 'font-awesome/css/font-awesome.css';
 import 'purecss';
 import './main.css';
 import React from 'react';
