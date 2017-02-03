@@ -140,6 +140,25 @@ exports.lintCSS = function({ include, exclude, rules }) {
   };
 };
 
+exports.loadImages = function({ include, exclude, options } = {}) {
+  return {
+    module: {
+      rules: [
+        {
+          test: /\.(png|jpg)$/,
+          include: include,
+          exclude: exclude,
+
+          use: {
+            loader: 'url-loader',
+            options: options,
+          },
+        },
+      ],
+    },
+  };
+};
+
 exports.generateSourceMaps = function({ type }) {
   return {
     devtool: type,

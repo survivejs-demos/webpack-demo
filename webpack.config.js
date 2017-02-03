@@ -44,6 +44,11 @@ const common = merge([
       'color-hex-case': 'lower',
     },
   }),
+  parts.loadImages({
+    options: {
+      limit: 15000,
+    },
+  }),
   parts.loadJavaScript({ include: PATHS.app }),
 ]);
 
