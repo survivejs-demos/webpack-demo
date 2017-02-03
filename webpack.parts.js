@@ -68,11 +68,10 @@ exports.loadCSS = function({ include, exclude } = {}) {
   };
 };
 
-exports.extractCSS = function({ include, exclude } = {}) {
+exports.extractCSS = function({ include, exclude, loader }) {
   return {
     module: {
       rules: [
-        // Extract CSS during build
         {
           test: /\.css$/,
           include: include,
@@ -80,7 +79,7 @@ exports.extractCSS = function({ include, exclude } = {}) {
 
           use: ExtractTextPlugin.extract({
             fallbackLoader: 'style-loader',
-            loader: 'css-loader',
+            loader: loader,
           }),
         },
       ],
