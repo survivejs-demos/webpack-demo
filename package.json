@@ -26,16 +26,16 @@
     "eslint-plugin-react": "^6.9.0",
     "extract-text-webpack-plugin": "2.0.0-rc.2",
     "glob": "^7.1.1",
-    "html-webpack-plugin": "^2.26.0",
+    "html-webpack-plugin": "^2.28.0",
     "html-webpack-template": "^6.0.1",
     "postcss-loader": "^1.2.2",
-    "purifycss-webpack": "^0.4.0",
+    "purifycss-webpack": "^0.4.2",
     "react-hot-loader": "^3.0.0-beta.6",
     "style-loader": "^0.13.1",
-    "stylelint": "^7.7.1",
-    "webpack": "^2.2.0",
+    "stylelint": "^7.8.0",
+    "webpack": "^2.2.1",
     "webpack-dev-server": "^2.2.0",
-    "webpack-merge": "^2.5.0"
+    "webpack-merge": "^2.6.1"
   },
   "dependencies": {
     "purecss": "^0.6.2",
