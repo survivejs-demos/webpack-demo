@@ -29,10 +29,7 @@ exports.devServer = function({ host, port }) {
       port: port, // Defaults to 8080
     },
     plugins: [
-      new webpack.HotModuleReplacementPlugin({
-        // Disabled as this won't work with html-webpack-template
-        //multiStep: true
-      }),
+      new webpack.HotModuleReplacementPlugin(),
     ],
   };
 };
