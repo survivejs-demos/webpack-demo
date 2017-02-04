@@ -109,6 +109,9 @@ module.exports = function(env) {
         // react-hot-loader has to run before app!
         app: ['react-hot-loader/patch', PATHS.app],
       },
+      output: {
+        devtoolModuleFilenameTemplate: 'webpack:///[absolute-resource-path]',
+      },
       plugins: [
         new webpack.NamedModulesPlugin(),
       ],
