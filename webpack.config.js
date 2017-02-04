@@ -113,7 +113,7 @@ module.exports = function(env) {
         new webpack.NamedModulesPlugin(),
       ],
     },
-    parts.generateSourceMaps({ type: 'eval-source-map' }),
+    parts.generateSourceMaps({ type: 'cheap-module-eval-source-map' }),
     parts.loadCSS(),
     parts.devServer({
       // Customize host/port here if needed
