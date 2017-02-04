@@ -68,7 +68,7 @@ exports.loadCSS = function({ include, exclude } = {}) {
   };
 };
 
-exports.extractCSS = function({ include, exclude, loader }) {
+exports.extractCSS = function({ include, exclude, use }) {
   return {
     module: {
       rules: [
@@ -78,8 +78,8 @@ exports.extractCSS = function({ include, exclude, loader }) {
           exclude: exclude,
 
           use: ExtractTextPlugin.extract({
-            fallbackLoader: 'style-loader',
-            loader: loader,
+            use: use,
+            fallback: 'style-loader',
           }),
         },
       ],
