@@ -48,55 +48,53 @@ const common = merge([
   parts.loadJavaScript({ include: PATHS.app }),
 ]);
 
-module.exports = function(env) {
-  process.env.BABEL_ENV = env;
-
-  if (env === 'production') {
-    return merge([
-      common,
-      {
-        performance: {
-          hints: 'warning', // 'error' or false are valid too
-          maxEntrypointSize: 200000, // in bytes
-          maxAssetSize: 200000, // in bytes
-        },
-        output: {
-          chunkFilename: 'scripts/[chunkhash].js',
-          filename: '[name].[chunkhash].js',
-        },
-        plugins: [
-          new webpack.HashedModuleIdsPlugin(),
-        ],
-        recordsPath: 'records.json',
+function production() {
+  return merge([
+    common,
+    {
+      performance: {
+        hints: 'warning', // 'error' or false are valid too
+        maxEntrypointSize: 200000, // in bytes
+        maxAssetSize: 200000, // in bytes
       },
-      parts.setFreeVariable(
-        'process.env.NODE_ENV',
-        'production'
-      ),
-      parts.clean(PATHS.build),
-      parts.minifyJavaScript({ useSourceMap: true }),
-      parts.extractBundles({
-        bundles: [
-          {
-            name: 'vendor',
-            entries: ['react', 'react-dom'],
-          },
-          {
-            name: 'manifest',
-          },
-        ],
-      }),
-      parts.generateSourceMaps({ type: 'source-map' }),
-      parts.lintJavaScript({ include: PATHS.app }),
-      parts.extractCSS({
-        use: ['css-loader', parts.autoprefix()],
-      }),
-      parts.purifyCSS({
-        paths: glob.sync(path.join(PATHS.app, '**', '*')),
-      }),
-    ]);
-  }
+      output: {
+        chunkFilename: 'scripts/[chunkhash].js',
+        filename: '[name].[chunkhash].js',
+      },
+      plugins: [
+        new webpack.HashedModuleIdsPlugin(),
+      ],
+      recordsPath: 'records.json',
+    },
+    parts.setFreeVariable(
+      'process.env.NODE_ENV',
+      'production'
+    ),
+    parts.clean(PATHS.build),
+    parts.minifyJavaScript({ useSourceMap: true }),
+    parts.extractBundles({
+      bundles: [
+        {
+          name: 'vendor',
+          entries: ['react', 'react-dom'],
+        },
+        {
+          name: 'manifest',
+        },
+      ],
+    }),
+    parts.generateSourceMaps({ type: 'source-map' }),
+    parts.lintJavaScript({ include: PATHS.app }),
+    parts.extractCSS({
+      use: ['css-loader', parts.autoprefix()],
+    }),
+    parts.purifyCSS({
+      paths: glob.sync(path.join(PATHS.app, '**', '*')),
+    }),
+  ]);
+}
 
+function development() {
   return merge([
     common,
     {
@@ -127,4 +125,14 @@ module.exports = function(env) {
       },
     }),
   ]);
+}
+
+module.exports = function(env) {
+  process.env.BABEL_ENV = env;
+
+  if (env === 'production') {
+    return production();
+  }
+
+  return development();
 };
