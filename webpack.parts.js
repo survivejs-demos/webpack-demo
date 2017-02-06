@@ -25,8 +25,8 @@ exports.devServer = function({ host, port }) {
       //
       // 0.0.0.0 is available to all network devices
       // unlike default `localhost`.
-      host: host, // Defaults to `localhost`
-      port: port, // Defaults to 8080
+      host, // Defaults to `localhost`
+      port, // Defaults to 8080
     },
     plugins: [
       new webpack.HotModuleReplacementPlugin(),
@@ -40,12 +40,12 @@ exports.lintJavaScript = function({ include, exclude, options }) {
       rules: [
         {
           test: /\.js$/,
-          include: include,
-          exclude: exclude,
+          include,
+          exclude,
           enforce: 'pre',
 
           loader: 'eslint-loader',
-          options: options,
+          options,
         },
       ],
     },
@@ -58,8 +58,8 @@ exports.loadCSS = function({ include, exclude } = {}) {
       rules: [
         {
           test: /\.css$/,
-          include: include,
-          exclude: exclude,
+          include,
+          exclude,
 
           use: ['style-loader', 'css-loader'],
         },
@@ -74,11 +74,11 @@ exports.extractCSS = function({ include, exclude, use }) {
       rules: [
         {
           test: /\.css$/,
-          include: include,
-          exclude: exclude,
+          include,
+          exclude,
 
           use: ExtractTextPlugin.extract({
-            use: use,
+            use,
             fallback: 'style-loader',
           }),
         },
@@ -107,7 +107,7 @@ exports.autoprefix = function() {
 exports.purifyCSS = function({ paths }) {
   return {
     plugins: [
-      new PurifyCSSPlugin({ paths: paths }),
+      new PurifyCSSPlugin({ paths }),
     ],
   };
 };
@@ -118,8 +118,8 @@ exports.lintCSS = function({ include, exclude }) {
       rules: [
         {
           test: /\.css$/,
-          include: include,
-          exclude: exclude,
+          include,
+          exclude,
           enforce: 'pre',
 
           loader: 'postcss-loader',
@@ -145,12 +145,12 @@ exports.loadImages = function({ include, exclude, options } = {}) {
       rules: [
         {
           test: /\.(png|jpg)$/,
-          include: include,
-          exclude: exclude,
+          include,
+          exclude,
 
           use: {
             loader: 'url-loader',
-            options: options,
+            options,
           },
         },
       ],
@@ -165,12 +165,12 @@ exports.loadFonts = function({ include, exclude, options } = {}) {
         {
           // Capture eot, ttf, svg, woff, and woff2
           test: /\.(woff2?|ttf|svg|eot)(\?v=\d+\.\d+\.\d+)?$/,
-          include: include,
-          exclude: exclude,
+          include,
+          exclude,
 
           use: {
             loader: 'file-loader',
-            options: options,
+            options,
           },
         },
       ],
@@ -215,8 +215,8 @@ exports.loadJavaScript = function({ include, exclude }) {
       rules: [
         {
           test: /\.js$/,
-          include: include,
-          exclude: exclude,
+          include,
+          exclude,
 
           loader: 'babel-loader',
           options: {
