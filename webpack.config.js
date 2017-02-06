@@ -38,12 +38,7 @@ const common = merge([
       }),
     ],
   },
-  parts.lintCSS({
-    include: PATHS.app,
-    rules: {
-      'color-hex-case': 'lower',
-    },
-  }),
+  parts.lintCSS({ include: PATHS.app }),
   parts.loadImages({
     options: {
       limit: 15000,
