@@ -112,7 +112,7 @@ exports.purifyCSS = function({ paths }) {
   };
 };
 
-exports.lintCSS = function({ include, exclude, rules }) {
+exports.lintCSS = function({ include, exclude }) {
   return {
     module: {
       rules: [
@@ -127,7 +127,6 @@ exports.lintCSS = function({ include, exclude, rules }) {
             plugins: function () {
               return [
                 require('stylelint')({
-                  rules: rules,
                   // Ignore node_modules CSS
                   ignoreFiles: 'node_modules/**/*.css',
                 }),
