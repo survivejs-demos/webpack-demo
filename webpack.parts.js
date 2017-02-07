@@ -4,6 +4,7 @@ const PurifyCSSPlugin = require('purifycss-webpack');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const cssnano = require('cssnano');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const GitRevisionPlugin = require('git-revision-webpack-plugin');
 
 exports.devServer = function({ host, port }) {
   return {
@@ -239,6 +240,16 @@ exports.clean = function(path) {
   return {
     plugins: [
       new CleanWebpackPlugin([path]),
+    ],
+  };
+};
+
+exports.attachRevision = function() {
+  return {
+    plugins: [
+      new webpack.BannerPlugin({
+        banner: new GitRevisionPlugin().version(),
+      }),
     ],
   };
 };

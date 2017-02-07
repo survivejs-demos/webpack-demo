@@ -76,6 +76,7 @@ function production() {
       'production'
     ),
     parts.clean(PATHS.build),
+    parts.attachRevision(),
     parts.minifyJavaScript({ useSourceMap: true }),
     parts.minifyCSS({
       options: {
