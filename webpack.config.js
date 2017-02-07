@@ -42,9 +42,14 @@ const common = merge([
   parts.loadImages({
     options: {
       limit: 15000,
+      name: '[name].[hash].[ext]',
     },
   }),
-  parts.loadFonts(),
+  parts.loadFonts({
+    options: {
+      name: '[name].[hash].[ext]',
+    },
+  }),
   parts.loadJavaScript({ include: PATHS.app }),
 ]);
 
