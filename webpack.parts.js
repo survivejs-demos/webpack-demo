@@ -1,6 +1,8 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const PurifyCSSPlugin = require('purifycss-webpack');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const cssnano = require('cssnano');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 exports.devServer = function({ host, port }) {
@@ -249,6 +251,17 @@ exports.minifyJavaScript = function({ useSourceMap }) {
         compress: {
           warnings: false,
         },
+      }),
+    ],
+  };
+};
+
+exports.minifyCSS = function({ options }) {
+  return {
+    plugins: [
+      new OptimizeCSSAssetsPlugin({
+        cssProcessor: cssnano,
+        cssProcessorOptions: options,
       }),
     ],
   };

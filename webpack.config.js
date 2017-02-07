@@ -77,6 +77,13 @@ function production() {
     ),
     parts.clean(PATHS.build),
     parts.minifyJavaScript({ useSourceMap: true }),
+    parts.minifyCSS({
+      options: {
+        discardComments: {
+          removeAll: true,
+        },
+      },
+    }),
     parts.extractBundles({
       bundles: [
         {
