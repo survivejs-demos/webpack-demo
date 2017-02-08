@@ -5,6 +5,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Component from './component';
 import { AppContainer } from 'react-hot-loader';
+import { bake } from './shake';
+
+bake();
 
 const render = App => {
   ReactDOM.render(
