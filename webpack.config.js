@@ -42,12 +42,12 @@ const common = merge([
   parts.loadImages({
     options: {
       limit: 15000,
-      name: '[name].[hash].[ext]',
+      name: '[name].[hash:8].[ext]',
     },
   }),
   parts.loadFonts({
     options: {
-      name: '[name].[hash].[ext]',
+      name: '[name].[hash:8].[ext]',
     },
   }),
   parts.loadJavaScript({ include: PATHS.app }),
@@ -63,8 +63,8 @@ function production() {
         maxAssetSize: 200000, // in bytes
       },
       output: {
-        chunkFilename: 'scripts/[chunkhash].js',
-        filename: '[name].[chunkhash].js',
+        chunkFilename: 'scripts/[chunkhash:8].js',
+        filename: '[name].[chunkhash:8].js',
       },
       plugins: [
         new webpack.HashedModuleIdsPlugin(),
