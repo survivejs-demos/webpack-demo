@@ -1,23 +1,25 @@
+import 'react';
 import 'font-awesome/css/font-awesome.css';
 import 'purecss';
 import './main.css';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Component from './component';
-import { AppContainer } from 'react-hot-loader';
+import component from './component';
 import { bake } from './shake';
 
 bake();
 
-const render = App => {
-  ReactDOM.render(
-    <AppContainer><App /></AppContainer>,
-    document.getElementById('app')
-  );
-};
+let demoComponent = component();
 
-render(Component);
+document.body.appendChild(demoComponent);
 
-if (module.hot) {
-  module.hot.accept('./component', () => render(Component));
+// HMR interface
+if(module.hot) {
+  // Capture hot update
+  module.hot.accept('./component', () => {
+    const nextComponent = component();
+
+    // Replace old content with the hot loaded one
+    document.body.replaceChild(nextComponent, demoComponent);
+
+    demoComponent = nextComponent;
+  });
 }

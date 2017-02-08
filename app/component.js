@@ -1,23 +1,15 @@
-import React from 'react';
+export default function () {
+  const element = document.createElement('h1');
 
-class Counter extends React.Component {
-  constructor(props) {
-    super(props);
+  element.className = 'fa fa-hand-spock-o fa-1g';
+  element.innerHTML = 'Hello world';
+  element.onclick = () => {
+    import('./lazy').then((lazy) => {
+      element.textContent = lazy.default;
+    }).catch((err) => {
+      console.error(err);
+    });
+  };
 
-    this.state = { amount: 0 };
-  }
-  render() {
-    return (
-      <div>
-        <span className="fa fa-hand-spock-o fa-1g">
-          Amount: {this.state.amount}
-        </span>
-        <button onClick={() => this.setState(addOne)}>Add one</button>
-      </div>
-    );
-  }
+  return element;
 }
-
-const addOne = ({ amount }) => ({ amount: amount + 1 });
-
-export default Counter;
