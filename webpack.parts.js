@@ -98,11 +98,9 @@ exports.autoprefix = function() {
   return {
     loader: 'postcss-loader',
     options: {
-      plugins: function () {
-        return [
-          require('autoprefixer'),
-        ];
-      },
+      plugins: () => ([
+        require('autoprefixer'),
+      ]),
     },
   };
 };
@@ -127,14 +125,12 @@ exports.lintCSS = function({ include, exclude }) {
 
           loader: 'postcss-loader',
           options: {
-            plugins: function () {
-              return [
-                require('stylelint')({
-                  // Ignore node_modules CSS
-                  ignoreFiles: 'node_modules/**/*.css',
-                }),
-              ];
-            },
+            plugins: () => ([
+              require('stylelint')({
+                // Ignore node_modules CSS
+                ignoreFiles: 'node_modules/**/*.css',
+              }),
+            ]),
           },
         },
       ],
