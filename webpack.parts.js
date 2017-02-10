@@ -162,8 +162,8 @@ exports.loadFonts = function({ include, exclude, options } = {}) {
     module: {
       rules: [
         {
-          // Capture eot, ttf, woff, and woff2
-          test: /\.(woff2?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
+          // Capture eot, ttf, svg, woff, and woff2
+          test: /\.(woff2?|ttf|svg|eot)(\?v=\d+\.\d+\.\d+)?$/,
           include,
           exclude,
 
@@ -172,9 +172,17 @@ exports.loadFonts = function({ include, exclude, options } = {}) {
             options,
           },
         },
+      ],
+    },
+  };
+};
+
+exports.ignore = function({ test, include, exclude }) {
+  return {
+    module: {
+      rules: [
         {
-          // Ignore svg since it's too big
-          test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+          test,
           include,
           exclude,
 
@@ -184,6 +192,7 @@ exports.loadFonts = function({ include, exclude, options } = {}) {
     },
   };
 };
+
 
 exports.generateSourceMaps = function({ type }) {
   return {
