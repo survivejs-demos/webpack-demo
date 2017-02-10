@@ -65,17 +65,17 @@ const productionConfig = merge([
     },
   }),
   parts.attachRevision(),
-  parts.extractBundles({
-    bundles: [
-      {
-        name: 'vendor',
-        entries: ['react'],
-      },
-      {
-        name: 'manifest',
-      },
-    ],
-  }),
+  parts.extractBundles([
+    {
+      name: 'vendor',
+      minChunks: ({ context }) => (
+        context && context.indexOf('node_modules') >= 0
+      ),
+    },
+    {
+      name: 'manifest',
+    },
+  ]),
   parts.generateSourceMaps({ type: 'source-map' }),
   parts.lintJavaScript({ include: PATHS.app }),
   parts.extractCSS({

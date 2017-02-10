@@ -200,29 +200,23 @@ exports.generateSourceMaps = function({ type }) {
   };
 };
 
-exports.extractBundles = function({ bundles, options }) {
+exports.extractBundles = function(bundles) {
   const entry = {};
-  const names = [];
+  const plugins = [];
 
-  // Set up entries and names.
-  bundles.forEach(({ name, entries }) => {
+  bundles.forEach((bundle) => {
+    const { name, entries } = bundle;
+
     if (entries) {
       entry[name] = entries;
     }
 
-    names.push(name);
+    plugins.push(
+      new webpack.optimize.CommonsChunkPlugin(bundle)
+    );
   });
 
-  return {
-    // Define an entry point needed for splitting.
-    entry,
-    plugins: [
-      // Extract bundles.
-      new webpack.optimize.CommonsChunkPlugin(
-        Object.assign({}, options, { names })
-      ),
-    ],
-  };
+  return { entry, plugins };
 };
 
 exports.loadJavaScript = function({ include, exclude }) {
