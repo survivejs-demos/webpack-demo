@@ -24,12 +24,12 @@ const commonConfig = merge([
   parts.loadImages({
     options: {
       limit: 15000,
-      name: '[name].[hash:8].[ext]',
+      name: '[hash:8].[ext]',
     },
   }),
   parts.loadFonts({
     options: {
-      name: '[name].[hash:8].[ext]',
+      name: '[hash:8].[ext]',
     },
   }),
   parts.ignore({
@@ -48,7 +48,7 @@ const productionConfig = merge([
     },
     output: {
       chunkFilename: 'scripts/[chunkhash].js',
-      filename: '[name].[chunkhash:8].js',
+      filename: '[chunkhash:8].js',
     },
     plugins: [
       new webpack.HashedModuleIdsPlugin(),
