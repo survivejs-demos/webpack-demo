@@ -43,7 +43,7 @@ const productionConfig = merge([
   {
     performance: {
       hints: 'warning', // 'error' or false are valid too
-      maxEntrypointSize: 200000, // in bytes
+      maxEntrypointSize: 100000, // in bytes
       maxAssetSize: 200000, // in bytes
     },
     output: {
