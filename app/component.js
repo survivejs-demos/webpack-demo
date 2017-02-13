@@ -1,5 +1,5 @@
 export default function () {
-  const element = document.createElement('h1');
+  const element = document.createElement('div');
 
   element.className = 'fa fa-hand-spock-o fa-1g';
   element.innerHTML = 'Hello world';
