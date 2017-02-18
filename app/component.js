@@ -1,8 +1,8 @@
-export default function () {
+export default function (text = 'Hello world') {
   const element = document.createElement('div');
 
   element.className = 'fa fa-hand-spock-o fa-1g';
-  element.innerHTML = 'Hello world';
+  element.innerHTML = text;
   element.onclick = () => {
     import('./lazy').then((lazy) => {
       element.textContent = lazy.default;
