@@ -3,7 +3,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const glob = require('glob');
-const HtmlWebpackTemplate = require('html-webpack-template');
 
 const parts = require('./webpack.parts');
 
@@ -121,52 +120,27 @@ const developmentConfig = merge([
   parts.loadCSS(),
 ]);
 
-const appConfig = {
-  entry: {
-    app: PATHS.app,
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      title: 'Webpack demo',
-    }),
-  ],
-};
-
-const reactConfig = {
-  entry: {
-    react: PATHS.reactDemo,
-  },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: HtmlWebpackTemplate,
-      title: 'React demo',
-      filename: 'react/index.html',
-      appMountId: 'app', // Generate #app where to mount
-      mobile: true, // Scale page on mobile
-      inject: false, // html-webpack-template needs this to work
-    }),
-  ],
-};
-
-const reactDevelopmentConfig = {
-  entry: {
-    // react-hot-loader has to run before demo!
-    react: ['react-hot-loader/patch', PATHS.reactDemo],
-  },
-};
-
 module.exports = function(env) {
-  process.env.BABEL_ENV = env;
-
-  if (env === 'production') {
-    return [
-      merge(commonConfig, productionConfig, appConfig),
-      merge(commonConfig, productionConfig, reactConfig),
-    ];
-  }
-
-  return [
-    merge(commonConfig, developmentConfig, appConfig),
-    merge(commonConfig, developmentConfig, reactConfig, reactDevelopmentConfig),
+  const pages = [
+    parts.page({
+      title: 'Webpack demo',
+      entry: {
+        app: PATHS.app,
+      },
+      chunks: ['app', 'manifest', 'vendor'],
+    }),
+    parts.page({
+      title: 'Another demo',
+      path: 'another',
+      entry: {
+        another: path.join(PATHS.app, 'another.js'),
+      },
+      chunks: ['another', 'manifest', 'vendor'],
+    }),
   ];
+  const config = env === 'production' ?
+    productionConfig :
+    developmentConfig;
+
+  return merge([commonConfig, config].concat(pages));
 };
