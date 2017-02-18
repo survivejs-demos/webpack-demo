@@ -47,7 +47,7 @@ const productionConfig = merge([
       maxAssetSize: 200000, // in bytes
     },
     output: {
-      chunkFilename: 'scripts/[chunkhash].js',
+      chunkFilename: '[chunkhash].js',
       filename: '[chunkhash:8].js',
     },
     plugins: [
