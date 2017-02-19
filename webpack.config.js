@@ -1,5 +1,4 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const glob = require('glob');
@@ -19,6 +18,7 @@ const commonConfig = merge([
       filename: '[name].js',
     },
   },
+  parts.lintJavaScript({ include: PATHS.app }),
   parts.lintCSS({ include: PATHS.app }),
   parts.loadImages({
     options: {
@@ -81,7 +81,6 @@ const productionConfig = merge([
     },
   ]),
   parts.generateSourceMaps({ type: 'source-map' }),
-  parts.lintJavaScript({ include: PATHS.app }),
   parts.extractCSS({
     use: ['css-loader', parts.autoprefix()],
   }),
@@ -108,14 +107,6 @@ const developmentConfig = merge([
     // Customize host/port here if needed
     host: process.env.HOST,
     port: process.env.PORT,
-  }),
-  parts.lintJavaScript({
-    include: PATHS.app,
-    options: {
-      // Emit warnings over errors to avoid crashing
-      // HMR on error.
-      emitWarning: true,
-    },
   }),
   parts.loadCSS(),
 ]);

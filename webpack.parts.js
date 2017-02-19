@@ -15,6 +15,10 @@ exports.devServer = function({ host, port }) {
       stats: 'errors-only',
       host, // Defaults to `localhost`
       port, // Defaults to 8080
+      overlay: {
+        errors: true,
+        warnings: true,
+      },
     },
     plugins: [
       new webpack.HotModuleReplacementPlugin(),
