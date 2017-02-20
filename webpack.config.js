@@ -72,6 +72,7 @@ const productionConfig = merge([
     },
     {
       name: 'manifest',
+      minChunks: Infinity,
     },
   ]),
   parts.generateSourceMaps({ type: 'source-map' }),
