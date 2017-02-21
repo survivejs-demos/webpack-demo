@@ -182,7 +182,6 @@ exports.ignore = function({ test, include, exclude }) {
   };
 };
 
-
 exports.generateSourceMaps = function({ type }) {
   return {
     devtool: type,
