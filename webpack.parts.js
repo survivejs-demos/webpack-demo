@@ -7,7 +7,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const cssnano = require('cssnano');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-exports.devServer = function({ host, port }) {
+exports.devServer = function({ host, port } = {}) {
   return {
     devServer: {
       historyApiFallback: true,

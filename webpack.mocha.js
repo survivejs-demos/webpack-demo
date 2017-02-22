@@ -8,12 +8,7 @@ const PATHS = {
 };
 
 module.exports = merge([
-  parts.loadJavaScript({ include: PATHS.tests }),
-  parts.devServer({
-    // Customize host/port here if needed
-    host: process.env.HOST,
-    port: process.env.PORT,
-  }),
+  parts.devServer(),
   parts.page({
     title: 'Mocha demo',
     entry: {
