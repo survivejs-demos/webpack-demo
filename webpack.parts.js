@@ -78,7 +78,7 @@ exports.extractCSS = function({ include, exclude, use }) {
     },
     plugins: [
       // Output extracted CSS to a file
-      new ExtractTextPlugin('[contenthash:8].css'),
+      new ExtractTextPlugin('[name].[contenthash:8].css'),
     ],
   };
 };

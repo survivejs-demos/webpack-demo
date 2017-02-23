@@ -22,7 +22,7 @@ const commonConfig = merge([
   parts.lintCSS({ include: PATHS.app }),
   parts.loadFonts({
     options: {
-      name: '[hash:8].[ext]',
+      name: '[name].[hash:8].[ext]',
     },
   }),
   parts.ignore({
@@ -40,8 +40,8 @@ const productionConfig = merge([
       maxAssetSize: 200000, // in bytes
     },
     output: {
-      chunkFilename: '[chunkhash].js',
-      filename: '[chunkhash:8].js',
+      chunkFilename: '[name].[chunkhash:8].js',
+      filename: '[name].[chunkhash:8].js',
     },
     plugins: [
       new webpack.HashedModuleIdsPlugin(),
@@ -85,7 +85,7 @@ const productionConfig = merge([
   parts.loadImages({
     options: {
       limit: 15000,
-      name: '[hash:8].[ext]',
+      name: '[name].[hash:8].[ext]',
     },
   }),
   parts.setFreeVariable(
