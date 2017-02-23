@@ -11,7 +11,7 @@ exports.devServer = function({ host, port } = {}) {
   return {
     devServer: {
       historyApiFallback: true,
-      hotOnly: true,
+      hot: true,
       stats: 'errors-only',
       host, // Defaults to `localhost`
       port, // Defaults to 8080
