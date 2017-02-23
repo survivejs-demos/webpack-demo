@@ -1,6 +1,6 @@
 {
   "name": "webpack-demo",
-  "version": "1.8.3",
+  "version": "1.8.4",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,9 @@
     "build": "webpack --env production"
   },
   "jest": {
-    "testMatch": ["**/tests/**/*_test.js"]
+    "testMatch": [
+      "**/tests/**/*_test.js"
+    ]
   },
   "keywords": [],
   "author": "",
