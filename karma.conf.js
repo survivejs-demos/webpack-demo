@@ -3,6 +3,8 @@ const path = require('path');
 module.exports = function(config) {
   const tests = 'tests/*_test.js';
 
+  process.env.BABEL_ENV = 'karma';
+
   config.set({
     frameworks: ['mocha'],
 
@@ -28,16 +30,10 @@ module.exports = function(config) {
     reporters: ['coverage'],
 
     coverageReporter: {
-      dir: 'build',
+      dir: 'coverage',
       reporters: [
-        {
-          type: 'html',
-          subdir: 'coverage',
-        },
-        {
-          type: 'lcov',
-          subdir: 'lcov',
-        },
+        { type: 'html' },
+        { type: 'lcov' },
       ],
     },
   });

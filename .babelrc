@@ -1,6 +1,5 @@
 {
   "plugins": [
-    "istanbul",
     "syntax-dynamic-import"
   ],
   "presets": [
@@ -11,5 +10,12 @@
       }
     ],
     "react"
-  ]
+  ],
+  "env": {
+    "karma": {
+      "plugins": [
+        "istanbul"
+      ]
+    }
+  }
 }
