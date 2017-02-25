@@ -189,22 +189,11 @@ exports.generateSourceMaps = function({ type }) {
 };
 
 exports.extractBundles = function(bundles) {
-  const entry = {};
-  const plugins = [];
-
-  bundles.forEach((bundle) => {
-    const { name, entries } = bundle;
-
-    if (entries) {
-      entry[name] = entries;
-    }
-
-    plugins.push(
+  return {
+    plugins: bundles.map((bundle) => (
       new webpack.optimize.CommonsChunkPlugin(bundle)
-    );
-  });
-
-  return { entry, plugins };
+    )),
+  };
 };
 
 exports.loadJavaScript = function({ include, exclude }) {
