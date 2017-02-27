@@ -64,10 +64,10 @@ const productionConfig = merge([
   parts.extractBundles([
     {
       name: 'vendor',
-      minChunks: ({ userRequest }) => (
-        userRequest &&
-        userRequest.indexOf('node_modules') >= 0 &&
-        userRequest.match(/\.js$/)
+      minChunks: ({ resource }) => (
+        resource &&
+        resource.indexOf('node_modules') >= 0 &&
+        resource.match(/\.js$/)
       ),
     },
     {
