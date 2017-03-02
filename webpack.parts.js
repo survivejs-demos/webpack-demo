@@ -168,22 +168,6 @@ exports.loadFonts = function({ include, exclude, options } = {}) {
   };
 };
 
-exports.ignore = function({ test, include, exclude }) {
-  return {
-    module: {
-      rules: [
-        {
-          test,
-          include,
-          exclude,
-
-          use: 'null-loader',
-        },
-      ],
-    },
-  };
-};
-
 exports.generateSourceMaps = function({ type }) {
   return {
     devtool: type,

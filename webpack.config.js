@@ -25,10 +25,6 @@ const commonConfig = merge([
       name: '[name].[hash:8].[ext]',
     },
   }),
-  parts.ignore({
-    test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-    include: /font-awesome/,
-  }),
   parts.loadJavaScript({ include: PATHS.app }),
 ]);
 
