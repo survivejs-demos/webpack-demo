@@ -51,7 +51,7 @@ const productionConfig = merge([
       discardComments: {
         removeAll: true,
         // Run cssnano in safe mode to avoid
-        // potentially unsafe ones.
+        // potentially unsafe transformations.
         safe: true,
       },
     },
