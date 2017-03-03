@@ -225,12 +225,10 @@ exports.attachRevision = function() {
   };
 };
 
-exports.minifyJavaScript = function({ useSourceMap }) {
+exports.minifyJavaScript = function() {
   return {
     plugins: [
-      new BabiliPlugin({
-        sourceMap: useSourceMap,
-      }),
+      new BabiliPlugin(),
     ],
   };
 };

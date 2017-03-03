@@ -45,7 +45,7 @@ const productionConfig = merge([
     recordsPath: 'records.json',
   },
   parts.clean(PATHS.build),
-  parts.minifyJavaScript({ useSourceMap: true }),
+  parts.minifyJavaScript(),
   parts.minifyCSS({
     options: {
       discardComments: {
