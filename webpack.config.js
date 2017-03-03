@@ -33,7 +33,7 @@ const productionConfig = merge([
     performance: {
       hints: 'warning', // 'error' or false are valid too
       maxEntrypointSize: 100000, // in bytes
-      maxAssetSize: 200000, // in bytes
+      maxAssetSize: 450000, // in bytes
     },
     output: {
       chunkFilename: '[name].[chunkhash:8].js',
