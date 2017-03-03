@@ -8,7 +8,7 @@
       {
         "modules": false,
         "targets": {
-          "browsers": ["last 2 Chrome versions"]
+          "browsers": ["IE 8"]
         }
       }
     ],
