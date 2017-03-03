@@ -1,3 +1,11 @@
+class Foo {
+  constructor() {
+    console.log('Constructed');
+  }
+}
+
+console.log(new Foo());
+
 export default function (text = 'Hello world') {
   const element = document.createElement('div');
 

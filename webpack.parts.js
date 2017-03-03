@@ -3,6 +3,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const PurifyCSSPlugin = require('purifycss-webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const GitRevisionPlugin = require('git-revision-webpack-plugin');
+const BabiliPlugin = require('babili-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const cssnano = require('cssnano');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -227,11 +228,8 @@ exports.attachRevision = function() {
 exports.minifyJavaScript = function({ useSourceMap }) {
   return {
     plugins: [
-      new webpack.optimize.UglifyJsPlugin({
+      new BabiliPlugin({
         sourceMap: useSourceMap,
-        compress: {
-          warnings: false,
-        },
       }),
     ],
   };
