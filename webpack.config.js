@@ -76,7 +76,10 @@ const productionConfig = merge([
     use: ['css-loader', parts.autoprefix()],
   }),
   parts.purifyCSS({
-    paths: glob.sync(path.join(PATHS.app, '**', '*')),
+    paths: glob.sync(
+      path.join(PATHS.app, '**', '*'),
+      { nodir: true }
+    ),
   }),
   parts.loadImages({
     options: {
