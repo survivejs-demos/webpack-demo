@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = function(config) {
-  const tests = 'tests/*_test.js';
+  const tests = 'tests/*.test.js';
 
   process.env.BABEL_ENV = 'karma';
 

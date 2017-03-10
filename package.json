@@ -20,11 +20,6 @@
     "start": "webpack-dev-server --env development",
     "build": "webpack --env production"
   },
-  "jest": {
-    "testMatch": [
-      "**/tests/**/*_test.js"
-    ]
-  },
   "keywords": [],
   "author": "",
   "license": "MIT",
