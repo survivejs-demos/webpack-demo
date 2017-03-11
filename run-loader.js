@@ -14,10 +14,7 @@ runLoaders({
   ],
   readResource: fs.readFile.bind(fs),
 },
-function(err, result) {
-  if(err) {
-    return console.error(err);
-  }
-
-  console.log(result);
-});
+(err, result) => err ?
+  console.error(err) :
+  console.log(result)
+);
