@@ -109,7 +109,7 @@ const developmentConfig = merge([
   parts.loadImages(),
 ]);
 
-module.exports = function(env) {
+module.exports = (env) => {
   const pages = [
     parts.page({
       title: 'Webpack demo',
