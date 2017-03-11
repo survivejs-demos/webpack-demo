@@ -1,6 +1,6 @@
-const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const PurifyCSSPlugin = require('purifycss-webpack');
+const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const GitRevisionPlugin = require('git-revision-webpack-plugin');
 const BabiliPlugin = require('babili-webpack-plugin');
@@ -12,7 +12,6 @@ exports.devServer = function({ host, port } = {}) {
   return {
     devServer: {
       historyApiFallback: true,
-      hot: true,
       stats: 'errors-only',
       host, // Defaults to `localhost`
       port, // Defaults to 8080
@@ -21,9 +20,6 @@ exports.devServer = function({ host, port } = {}) {
         warnings: true,
       },
     },
-    plugins: [
-      new webpack.HotModuleReplacementPlugin(),
-    ],
   };
 };
 
