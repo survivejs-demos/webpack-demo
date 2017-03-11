@@ -16,7 +16,7 @@ const commonConfig = merge([
     output: {
       path: PATHS.build,
       library: 'Demo',
-      libraryTarget: 'var',
+      libraryTarget: 'var', // Default
     },
   },
   parts.attachRevision(),

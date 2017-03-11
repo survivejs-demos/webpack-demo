@@ -20,4 +20,4 @@ export default (text = 'Hello world') => {
   };
 
   return element;
-}
+};
