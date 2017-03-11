@@ -5,7 +5,9 @@ module.exports = (input) => {
 
   return input + text;
 };
-module.exports.pitch = (remainingRequest, precedingRequest, input) => {
+module.exports.pitch = (
+  remainingRequest, precedingRequest, input
+) => {
   console.log(
     'remaining request', remainingRequest,
     'preceding request', precedingRequest,
