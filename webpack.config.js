@@ -98,9 +98,6 @@ const developmentConfig = merge([
     output: {
       devtoolModuleFilenameTemplate: 'webpack:///[absolute-resource-path]',
     },
-    plugins: [
-      new webpack.NamedModulesPlugin(),
-    ],
   },
   parts.generateSourceMaps({ type: 'cheap-module-eval-source-map' }),
   parts.devServer({
