@@ -1,10 +1,5 @@
-const shake = function() {
-  console.log('shake');
-};
-
-const bake = function () {
-  console.log('bake');
-};
+const shake = () => console.log('shake');
+const bake = () => console.log('bake');
 
 export {
   shake,
