@@ -16,7 +16,7 @@
     "postbuild:lib": "babel ./lib --out-dir ./dist-modules",
     "stats": "webpack --env production --profile --json > stats.json",
     "lint:style": "stylelint app/**/*.css",
-    "lint:js": "eslint . --cache",
+    "lint:js": "eslint app/ webpack.*.js --cache",
     "start": "webpack-dev-server --env development",
     "build": "webpack --env production"
   },
