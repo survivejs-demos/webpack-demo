@@ -1,18 +1,14 @@
 const loaderUtils = require('loader-utils');
 
-module.exports = function(input) {
-  const { text } = loaderUtils.getOptions(this);
-
-  return input + text;
-};
-module.exports.pitch = function(
-  remainingRequest, precedingRequest, input
-) {
-  console.log(
-    'remaining request', remainingRequest,
-    'preceding request', precedingRequest,
-    'input', input
+module.exports = function(content) {
+  const { name } = loaderUtils.getOptions(this);
+  const url = loaderUtils.interpolateName(
+    this, name, { content }
   );
 
-  return 'pitched';
+  this.emitFile(url, content);
+
+  const filePath = `__webpack_public_path__ + ${JSON.stringify(url)};`;
+
+  return `export default ${filePath}`;
 };

@@ -8,10 +8,14 @@ runLoaders({
     {
       loader: path.resolve(__dirname, './loaders/demo-loader'),
       options: {
-        text: 'demo',
+        name: 'demo.[ext]',
       },
     },
+    path.resolve(__dirname, './loaders/pitch-loader'),
   ],
+  context: {
+    emitFile: () => {},
+  },
   readResource: fs.readFile.bind(fs),
 },
 (err, result) => err ?
