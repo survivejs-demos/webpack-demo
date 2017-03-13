@@ -7,7 +7,6 @@ const parts = require('./webpack.parts');
 
 const PATHS = {
   app: path.join(__dirname, 'app'),
-  reactDemo: path.join(__dirname, 'app', 'react'),
   build: path.join(__dirname, 'build'),
 };
 
