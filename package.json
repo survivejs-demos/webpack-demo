@@ -9,7 +9,7 @@
     "test:jest": "jest",
     "test:karma:watch": "karma start --auto-watch --no-single-run",
     "test:karma": "karma start",
-    "test:mocha:watch": "webpack-dev-server --config webpack.mocha.js",
+    "test:mocha:watch": "webpack-dev-server --hot --config webpack.mocha.js",
     "test:mocha": "mocha tests",
     "build:ssr": "webpack --config webpack.ssr.js",
     "prebuild:lib": "npm run lint:js && rimraf dist*",
