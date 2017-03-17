@@ -9,10 +9,8 @@ function server(port) {
   const app = express();
 
   app.use(express.static('static'));
-  app.get('/', (req, res) => (
-    res.status(200).send(
-      renderMarkup(renderToString(SSR))
-    )
+  app.get('/', (req, res) => res.status(200).send(
+    renderMarkup(renderToString(SSR))
   ));
 
   app.listen(port, () => process.send && process.send('online'));
