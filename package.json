@@ -12,9 +12,8 @@
     "test:mocha:watch": "webpack-dev-server --hot --config webpack.mocha.js",
     "test:mocha": "mocha tests",
     "build:ssr": "webpack --config webpack.ssr.js",
-    "prebuild:lib": "npm run lint:js && rimraf dist*",
+    "prebuild:lib": "npm run lint:js && rimraf dist",
     "build:lib": "webpack --config webpack.lib.js",
-    "postbuild:lib": "babel ./lib --out-dir ./dist-modules",
     "stats": "webpack --env production --profile --json > stats.json",
     "lint:style": "stylelint app/**/*.css",
     "lint:js": "eslint app/ webpack.*.js --cache",
@@ -26,7 +25,6 @@
   "license": "MIT",
   "devDependencies": {
     "autoprefix": "^1.0.1",
-    "babel-cli": "^6.23.0",
     "babel-core": "^6.23.1",
     "babel-eslint": "^7.1.1",
     "babel-loader": "^6.3.2",
