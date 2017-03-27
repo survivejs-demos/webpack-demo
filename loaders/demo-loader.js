@@ -8,7 +8,7 @@ module.exports = function(content) {
 
   this.emitFile(url, content);
 
-  const filePath = `__webpack_public_path__ + ${JSON.stringify(url)};`;
+  const filePath = `__webpack_public_path__+${JSON.stringify(url)};`;
 
   return `export default ${filePath}`;
 };
