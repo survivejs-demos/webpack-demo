@@ -1,3 +1,5 @@
+import demo from '!demo-loader?name=foo!./main.css';
+
 class Foo {
   constructor() {
     console.log('Constructed');

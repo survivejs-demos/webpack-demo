@@ -16,6 +16,11 @@ const commonConfig = merge([
       path: PATHS.build,
       filename: '[name].js',
     },
+    resolveLoader: {
+      alias: {
+        'demo-loader': path.resolve(__dirname, 'loaders/demo-loader.js'),
+      },
+    },
   },
   parts.lintJavaScript({ include: PATHS.app }),
   parts.lintCSS({ include: PATHS.app }),
@@ -106,6 +111,8 @@ const developmentConfig = merge([
 ]);
 
 module.exports = (env) => {
+  console.log(env);
+
   const pages = [
     parts.page({
       title: 'Webpack demo',
