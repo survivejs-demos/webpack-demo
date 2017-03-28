@@ -18,7 +18,9 @@ const commonConfig = merge([
     },
     resolveLoader: {
       alias: {
-        'demo-loader': path.resolve(__dirname, 'loaders/demo-loader.js'),
+        'demo-loader': path.resolve(
+          __dirname, 'loaders/demo-loader.js'
+        ),
       },
     },
   },
