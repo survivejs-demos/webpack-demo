@@ -19,9 +19,7 @@
       "plugins": [
         [
           "istanbul",
-          {
-            "exclude": ["tests/*.test.js"]
-          }
+          { "exclude": ["tests/*.test.js"] }
         ]
       ]
     }
