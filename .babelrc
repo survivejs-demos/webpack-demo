@@ -17,7 +17,12 @@
   "env": {
     "karma": {
       "plugins": [
-        "istanbul"
+        [
+          "istanbul",
+          {
+            "exclude": ["tests/*.test.js"]
+          }
+        ]
       ]
     }
   }
