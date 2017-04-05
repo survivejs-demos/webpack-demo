@@ -1,4 +1,4 @@
-import demo from '!demo-loader?name=foo!./main.css';
+import '!demo-loader?name=foo!./main.css';
 
 class Foo {
   constructor() {
