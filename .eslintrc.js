@@ -16,7 +16,7 @@ module.exports = {
     },
   },
   globals: {
-    '__': true,
+    __: true,
   },
   plugins: [
     'react',
