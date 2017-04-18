@@ -102,7 +102,7 @@ const developmentConfig = merge([
       devtoolModuleFilenameTemplate: 'webpack:///[absolute-resource-path]',
     },
   },
-  parts.generateSourceMaps({ type: 'cheap-module-eval-source-map' }),
+  parts.generateSourceMaps({ type: 'cheap-module-source-map' }),
   parts.devServer({
     // Customize host/port here if needed
     host: process.env.HOST,
