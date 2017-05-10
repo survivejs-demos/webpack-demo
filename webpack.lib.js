@@ -40,7 +40,7 @@ const libraryMinConfig = merge([
       filename: '[name].min.js',
     },
   },
-  parts.minifyJavaScript({ useSourceMap: true }),
+  parts.minifyJavaScript(),
 ]);
 
 module.exports = [
