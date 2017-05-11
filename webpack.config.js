@@ -32,20 +32,6 @@ const commonConfig = merge([
     },
   }),
   parts.loadJavaScript({ include: PATHS.app }),
-  parts.extractBundles([
-    {
-      name: 'vendor',
-      minChunks: ({ resource }) => (
-        resource &&
-        resource.indexOf('node_modules') >= 0 &&
-        resource.match(/\.js$/)
-      ),
-    },
-    {
-      name: 'manifest',
-      minChunks: Infinity,
-    },
-  ]),
 ]);
 
 const productionConfig = merge([
@@ -76,6 +62,20 @@ const productionConfig = merge([
       },
     },
   }),
+  parts.extractBundles([
+    {
+      name: 'vendor',
+      minChunks: ({ resource }) => (
+        resource &&
+        resource.indexOf('node_modules') >= 0 &&
+        resource.match(/\.js$/)
+      ),
+    },
+    {
+      name: 'manifest',
+      minChunks: Infinity,
+    },
+  ]),
   parts.attachRevision(),
   parts.generateSourceMaps({ type: 'source-map' }),
   parts.extractCSS({
