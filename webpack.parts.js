@@ -146,16 +146,6 @@ exports.loadFonts = ({ include, exclude, options } = {}) => ({
   },
 });
 
-exports.generateSourceMaps = ({ type }) => ({
-  devtool: type,
-});
-
-exports.extractBundles = (bundles) => ({
-  plugins: bundles.map((bundle) => (
-    new webpack.optimize.CommonsChunkPlugin(bundle)
-  )),
-});
-
 exports.loadJavaScript = ({ include, exclude }) => ({
   module: {
     rules: [
@@ -176,6 +166,16 @@ exports.loadJavaScript = ({ include, exclude }) => ({
       },
     ],
   },
+});
+
+exports.generateSourceMaps = ({ type }) => ({
+  devtool: type,
+});
+
+exports.extractBundles = (bundles) => ({
+  plugins: bundles.map((bundle) => (
+    new webpack.optimize.CommonsChunkPlugin(bundle)
+  )),
 });
 
 exports.clean = (path) => ({
