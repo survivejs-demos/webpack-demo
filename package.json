@@ -1,6 +1,6 @@
 {
   "name": "webpack-demo",
-  "version": "2.0.11",
+  "version": "2.0.12",
   "description": "",
   "main": "index.js",
   "scripts": {
