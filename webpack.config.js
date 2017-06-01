@@ -113,8 +113,6 @@ const developmentConfig = merge([
 ]);
 
 module.exports = (env) => {
-  console.log(env);
-
   const pages = [
     parts.page({
       title: 'Webpack demo',
