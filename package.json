@@ -9,12 +9,11 @@
         "test:jest": "jest",
         "test:karma:watch": "karma start --auto-watch --no-single-run",
         "test:karma": "karma start",
-        "test:mocha:watch": "webpack-dev-server --hot --config webpack.mocha.js",
+        "test:mocha:watch":
+            "webpack-dev-server --hot --config webpack.mocha.js",
         "test:mocha": "mocha tests",
         "build:i18n": "webpack --config webpack.i18n.js",
         "build:ssr": "webpack --config webpack.ssr.js",
-        "prebuild:lib": "rimraf dist",
-        "build:lib": "webpack --config webpack.lib.js",
         "stats": "webpack --env production --profile --json > stats.json",
         "start": "webpack-dev-server --env development",
         "build": "webpack --env production"
@@ -58,7 +57,6 @@
         "postcss-loader": "^2.0.8",
         "purify-css": "^1.2.5",
         "purifycss-webpack": "^0.7.0",
-        "rimraf": "^2.6.2",
         "style-loader": "^0.19.0",
         "url-loader": "^0.6.2",
         "webpack": "^3.8.1",
