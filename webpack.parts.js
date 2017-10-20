@@ -8,6 +8,14 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const cssnano = require("cssnano");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
+exports.attachRevision = () => ({
+  plugins: [
+    new webpack.BannerPlugin({
+      banner: new GitRevisionPlugin().version(),
+    }),
+  ],
+});
+
 exports.clean = path => ({
   plugins: [new CleanWebpackPlugin([path])],
 });
@@ -140,14 +148,6 @@ exports.extractBundles = bundles => ({
   plugins: bundles.map(
     bundle => new webpack.optimize.CommonsChunkPlugin(bundle)
   ),
-});
-
-exports.attachRevision = () => ({
-  plugins: [
-    new webpack.BannerPlugin({
-      banner: new GitRevisionPlugin().version(),
-    }),
-  ],
 });
 
 exports.minifyJavaScript = () => ({
