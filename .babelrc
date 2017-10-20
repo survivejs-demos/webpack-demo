@@ -6,10 +6,7 @@
     [
       "env",
       {
-        "modules": false,
-        "targets": {
-          "browsers": ["IE 8"]
-        }
+        "modules": false
       }
     ],
     "react"
