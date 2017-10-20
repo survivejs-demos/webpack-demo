@@ -16,9 +16,9 @@ exports.devServer = ({ host, port } = {}) => ({
     port, // Defaults to 8080
     overlay: {
       errors: true,
-      warnings: true
-    }
-  }
+      warnings: true,
+    },
+  },
 });
 
 exports.loadCSS = ({ include, exclude } = {}) => ({
@@ -29,16 +29,16 @@ exports.loadCSS = ({ include, exclude } = {}) => ({
         include,
         exclude,
 
-        use: ["style-loader", "css-loader"]
-      }
-    ]
-  }
+        use: ["style-loader", "css-loader"],
+      },
+    ],
+  },
 });
 
 exports.extractCSS = ({ include, exclude, use }) => {
   // Output extracted CSS to a file
   const plugin = new ExtractTextPlugin({
-    filename: "[name].[contenthash:8].css"
+    filename: "[name].[contenthash:8].css",
   });
 
   return {
@@ -51,24 +51,24 @@ exports.extractCSS = ({ include, exclude, use }) => {
 
           use: plugin.extract({
             use,
-            fallback: "style-loader"
-          })
-        }
-      ]
+            fallback: "style-loader",
+          }),
+        },
+      ],
     },
-    plugins: [plugin]
+    plugins: [plugin],
   };
 };
 
 exports.autoprefix = () => ({
   loader: "postcss-loader",
   options: {
-    plugins: () => [require("autoprefixer")()]
-  }
+    plugins: () => [require("autoprefixer")()],
+  },
 });
 
 exports.purifyCSS = ({ paths }) => ({
-  plugins: [new PurifyCSSPlugin({ paths })]
+  plugins: [new PurifyCSSPlugin({ paths })],
 });
 
 exports.loadImages = ({ include, exclude, options } = {}) => ({
@@ -81,11 +81,11 @@ exports.loadImages = ({ include, exclude, options } = {}) => ({
 
         use: {
           loader: "url-loader",
-          options
-        }
-      }
-    ]
-  }
+          options,
+        },
+      },
+    ],
+  },
 });
 
 exports.loadFonts = ({ include, exclude, options } = {}) => ({
@@ -99,11 +99,11 @@ exports.loadFonts = ({ include, exclude, options } = {}) => ({
 
         use: {
           loader: "file-loader",
-          options
-        }
-      }
-    ]
-  }
+          options,
+        },
+      },
+    ],
+  },
 });
 
 exports.loadJavaScript = ({ include, exclude }) => ({
@@ -121,37 +121,37 @@ exports.loadJavaScript = ({ include, exclude }) => ({
           // It uses default OS directory by default. If you need
           // something more custom, pass a path to it.
           // I.e., { cacheDirectory: '<path>' }
-          cacheDirectory: true
-        }
-      }
-    ]
-  }
+          cacheDirectory: true,
+        },
+      },
+    ],
+  },
 });
 
 exports.generateSourceMaps = ({ type }) => ({
-  devtool: type
+  devtool: type,
 });
 
 exports.extractBundles = bundles => ({
   plugins: bundles.map(
     bundle => new webpack.optimize.CommonsChunkPlugin(bundle)
-  )
+  ),
 });
 
 exports.clean = path => ({
-  plugins: [new CleanWebpackPlugin([path])]
+  plugins: [new CleanWebpackPlugin([path])],
 });
 
 exports.attachRevision = () => ({
   plugins: [
     new webpack.BannerPlugin({
-      banner: new GitRevisionPlugin().version()
-    })
-  ]
+      banner: new GitRevisionPlugin().version(),
+    }),
+  ],
 });
 
 exports.minifyJavaScript = () => ({
-  plugins: [new BabelWebpackPlugin()]
+  plugins: [new BabelWebpackPlugin()],
 });
 
 exports.minifyCSS = ({ options }) => ({
@@ -159,9 +159,9 @@ exports.minifyCSS = ({ options }) => ({
     new OptimizeCSSAssetsPlugin({
       cssProcessor: cssnano,
       cssProcessorOptions: options,
-      canPrint: false
-    })
-  ]
+      canPrint: false,
+    }),
+  ],
 });
 
 exports.setFreeVariable = (key, value) => {
@@ -169,7 +169,7 @@ exports.setFreeVariable = (key, value) => {
   env[key] = JSON.stringify(value);
 
   return {
-    plugins: [new webpack.DefinePlugin(env)]
+    plugins: [new webpack.DefinePlugin(env)],
   };
 };
 
@@ -179,7 +179,7 @@ exports.page = (
     template = require.resolve("html-webpack-plugin/default_index.ejs"),
     title,
     entry,
-    chunks
+    chunks,
   } = {}
 ) => ({
   entry,
@@ -188,7 +188,7 @@ exports.page = (
       chunks,
       filename: `${path && path + "/"}index.html`,
       template,
-      title
-    })
-  ]
+      title,
+    }),
+  ],
 });
