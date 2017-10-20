@@ -8,6 +8,10 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const cssnano = require("cssnano");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
+exports.clean = path => ({
+  plugins: [new CleanWebpackPlugin([path])],
+});
+
 exports.devServer = ({ host, port } = {}) => ({
   devServer: {
     historyApiFallback: true,
@@ -136,10 +140,6 @@ exports.extractBundles = bundles => ({
   plugins: bundles.map(
     bundle => new webpack.optimize.CommonsChunkPlugin(bundle)
   ),
-});
-
-exports.clean = path => ({
-  plugins: [new CleanWebpackPlugin([path])],
 });
 
 exports.attachRevision = () => ({
