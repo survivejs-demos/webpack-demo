@@ -8,6 +8,10 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const cssnano = require("cssnano");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
+exports.minifyJavaScript = () => ({
+  plugins: [new BabelWebpackPlugin()],
+});
+
 exports.attachRevision = () => ({
   plugins: [
     new webpack.BannerPlugin({
@@ -148,10 +152,6 @@ exports.extractBundles = bundles => ({
   plugins: bundles.map(
     bundle => new webpack.optimize.CommonsChunkPlugin(bundle)
   ),
-});
-
-exports.minifyJavaScript = () => ({
-  plugins: [new BabelWebpackPlugin()],
 });
 
 exports.minifyCSS = ({ options }) => ({
