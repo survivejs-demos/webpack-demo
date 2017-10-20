@@ -8,6 +8,16 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const cssnano = require("cssnano");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
+exports.minifyCSS = ({ options }) => ({
+  plugins: [
+    new OptimizeCSSAssetsPlugin({
+      cssProcessor: cssnano,
+      cssProcessorOptions: options,
+      canPrint: false,
+    }),
+  ],
+});
+
 exports.minifyJavaScript = () => ({
   plugins: [new BabelWebpackPlugin()],
 });
@@ -152,16 +162,6 @@ exports.extractBundles = bundles => ({
   plugins: bundles.map(
     bundle => new webpack.optimize.CommonsChunkPlugin(bundle)
   ),
-});
-
-exports.minifyCSS = ({ options }) => ({
-  plugins: [
-    new OptimizeCSSAssetsPlugin({
-      cssProcessor: cssnano,
-      cssProcessorOptions: options,
-      canPrint: false,
-    }),
-  ],
 });
 
 exports.setFreeVariable = (key, value) => {
