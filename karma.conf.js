@@ -4,6 +4,8 @@ const parts = require("./webpack.parts");
 module.exports = config => {
   const tests = "tests/*.test.js";
 
+  process.env.BABEL_ENV = "karma";
+
   config.set({
     frameworks: ["mocha"],
 
