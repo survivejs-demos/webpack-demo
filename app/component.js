@@ -1,3 +1,5 @@
+import "!../loaders/demo-loader?name=foo!./main.css";
+
 export default (text = "Hello world") => {
   const element = document.createElement("div");
 
