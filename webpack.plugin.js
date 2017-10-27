@@ -1,9 +1,9 @@
+const { RawSource } = require("webpack-sources");
 const path = require("path");
-
 const DemoPlugin = require("./plugins/demo-plugin.js");
 
 const PATHS = {
-  lib: path.join(__dirname, "lib"),
+  lib: path.join(__dirname, "app", "shake.js"),
   build: path.join(__dirname, "build"),
 };
 
