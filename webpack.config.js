@@ -18,7 +18,10 @@ const commonConfig = merge([
     },
     resolveLoader: {
       alias: {
-        "demo-loader": path.resolve(__dirname, "loaders/demo-loader.js"),
+        "demo-loader": path.resolve(
+          __dirname,
+          "loaders/demo-loader.js"
+        ),
       },
     },
   },
@@ -89,7 +92,8 @@ const productionConfig = merge([
 const developmentConfig = merge([
   {
     output: {
-      devtoolModuleFilenameTemplate: "webpack:///[absolute-resource-path]",
+      devtoolModuleFilenameTemplate:
+        "webpack:///[absolute-resource-path]",
     },
   },
   parts.generateSourceMaps({ type: "cheap-module-eval-source-map" }),
@@ -120,7 +124,8 @@ module.exports = env => {
       chunks: ["another", "manifest", "vendor"],
     }),
   ];
-  const config = env === "production" ? productionConfig : developmentConfig;
+  const config =
+    env === "production" ? productionConfig : developmentConfig;
 
   return merge([commonConfig, config].concat(pages));
 };

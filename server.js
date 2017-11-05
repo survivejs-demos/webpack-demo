@@ -1,19 +1,19 @@
-const express = require('express');
-const { renderToString } = require('react-dom/server');
+const express = require("express");
+const { renderToString } = require("react-dom/server");
 
-const SSR = require('./static');
+const SSR = require("./static");
 
 server(process.env.PORT || 8080);
 
 function server(port) {
   const app = express();
 
-  app.use(express.static('static'));
-  app.get('/', (req, res) => res.status(200).send(
-    renderMarkup(renderToString(SSR))
-  ));
+  app.use(express.static("static"));
+  app.get("/", (req, res) =>
+    res.status(200).send(renderMarkup(renderToString(SSR)))
+  );
 
-  app.listen(port, () => process.send && process.send('online'));
+  app.listen(port, () => process.send && process.send("online"));
 }
 
 function renderMarkup(html) {

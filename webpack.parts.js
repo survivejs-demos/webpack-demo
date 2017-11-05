@@ -176,7 +176,9 @@ exports.setFreeVariable = (key, value) => {
 exports.page = (
   {
     path = "",
-    template = require.resolve("html-webpack-plugin/default_index.ejs"),
+    template = require.resolve(
+      "html-webpack-plugin/default_index.ejs"
+    ),
     title,
     entry,
     chunks,
