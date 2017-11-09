@@ -3,7 +3,7 @@ const PurifyCSSPlugin = require("purifycss-webpack");
 const webpack = require("webpack");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const GitRevisionPlugin = require("git-revision-webpack-plugin");
-const BabelWebpackPlugin = require("babel-minify-webpack-plugin");
+const UglifyWebpackPlugin = require("uglifyjs-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const cssnano = require("cssnano");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -19,7 +19,7 @@ exports.minifyCSS = ({ options }) => ({
 });
 
 exports.minifyJavaScript = () => ({
-  plugins: [new BabelWebpackPlugin()],
+  plugins: [new UglifyWebpackPlugin()],
 });
 
 exports.attachRevision = () => ({
