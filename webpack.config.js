@@ -62,10 +62,7 @@ const productionConfig = merge([
   parts.extractBundles([
     {
       name: "vendor",
-      minChunks: ({ resource }) =>
-        resource &&
-        resource.indexOf("node_modules") >= 0 &&
-        resource.match(/\.js$/),
+      minChunks: ({ resource }) => /node_modules/.test(resource),
     },
     {
       name: "manifest",
@@ -96,7 +93,9 @@ const developmentConfig = merge([
         "webpack:///[absolute-resource-path]",
     },
   },
-  parts.generateSourceMaps({ type: "cheap-module-eval-source-map" }),
+  parts.generateSourceMaps({
+    type: "cheap-module-eval-source-map",
+  }),
   parts.devServer({
     // Customize host/port here if needed
     host: process.env.HOST,
