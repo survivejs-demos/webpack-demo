@@ -24,6 +24,7 @@ const commonConfig = merge([
         ),
       },
     },
+    plugins: [new webpack.NamedModulesPlugin()],
   },
   parts.loadFonts({
     options: {
@@ -44,7 +45,6 @@ const productionConfig = merge([
       chunkFilename: "[name].[chunkhash:8].js",
       filename: "[name].[chunkhash:8].js",
     },
-    plugins: [new webpack.HashedModuleIdsPlugin()],
     recordsPath: path.join(__dirname, "records.json"),
   },
   parts.clean(PATHS.build),
