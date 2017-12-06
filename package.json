@@ -38,7 +38,7 @@
         "git-revision-webpack-plugin": "^2.5.1",
         "glob": "^7.1.2",
         "html-webpack-plugin": "^2.30.1",
-        "html-webpack-template": "^6.0.2",
+        "html-webpack-template": "^6.1.0",
         "i18n-webpack-plugin": "^1.0.0",
         "jest": "^21.2.1",
         "karma": "^1.7.1",
@@ -52,21 +52,21 @@
         "mocha-loader": "^1.1.1",
         "optimize-css-assets-webpack-plugin": "^3.2.0",
         "phantomjs-prebuilt": "^2.1.16",
-        "postcss-loader": "^2.0.8",
+        "postcss-loader": "^2.0.9",
         "purify-css": "^1.2.5",
         "purifycss-webpack": "^0.7.0",
         "style-loader": "^0.19.0",
-        "uglifyjs-webpack-plugin": "^1.0.1",
+        "uglifyjs-webpack-plugin": "^1.1.2",
         "url-loader": "^0.6.2",
-        "webpack": "^3.8.1",
-        "webpack-dev-server": "^2.9.4",
+        "webpack": "^3.10.0",
+        "webpack-dev-server": "^2.9.5",
         "webpack-merge": "^4.1.1",
-        "webpack-sources": "^1.0.2"
+        "webpack-sources": "^1.1.0"
     },
     "dependencies": {
         "font-awesome": "^4.7.0",
         "purecss": "^1.0.0",
-        "react": "^16.1.1",
-        "react-dom": "^16.1.1"
+        "react": "^16.2.0",
+        "react-dom": "^16.2.0"
     }
 }
