@@ -6,7 +6,10 @@
     [
       "env",
       {
-        "modules": false
+        "modules": false,
+        "targets": {
+          "browsers": ["chrome >= 60"]
+        }
       }
     ],
     "react"
