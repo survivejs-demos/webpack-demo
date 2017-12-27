@@ -14,6 +14,7 @@ const commonConfig = merge([
   {
     output: {
       path: PATHS.build,
+      // Needed for code splitting to work in nested paths
       filename: "[name].js",
       publicPath: "/",
     },
