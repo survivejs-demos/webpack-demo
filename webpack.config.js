@@ -15,6 +15,7 @@ const commonConfig = merge([
     output: {
       path: PATHS.build,
       filename: "[name].js",
+      publicPath: "/",
     },
     resolveLoader: {
       alias: {
