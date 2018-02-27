@@ -5,11 +5,12 @@ const parts = require("./webpack.parts");
 
 const PATHS = {
   build: path.join(__dirname, "static"),
-  ssrDemo: path.join(__dirname, "app", "ssr.js"),
+  ssrDemo: path.join(__dirname, "src", "ssr.js"),
 };
 
 module.exports = merge([
   {
+    mode: "production",
     entry: {
       index: PATHS.ssrDemo,
     },
@@ -17,6 +18,7 @@ module.exports = merge([
       path: PATHS.build,
       filename: "[name].js",
       libraryTarget: "umd",
+      globalObject: "this",
     },
   },
   parts.loadJavaScript({ include: PATHS.ssrDemo }),

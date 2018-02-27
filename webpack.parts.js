@@ -1,24 +1,22 @@
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const PurifyCSSPlugin = require("purifycss-webpack");
-const webpack = require("webpack");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
+const webpack = require("webpack");
 const GitRevisionPlugin = require("git-revision-webpack-plugin");
 const UglifyWebpackPlugin = require("uglifyjs-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const cssnano = require("cssnano");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-exports.page = (
-  {
-    path = "",
-    template = require.resolve(
-      "html-webpack-plugin/default_index.ejs"
-    ),
-    title,
-    entry,
-    chunks,
-  } = {}
-) => ({
+exports.page = ({
+  path = "",
+  template = require.resolve(
+    "html-webpack-plugin/default_index.ejs"
+  ),
+  title,
+  entry,
+  chunks,
+} = {}) => ({
   entry,
   plugins: [
     new HtmlWebpackPlugin({
@@ -41,7 +39,9 @@ exports.minifyCSS = ({ options }) => ({
 });
 
 exports.minifyJavaScript = () => ({
-  plugins: [new UglifyWebpackPlugin()],
+  optimization: {
+    minimizer: [new UglifyWebpackPlugin()],
+  },
 });
 
 exports.attachRevision = () => ({
@@ -55,6 +55,37 @@ exports.attachRevision = () => ({
 exports.clean = path => ({
   plugins: [new CleanWebpackPlugin([path])],
 });
+
+exports.purifyCSS = ({ paths }) => ({
+  plugins: [new PurifyCSSPlugin({ paths })],
+});
+
+exports.extractCSS = ({ include, exclude, use }) => {
+  // Output extracted CSS to a file
+  const plugin = new ExtractTextPlugin({
+    // `allChunks` is needed to extract from extracted chunks as well.
+    allChunks: true,
+    filename: "[name].[contenthash:8].css",
+  });
+
+  return {
+    module: {
+      rules: [
+        {
+          test: /\.css$/,
+          include,
+          exclude,
+
+          use: plugin.extract({
+            use,
+            fallback: "style-loader",
+          }),
+        },
+      ],
+    },
+    plugins: [plugin],
+  };
+};
 
 exports.devServer = ({ host, port } = {}) => ({
   devServer: {
@@ -82,43 +113,11 @@ exports.loadCSS = ({ include, exclude } = {}) => ({
   },
 });
 
-exports.extractCSS = ({ include, exclude, use }) => {
-  // Output extracted CSS to a file
-  const plugin = new ExtractTextPlugin({
-    // `allChunks` is needed with CommonsChunkPlugin to extract
-    // from extracted chunks as well.
-    allChunks: true,
-    filename: "[name].[contenthash:8].css",
-  });
-
-  return {
-    module: {
-      rules: [
-        {
-          test: /\.css$/,
-          include,
-          exclude,
-
-          use: plugin.extract({
-            use,
-            fallback: "style-loader",
-          }),
-        },
-      ],
-    },
-    plugins: [plugin],
-  };
-};
-
 exports.autoprefix = () => ({
   loader: "postcss-loader",
   options: {
     plugins: () => [require("autoprefixer")()],
   },
-});
-
-exports.purifyCSS = ({ paths }) => ({
-  plugins: [new PurifyCSSPlugin({ paths })],
 });
 
 exports.loadImages = ({ include, exclude, options } = {}) => ({
@@ -137,23 +136,6 @@ exports.loadImages = ({ include, exclude, options } = {}) => ({
   },
 });
 
-exports.loadFonts = ({ include, exclude, options } = {}) => ({
-  module: {
-    rules: [
-      {
-        // Capture eot, ttf, woff, and woff2
-        test: /\.(eot|ttf|woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
-        include,
-        exclude,
-        use: {
-          loader: "file-loader",
-          options,
-        },
-      },
-    ],
-  },
-});
-
 exports.loadJavaScript = ({ include, exclude } = {}) => ({
   module: {
     rules: [
@@ -161,8 +143,7 @@ exports.loadJavaScript = ({ include, exclude } = {}) => ({
         test: /\.js$/,
         include,
         exclude,
-
-        loader: "babel-loader",
+        use: "babel-loader",
       },
     ],
   },
@@ -170,12 +151,6 @@ exports.loadJavaScript = ({ include, exclude } = {}) => ({
 
 exports.generateSourceMaps = ({ type }) => ({
   devtool: type,
-});
-
-exports.extractBundles = bundles => ({
-  plugins: bundles.map(
-    bundle => new webpack.optimize.CommonsChunkPlugin(bundle)
-  ),
 });
 
 exports.setFreeVariable = (key, value) => {

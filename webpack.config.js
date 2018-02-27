@@ -1,21 +1,20 @@
 const webpack = require("webpack");
 const path = require("path");
 const merge = require("webpack-merge");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const glob = require("glob");
 
 const parts = require("./webpack.parts");
 
 const PATHS = {
-  app: path.join(__dirname, "app"),
-  build: path.join(__dirname, "build"),
+  app: path.join(__dirname, "src"),
+  build: path.join(__dirname, "dist"),
 };
 
 const commonConfig = merge([
   {
     output: {
-      path: PATHS.build,
       // Needed for code splitting to work in nested paths
-      filename: "[name].js",
       publicPath: "/",
     },
     resolveLoader: {
@@ -26,28 +25,26 @@ const commonConfig = merge([
         ),
       },
     },
-    plugins: [new webpack.NamedModulesPlugin()],
   },
-  parts.loadFonts({
-    options: {
-      name: "[name].[hash:8].[ext]",
-    },
-  }),
   parts.loadJavaScript({ include: PATHS.app }),
+  parts.setFreeVariable("HELLO", "hello from config"),
 ]);
 
 const productionConfig = merge([
   {
     performance: {
-      hints: "warning", // 'error' or false are valid too
-      maxEntrypointSize: 100000, // in bytes
+      hints: "warning", // "error" or false are valid too
+      maxEntrypointSize: 150000, // in bytes, default 250k
       maxAssetSize: 450000, // in bytes
     },
+  },
+  {
+    recordsPath: path.join(__dirname, "records.json"),
     output: {
       chunkFilename: "[name].[chunkhash:8].js",
       filename: "[name].[chunkhash:8].js",
     },
-    recordsPath: path.join(__dirname, "records.json"),
+    plugins: [new webpack.NamedModulesPlugin()],
   },
   parts.clean(PATHS.build),
   parts.minifyJavaScript(),
@@ -55,29 +52,17 @@ const productionConfig = merge([
     options: {
       discardComments: {
         removeAll: true,
-        // Run cssnano in safe mode to avoid
-        // potentially unsafe transformations.
-        safe: true,
       },
+      // Run cssnano in safe mode to avoid
+      // potentially unsafe transformations.
+      safe: true,
     },
   }),
-  parts.extractBundles([
-    {
-      name: "vendor",
-      minChunks: ({ resource }) => /node_modules/.test(resource),
-    },
-    {
-      name: "manifest",
-      minChunks: Infinity,
-    },
-  ]),
-  parts.attachRevision(),
-  parts.generateSourceMaps({ type: "source-map" }),
   parts.extractCSS({
     use: ["css-loader", parts.autoprefix()],
   }),
   parts.purifyCSS({
-    paths: glob.sync(`${PATHS.app}/**/*.js`, { nodir: true }),
+    paths: glob.sync(`./src/**/*.js`, { nodir: true }),
   }),
   parts.loadImages({
     options: {
@@ -85,19 +70,27 @@ const productionConfig = merge([
       name: "[name].[hash:8].[ext]",
     },
   }),
-  parts.setFreeVariable("process.env.NODE_ENV", "production"),
+  parts.generateSourceMaps({ type: "source-map" }),
+  {
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          commons: {
+            test: /[\\/]node_modules[\\/]/,
+            name: "vendor",
+            chunks: "all",
+          },
+        },
+      },
+      runtimeChunk: {
+        name: "manifest",
+      },
+    },
+  },
+  parts.attachRevision(),
 ]);
 
 const developmentConfig = merge([
-  {
-    output: {
-      devtoolModuleFilenameTemplate:
-        "webpack:///[absolute-resource-path]",
-    },
-  },
-  parts.generateSourceMaps({
-    type: "cheap-module-eval-source-map",
-  }),
   parts.devServer({
     // Customize host/port here if needed
     host: process.env.HOST,
@@ -107,7 +100,7 @@ const developmentConfig = merge([
   parts.loadImages(),
 ]);
 
-module.exports = env => {
+module.exports = mode => {
   const pages = [
     parts.page({
       title: "Webpack demo",
@@ -126,7 +119,7 @@ module.exports = env => {
     }),
   ];
   const config =
-    env === "production" ? productionConfig : developmentConfig;
+    mode === "production" ? productionConfig : developmentConfig;
 
-  return merge([commonConfig, config].concat(pages));
+  return merge([commonConfig, config, { mode }].concat(pages));
 };

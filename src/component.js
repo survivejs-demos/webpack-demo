@@ -1,9 +1,9 @@
 import "!demo-loader?name=foo!./main.css";
 
-export default (text = "Hello world") => {
+export default (text = HELLO) => {
   const element = document.createElement("div");
 
-  element.className = "fa fa-hand-spock-o fa-1g";
+  element.className = "pure-button";
   element.innerHTML = text;
   element.onclick = () => {
     import("./lazy")
