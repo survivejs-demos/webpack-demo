@@ -96,6 +96,7 @@ exports.devServer = ({ host, port } = {}) => ({
       errors: true,
       warnings: true,
     },
+    open: true,
   },
 });
 
