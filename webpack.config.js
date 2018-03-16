@@ -44,7 +44,6 @@ const productionConfig = merge([
       chunkFilename: "[name].[chunkhash:4].js",
       filename: "[name].[chunkhash:4].js",
     },
-    plugins: [new webpack.NamedModulesPlugin()],
   },
   parts.clean(PATHS.build),
   parts.minifyJavaScript(),
