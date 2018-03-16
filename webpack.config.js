@@ -41,8 +41,8 @@ const productionConfig = merge([
   {
     recordsPath: path.join(__dirname, "records.json"),
     output: {
-      chunkFilename: "[name].[chunkhash:8].js",
-      filename: "[name].[chunkhash:8].js",
+      chunkFilename: "[name].[chunkhash:4].js",
+      filename: "[name].[chunkhash:4].js",
     },
     plugins: [new webpack.NamedModulesPlugin()],
   },
@@ -67,7 +67,7 @@ const productionConfig = merge([
   parts.loadImages({
     options: {
       limit: 15000,
-      name: "[name].[hash:8].[ext]",
+      name: "[name].[hash:4].[ext]",
     },
   }),
   parts.generateSourceMaps({ type: "source-map" }),
