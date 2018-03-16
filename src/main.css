@@ -6,5 +6,6 @@ body {
 }
 
 .pure-button {
+    -webkit-border-radius: 1em;
     border-radius: 1em;
 }
