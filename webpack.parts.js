@@ -40,7 +40,7 @@ exports.minifyCSS = ({ options }) => ({
 
 exports.minifyJavaScript = () => ({
   optimization: {
-    minimizer: [new UglifyWebpackPlugin()],
+    minimizer: [new UglifyWebpackPlugin({ sourceMap: true })],
   },
 });
 
