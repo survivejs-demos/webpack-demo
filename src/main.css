@@ -6,5 +6,5 @@ body {
 }
 
 .pure-button {
-    display: flex;
+    border-radius: 1em;
 }
