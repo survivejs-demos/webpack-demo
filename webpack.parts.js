@@ -1,4 +1,4 @@
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const PurifyCSSPlugin = require("purifycss-webpack");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const webpack = require("webpack");
@@ -60,11 +60,9 @@ exports.purifyCSS = ({ paths }) => ({
   plugins: [new PurifyCSSPlugin({ paths })],
 });
 
-exports.extractCSS = ({ include, exclude, use }) => {
+exports.extractCSS = ({ include, exclude, use = [] }) => {
   // Output extracted CSS to a file
-  const plugin = new ExtractTextPlugin({
-    // `allChunks` is needed to extract from extracted chunks as well.
-    allChunks: true,
+  const plugin = new MiniCssExtractPlugin({
     filename: "[name].[contenthash:4].css",
   });
 
@@ -76,10 +74,9 @@ exports.extractCSS = ({ include, exclude, use }) => {
           include,
           exclude,
 
-          use: plugin.extract({
-            use,
-            fallback: "style-loader",
-          }),
+          use: [
+            MiniCssExtractPlugin.loader,
+          ].concat(use),
         },
       ],
     },
