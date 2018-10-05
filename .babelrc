@@ -1,27 +1,22 @@
 {
-  "plugins": [
-    "syntax-dynamic-import"
-  ],
-  "presets": [
-    [
-      "env",
-      {
-        "modules": false,
-        "targets": {
-          "browsers": ["chrome >= 60"]
-        }
-      }
-    ],
-    "react"
-  ],
-  "env": {
-    "karma": {
-      "plugins": [
+    "plugins": ["@babel/plugin-syntax-dynamic-import"],
+    "presets": [
         [
-          "istanbul",
-          { "exclude": ["tests/*.test.js"] }
-        ]
-      ]
+            "@babel/preset-env",
+            {
+                "modules": false,
+                "targets": {
+                    "browsers": ["chrome >= 60"]
+                }
+            }
+        ],
+        "@babel/preset-react"
+    ],
+    "env": {
+        "karma": {
+            "plugins": [
+                ["istanbul", { "exclude": ["tests/*.test.js"] }]
+            ]
+        }
     }
-  }
 }
