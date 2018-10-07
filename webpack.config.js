@@ -1,7 +1,5 @@
-const webpack = require("webpack");
 const path = require("path");
 const merge = require("webpack-merge");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const glob = require("glob");
 
 const parts = require("./webpack.parts");
