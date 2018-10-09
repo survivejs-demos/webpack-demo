@@ -98,7 +98,7 @@ module.exports = mode => {
       entry: {
         app: PATHS.app,
       },
-      chunks: ["app", "manifest", "vendor"],
+      chunks: ["manifest", "app", "vendors~app"],
     }),
     parts.page({
       title: "Another demo",
@@ -106,7 +106,7 @@ module.exports = mode => {
       entry: {
         another: path.join(PATHS.app, "another.js"),
       },
-      chunks: ["another", "manifest", "vendor"],
+      chunks: ["manifest", "another", "vendors~app"],
     }),
   ];
   const config =

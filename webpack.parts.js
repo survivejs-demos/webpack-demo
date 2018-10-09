@@ -74,9 +74,7 @@ exports.extractCSS = ({ include, exclude, use = [] }) => {
           include,
           exclude,
 
-          use: [
-            MiniCssExtractPlugin.loader,
-          ].concat(use),
+          use: [MiniCssExtractPlugin.loader].concat(use),
         },
       ],
     },
