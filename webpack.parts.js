@@ -53,7 +53,7 @@ exports.attachRevision = () => ({
 });
 
 exports.clean = path => ({
-  plugins: [new CleanWebpackPlugin([path])],
+  plugins: [new CleanWebpackPlugin()],
 });
 
 exports.purifyCSS = ({ paths }) => ({
