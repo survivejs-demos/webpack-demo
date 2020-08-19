@@ -1,11 +1,13 @@
-body {
-    background: cornsilk;
-    background-image: url("./logo.png");
-    background-repeat: no-repeat;
-    background-position: center;
-}
+@tailwind base;
+@tailwind components;
 
-.pure-button {
-    -webkit-border-radius: 1em;
-    border-radius: 1em;
+/* Write your utility classes here */
+
+@tailwind utilities;
+
+body {
+  background: cornsilk;
+  background-image: url("./logo.png");
+  background-repeat: no-repeat;
+  background-position: center;
 }

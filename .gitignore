@@ -1,4 +1,7 @@
 node_modules/
 dist/
-.eslintcache
+i18n-build/
+static/
+records.json
+stats.json
 

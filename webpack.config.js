@@ -1,79 +1,57 @@
+const { merge } = require("webpack-merge");
 const path = require("path");
-const merge = require("webpack-merge");
-const glob = require("glob");
 
 const parts = require("./webpack.parts");
 
-const PATHS = {
-  app: path.join(__dirname, "src"),
-};
+const cssLoaders = [parts.autoprefix(), parts.tailwind()];
 
 const commonConfig = merge([
   {
     output: {
-      // Needed for code splitting to work in nested paths
+      // Tweak this to match your GitHub project name
       publicPath: "/",
     },
     resolveLoader: {
       alias: {
-        "demo-loader": path.resolve(
-          __dirname,
-          "loaders/demo-loader.js"
-        ),
+        "demo-loader": path.resolve(__dirname, "loaders/demo-loader.js"),
       },
     },
   },
-  parts.loadJavaScript({ include: PATHS.app }),
+  parts.loadImages({
+    options: {
+      limit: 15000,
+      name: "[name].[contenthash:4].[ext]",
+    },
+  }),
+  parts.loadJavaScript(),
   parts.setFreeVariable("HELLO", "hello from config"),
 ]);
 
 const productionConfig = merge([
   {
-    performance: {
-      hints: "warning", // "error" or false are valid too
-      maxEntrypointSize: 150000, // in bytes, default 250k
-      maxAssetSize: 450000, // in bytes
-    },
-  },
-  {
-    recordsPath: path.join(__dirname, "records.json"),
     output: {
-      chunkFilename: "[name].[chunkhash:4].js",
-      filename: "[name].[chunkhash:4].js",
+      chunkFilename: "[name].[contenthash:4].js",
+      filename: "[name].[contenthash:4].js",
     },
+    recordsPath: path.join(__dirname, "records.json"),
   },
   parts.clean(),
   parts.minifyJavaScript(),
   parts.minifyCSS({
     options: {
-      discardComments: {
-        removeAll: true,
-      },
-      // Run cssnano in safe mode to avoid
-      // potentially unsafe transformations.
-      safe: true,
+      preset: ["default"],
     },
   }),
-  parts.extractCSS({
-    use: ["css-loader", parts.autoprefix()],
-  }),
-  parts.purifyCSS({
-    paths: glob.sync(`${PATHS.app}/**/*.js`, { nodir: true }),
-  }),
-  parts.loadImages({
-    options: {
-      limit: 15000,
-      name: "[name].[hash:4].[ext]",
-    },
-  }),
+  parts.extractCSS({ loaders: cssLoaders }),
+  parts.eliminateUnusedCSS(),
   parts.generateSourceMaps({ type: "source-map" }),
   {
     optimization: {
       splitChunks: {
-        chunks: "initial",
+        chunks: "all",
       },
       runtimeChunk: {
-        name: "manifest",
+        name: "runtime",
       },
     },
   },
@@ -86,30 +64,28 @@ const developmentConfig = merge([
     host: process.env.HOST,
     port: process.env.PORT,
   }),
-  parts.loadCSS(),
-  parts.loadImages(),
+  parts.extractCSS({ options: { hmr: true }, loaders: cssLoaders }),
 ]);
 
-module.exports = mode => {
+module.exports = (mode) => {
   const pages = [
     parts.page({
       title: "Webpack demo",
       entry: {
-        app: PATHS.app,
+        app: path.join(__dirname, "src", "index.js"),
       },
-      chunks: ["manifest", "app", "vendors~app"],
+      chunks: ["app", "runtime", "vendor"],
     }),
     parts.page({
       title: "Another demo",
       path: "another",
       entry: {
-        another: path.join(PATHS.app, "another.js"),
+        another: path.join(__dirname, "src", "another.js"),
       },
-      chunks: ["manifest", "another", "vendors~app"],
+      chunks: ["another", "runtime", "vendor"],
     }),
   ];
-  const config =
-    mode === "production" ? productionConfig : developmentConfig;
+  const config = mode === "production" ? productionConfig : developmentConfig;
 
   return merge([commonConfig, config, { mode }].concat(pages));
 };

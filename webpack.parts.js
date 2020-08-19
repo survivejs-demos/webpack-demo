@@ -1,32 +1,40 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const PurifyCSSPlugin = require("purifycss-webpack");
-const CleanWebpackPlugin = require("clean-webpack-plugin");
+const path = require("path");
+const glob = require("glob");
+const PurgeCSSPlugin = require("purgecss-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const webpack = require("webpack");
 const GitRevisionPlugin = require("git-revision-webpack-plugin");
-const UglifyWebpackPlugin = require("uglifyjs-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const cssnano = require("cssnano");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { MiniHtmlWebpackPlugin } = require("mini-html-webpack-plugin");
 
-exports.page = ({
-  path = "",
-  template = require.resolve(
-    "html-webpack-plugin/default_index.ejs"
-  ),
-  title,
-  entry,
-  chunks,
-} = {}) => ({
+const ALL_FILES = glob.sync(path.join(__dirname, "src/*.js"));
+const APP_SOURCE = path.join(__dirname, "src");
+
+exports.page = ({ path = "", template, title, entry, chunks } = {}) => ({
   entry,
   plugins: [
-    new HtmlWebpackPlugin({
+    new MiniHtmlWebpackPlugin({
       chunks,
       filename: `${path && path + "/"}index.html`,
+      context: {
+        title,
+      },
       template,
-      title,
     }),
   ],
 });
+
+exports.setFreeVariable = (key, value) => {
+  const env = {};
+  env[key] = JSON.stringify(value);
+
+  return {
+    plugins: [new webpack.DefinePlugin(env)],
+  };
+};
 
 exports.minifyCSS = ({ options }) => ({
   plugins: [
@@ -40,7 +48,7 @@ exports.minifyCSS = ({ options }) => ({
 
 exports.minifyJavaScript = () => ({
   optimization: {
-    minimizer: [new UglifyWebpackPlugin({ sourceMap: true })],
+    minimizer: [new TerserPlugin({ sourceMap: true })],
   },
 });
 
@@ -52,33 +60,56 @@ exports.attachRevision = () => ({
   ],
 });
 
-exports.clean = path => ({
+exports.clean = (path) => ({
   plugins: [new CleanWebpackPlugin()],
 });
 
-exports.purifyCSS = ({ paths }) => ({
-  plugins: [new PurifyCSSPlugin({ paths })],
+exports.loadJavaScript = () => ({
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        include: APP_SOURCE, // Consider extracting as a parameter
+        use: "babel-loader",
+      },
+    ],
+  },
 });
 
-exports.extractCSS = ({ include, exclude, use = [] }) => {
-  // Output extracted CSS to a file
-  const plugin = new MiniCssExtractPlugin({
-    filename: "[name].[contenthash:4].css",
-  });
+exports.eliminateUnusedCSS = () => ({
+  plugins: [
+    new PurgeCSSPlugin({
+      whitelistPatterns: [], // Example: /^svg-/
+      paths: ALL_FILES, // Consider extracting as a parameter
+      extractors: [
+        {
+          extractor: (content) =>
+            content.match(/[^<>"'`\s]*[^<>"'`\s:]/g) || [],
+          extensions: ["html"],
+        },
+      ],
+    }),
+  ],
+});
 
+exports.extractCSS = ({ options = {}, loaders = [] } = {}) => {
   return {
     module: {
       rules: [
         {
           test: /\.css$/,
-          include,
-          exclude,
-
-          use: [MiniCssExtractPlugin.loader].concat(use),
+          use: [
+            { loader: MiniCssExtractPlugin.loader, options },
+            "css-loader",
+          ].concat(loaders),
         },
       ],
     },
-    plugins: [plugin],
+    plugins: [
+      new MiniCssExtractPlugin({
+        filename: "[name].[contenthash:4].css",
+      }),
+    ],
   };
 };
 
@@ -92,24 +123,17 @@ exports.devServer = ({ host, port } = {}) => ({
   },
 });
 
-exports.loadCSS = ({ include, exclude } = {}) => ({
-  module: {
-    rules: [
-      {
-        test: /\.css$/,
-        include,
-        exclude,
-
-        use: ["style-loader", "css-loader"],
-      },
-    ],
+exports.tailwind = () => ({
+  loader: "postcss-loader",
+  options: {
+    plugins: [require("tailwindcss")()],
   },
 });
 
 exports.autoprefix = () => ({
   loader: "postcss-loader",
   options: {
-    plugins: () => [require("autoprefixer")()],
+    plugins: [require("autoprefixer")()],
   },
 });
 
@@ -129,28 +153,6 @@ exports.loadImages = ({ include, exclude, options } = {}) => ({
   },
 });
 
-exports.loadJavaScript = ({ include, exclude } = {}) => ({
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        include,
-        exclude,
-        use: "babel-loader",
-      },
-    ],
-  },
-});
-
 exports.generateSourceMaps = ({ type }) => ({
   devtool: type,
 });
-
-exports.setFreeVariable = (key, value) => {
-  const env = {};
-  env[key] = JSON.stringify(value);
-
-  return {
-    plugins: [new webpack.DefinePlugin(env)],
-  };
-};

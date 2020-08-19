@@ -1,22 +1,11 @@
 {
-    "plugins": ["@babel/plugin-syntax-dynamic-import"],
-    "presets": [
-        [
-            "@babel/preset-env",
-            {
-                "modules": false,
-                "targets": {
-                    "browsers": ["chrome >= 60"]
-                }
-            }
-        ],
-        "@babel/preset-react"
-    ],
-    "env": {
-        "karma": {
-            "plugins": [
-                ["istanbul", { "exclude": ["tests/*.test.js"] }]
-            ]
-        }
-    }
+  "presets": [
+    "@babel/preset-react",
+    [
+      "@babel/preset-env",
+      {
+        "modules": false
+      }
+    ]
+  ]
 }

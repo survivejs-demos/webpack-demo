@@ -1,11 +1,9 @@
 const loaderUtils = require("loader-utils");
 
-module.exports = function(input) {
-  const { text } = loaderUtils.getOptions(this);
-
-  return input + text;
+module.exports = function (input) {
+  return input + loaderUtils.getOptions(this).text;
 };
-module.exports.pitch = function(remainingReq, precedingReq, input) {
+module.exports.pitch = function (remainingReq, precedingReq, input) {
   console.log(`
 Remaining request: ${remainingReq}
 Preceding request: ${precedingReq}
