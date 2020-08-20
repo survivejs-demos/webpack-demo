@@ -1,25 +1,19 @@
 const path = require("path");
 const { merge } = require("webpack-merge");
-
 const parts = require("./webpack.parts");
-
-const PATHS = {
-  build: path.join(__dirname, "static"),
-  ssrDemo: path.join(__dirname, "src", "ssr.js"),
-};
 
 module.exports = merge([
   {
     mode: "production",
     entry: {
-      index: PATHS.ssrDemo,
+      index: path.join(__dirname, "src", "ssr.js"),
     },
     output: {
-      path: PATHS.build,
+      path: path.join(__dirname, "static"),
       filename: "[name].js",
       libraryTarget: "umd",
       globalObject: "this",
     },
   },
-  parts.loadJavaScript({ include: PATHS.ssrDemo }),
+  parts.loadJavaScript(),
 ]);
