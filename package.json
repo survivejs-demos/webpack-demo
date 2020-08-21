@@ -5,7 +5,6 @@
     "main": "index.js",
     "scripts": {
         "deploy": "gh-pages -d dist",
-        "test:jest": "jest",
         "test:mocha:watch": "wp --config webpack.mocha.js",
         "test:mocha": "mocha tests",
         "build:plugin": "wp --config webpack.plugin.js",
@@ -33,7 +32,6 @@
         "gh-pages": "^3.1.0",
         "git-revision-webpack-plugin": "^3.0.6",
         "glob": "^7.1.6",
-        "jest": "^26.4.1",
         "loader-runner": "^4.0.0",
         "mini-css-extract-plugin": "^0.10.0",
         "mini-html-webpack-plugin": "^3.0.7",
