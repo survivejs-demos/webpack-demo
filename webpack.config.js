@@ -1,3 +1,4 @@
+const { mode } = require("webpack-nano/argv");
 const { merge } = require("webpack-merge");
 const path = require("path");
 
@@ -67,7 +68,7 @@ const developmentConfig = merge([
   parts.extractCSS({ options: { hmr: true }, loaders: cssLoaders }),
 ]);
 
-module.exports = (mode) => {
+const getConfig = (mode) => {
   const pages = [
     parts.page({
       title: "Webpack demo",
@@ -89,3 +90,5 @@ module.exports = (mode) => {
 
   return merge([commonConfig, config, { mode }].concat(pages));
 };
+
+module.exports = getConfig(mode);

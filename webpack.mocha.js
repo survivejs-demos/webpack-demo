@@ -4,6 +4,9 @@ const { merge } = require("webpack-merge");
 const parts = require("./webpack.parts");
 
 module.exports = merge([
+  {
+    mode: "development",
+  },
   parts.devServer(),
   parts.page({
     title: "Mocha demo",

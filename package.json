@@ -6,14 +6,14 @@
     "scripts": {
         "deploy": "gh-pages -d dist",
         "test:jest": "jest",
-        "test:mocha:watch": "webpack-dev-server --hot --config webpack.mocha.js",
+        "test:mocha:watch": "wp --config webpack.mocha.js",
         "test:mocha": "mocha tests",
-        "build:plugin": "webpack --config webpack.plugin.js",
-        "build:i18n": "webpack --config webpack.i18n.js",
-        "build:ssr": "webpack --config webpack.ssr.js",
-        "build:stats": "webpack --env production --json > stats.json",
-        "start": "webpack-dev-server --env development",
-        "build": "webpack --env production"
+        "build:plugin": "wp --config webpack.plugin.js",
+        "build:i18n": "wp --config webpack.i18n.js",
+        "build:ssr": "wp --config webpack.ssr.js",
+        "build:stats": "wp --mode production --json > stats.json",
+        "start": "wp --mode development",
+        "build": "wp --mode production"
     },
     "keywords": [],
     "author": "",
@@ -48,9 +48,9 @@
         "terser-webpack-plugin": "^4.1.0",
         "url-loader": "^4.1.0",
         "webpack": "^4.44.1",
-        "webpack-cli": "^3.3.12",
-        "webpack-dev-server": "^3.11.0",
         "webpack-merge": "^5.1.1",
+        "webpack-nano": "^1.0.0",
+        "webpack-plugin-serve": "^1.0.1",
         "webpack-sources": "^1.4.3",
         "worker-loader": "^3.0.1"
     },

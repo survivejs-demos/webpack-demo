@@ -1,3 +1,4 @@
+const { WebpackPluginServe } = require("webpack-plugin-serve");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
 const glob = require("glob");
@@ -13,8 +14,11 @@ const { MiniHtmlWebpackPlugin } = require("mini-html-webpack-plugin");
 const ALL_FILES = glob.sync(path.join(__dirname, "src/*.js"));
 const APP_SOURCE = path.join(__dirname, "src");
 
-exports.page = ({ path = "", template, title, entry, chunks } = {}) => ({
-  entry,
+exports.page = ({ path = "", template, title, entry, chunks, mode } = {}) => ({
+  entry:
+    mode === "development"
+      ? addEntryToAll(entry, "webpack-plugin-serve/client")
+      : entry,
   plugins: [
     new MiniHtmlWebpackPlugin({
       chunks,
@@ -26,6 +30,16 @@ exports.page = ({ path = "", template, title, entry, chunks } = {}) => ({
     }),
   ],
 });
+
+function addEntryToAll(entries, entry) {
+  const ret = {};
+
+  Object.keys(entries).forEach((key) => {
+    ret[key] = entries[key].concat(entry);
+  });
+
+  return ret;
+}
 
 exports.setFreeVariable = (key, value) => {
   const env = {};
@@ -113,14 +127,15 @@ exports.extractCSS = ({ options = {}, loaders = [] } = {}) => {
   };
 };
 
-exports.devServer = ({ host, port } = {}) => ({
-  devServer: {
-    stats: "errors-only",
-    host, // Defaults to `localhost`
-    port, // Defaults to 8080
-    open: true,
-    overlay: true,
-  },
+exports.devServer = () => ({
+  watch: true,
+  plugins: [
+    new WebpackPluginServe({
+      port: process.env.PORT || 8080,
+      static: "./dist", // Expose if output.path changes
+      liveReload: true,
+    }),
+  ],
 });
 
 exports.tailwind = () => ({
