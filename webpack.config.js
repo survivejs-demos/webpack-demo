@@ -60,11 +60,7 @@ const productionConfig = merge([
 ]);
 
 const developmentConfig = merge([
-  parts.devServer({
-    // Customize host/port here if needed
-    host: process.env.HOST,
-    port: process.env.PORT,
-  }),
+  parts.devServer(),
   parts.extractCSS({ options: { hmr: true }, loaders: cssLoaders }),
 ]);
 
