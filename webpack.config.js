@@ -18,6 +18,7 @@ const commonConfig = merge([
       },
     },
   },
+  parts.clean(),
   parts.loadImages({
     options: {
       limit: 15000,
@@ -36,7 +37,6 @@ const productionConfig = merge([
     },
     recordsPath: path.join(__dirname, "records.json"),
   },
-  parts.clean(),
   parts.minifyJavaScript(),
   parts.minifyCSS({
     options: {
@@ -72,6 +72,7 @@ const getConfig = (mode) => {
         app: path.join(__dirname, "src", "index.js"),
       },
       chunks: ["app", "runtime", "vendor"],
+      mode,
     }),
     parts.page({
       title: "Another demo",
@@ -80,6 +81,7 @@ const getConfig = (mode) => {
         another: path.join(__dirname, "src", "another.js"),
       },
       chunks: ["another", "runtime", "vendor"],
+      mode,
     }),
   ];
   const config = mode === "production" ? productionConfig : developmentConfig;

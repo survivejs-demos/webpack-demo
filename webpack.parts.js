@@ -35,7 +35,9 @@ function addEntryToAll(entries, entry) {
   const ret = {};
 
   Object.keys(entries).forEach((key) => {
-    ret[key] = entries[key].concat(entry);
+    const e = entries[key];
+
+    ret[key] = (Array.isArray(e) ? e : [e]).concat(entry);
   });
 
   return ret;
@@ -134,6 +136,7 @@ exports.devServer = () => ({
       port: process.env.PORT || 8080,
       static: "./dist", // Expose if output.path changes
       liveReload: true,
+      waitForBuild: true,
     }),
   ],
 });
