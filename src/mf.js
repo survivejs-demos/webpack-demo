@@ -1,5 +1,6 @@
 import ReactDOM from "react-dom";
 import React from "react";
+import Header from "mf/header";
 import "./main.css";
 
 function App() {
@@ -10,9 +11,7 @@ function App() {
 
   return (
     <main className="max-w-md mx-auto space-y-8">
-      <header className="h-32 flex flex-wrap content-center">
-        <h1 className="text-xl">Module federation demo</h1>
-      </header>
+      <Header />
       <aside>
         <ul className="flex space-x-8">
           {options.map((option) => (
