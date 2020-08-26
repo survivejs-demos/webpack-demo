@@ -2,7 +2,6 @@ const path = require("path");
 const { component, mode } = require("webpack-nano/argv");
 const { merge } = require("webpack-merge");
 const parts = require("./webpack.parts");
-const { ModuleFederationPlugin } = require("webpack").container;
 
 const cssLoaders = [parts.autoprefix(), parts.tailwind()];
 
@@ -23,63 +22,40 @@ const configs = {
 };
 
 const getConfig = (mode) => {
+  const shared = {
+    react: { singleton: true },
+    "react-dom": { singleton: true },
+  };
+
   const componentConfigs = {
     app: merge([
-      {
-        name: "app",
-        output: {
-          uniqueName: "mf-app",
-        },
-        plugins: [
-          new ModuleFederationPlugin({
-            name: "app",
-            remotes: {
-              mf: "mf@/mf.js",
-            },
-            shared: {
-              react: {
-                singleton: true,
-              },
-              "react-dom": {
-                singleton: true,
-              },
-            },
-          }),
-        ],
-      },
       parts.page({
         entry: {
-          app: path.join(__dirname, "src", "mf-app.js"),
+          app: path.join(__dirname, "src", "bootstrap.js"),
         },
         mode,
       }),
+      parts.federateModule({
+        name: "app",
+        remotes: {
+          mf: "mf@/mf.js",
+        },
+        shared,
+      }),
     ]),
-    header: {
-      name: "mf",
-      entry: path.join(__dirname, "src", "header.js"),
-      output: {
-        uniqueName: "mf",
+    header: merge([
+      {
+        entry: path.join(__dirname, "src", "header.js"),
       },
-      plugins: [
-        new ModuleFederationPlugin({
-          name: "mf",
-          filename: "mf.js",
-          exposes: {
-            "./header": "./src/header",
-          },
-          shared: [
-            {
-              react: {
-                singleton: true,
-              },
-              "react-dom": {
-                singleton: true,
-              },
-            },
-          ],
-        }),
-      ],
-    },
+      parts.federateModule({
+        name: "mf",
+        filename: "mf.js",
+        exposes: {
+          "./header": "./src/header",
+        },
+        shared,
+      }),
+    ]),
   };
 
   return merge(commonConfig, configs[mode], componentConfigs[component], {
