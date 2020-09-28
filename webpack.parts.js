@@ -83,7 +83,7 @@ exports.attachRevision = () => ({
   ],
 });
 
-exports.clean = (path) => ({
+exports.clean = () => ({
   plugins: [new CleanWebpackPlugin()],
 });
 
@@ -102,7 +102,6 @@ exports.loadJavaScript = () => ({
 exports.eliminateUnusedCSS = () => ({
   plugins: [
     new PurgeCSSPlugin({
-      whitelistPatterns: [], // Example: /^svg-/
       paths: ALL_FILES, // Consider extracting as a parameter
       extractors: [
         {
@@ -125,6 +124,11 @@ exports.extractCSS = ({ options = {}, loaders = [] } = {}) => {
             { loader: MiniCssExtractPlugin.loader, options },
             "css-loader",
           ].concat(loaders),
+          // If you distribute your code as a package and want to
+          // use _Tree Shaking_, then you should mark CSS extraction
+          // to emit side effects. For most use cases, you don't
+          // have to worry about setting flag.
+          sideEffects: true,
         },
       ],
     },
@@ -151,14 +155,18 @@ exports.devServer = () => ({
 exports.tailwind = () => ({
   loader: "postcss-loader",
   options: {
-    plugins: [require("tailwindcss")()],
+    postcssOptions: {
+      plugins: [require("tailwindcss")()],
+    },
   },
 });
 
 exports.autoprefix = () => ({
   loader: "postcss-loader",
   options: {
-    plugins: [require("autoprefixer")()],
+    postcssOptions: {
+      plugins: [require("autoprefixer")()],
+    },
   },
 });
 
