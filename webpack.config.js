@@ -84,7 +84,15 @@ const getConfig = (mode) => {
       mode,
     }),
   ];
-  const config = mode === "production" ? productionConfig : developmentConfig;
+
+  let config;
+  switch (mode) {
+    case "production":
+      config = productionConfig;
+    case "development":
+    default:
+      config = developmentConfig;
+  }
 
   return merge([commonConfig, config, { mode }].concat(pages));
 };
