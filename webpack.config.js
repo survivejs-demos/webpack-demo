@@ -94,7 +94,6 @@ const getConfig = (mode) => {
     case "development":
     default:
       config = developmentConfig;
-      break;
   }
 
   return merge([commonConfig, config, { mode }].concat(pages));
