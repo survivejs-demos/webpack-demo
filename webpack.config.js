@@ -90,9 +90,11 @@ const getConfig = (mode) => {
   switch (mode) {
     case "production":
       config = productionConfig;
+      break;
     case "development":
     default:
       config = developmentConfig;
+      break;
   }
 
   return merge([commonConfig, config, { mode }].concat(pages));
