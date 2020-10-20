@@ -71,7 +71,7 @@ exports.minifyCSS = ({ options }) => ({
 
 exports.minifyJavaScript = () => ({
   optimization: {
-    minimizer: [new TerserPlugin({ sourceMap: true })],
+    minimizer: [new TerserPlugin()],
   },
 });
 
