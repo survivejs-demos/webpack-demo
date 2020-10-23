@@ -3,10 +3,10 @@ const loaderUtils = require("loader-utils");
 module.exports = function (input) {
   return input + loaderUtils.getOptions(this).text;
 };
-module.exports.pitch = function (remainingReq, precedingReq, input) {
+module.exports.pitch = function (remaining, preceding, input) {
   console.log(`
-Remaining request: ${remainingReq}
-Preceding request: ${precedingReq}
+Remaining request: ${remaining}
+Preceding request: ${preceding}
 Input: ${JSON.stringify(input, null, 2)}
   `);
 
