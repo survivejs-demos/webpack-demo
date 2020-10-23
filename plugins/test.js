@@ -1,13 +1,11 @@
 const webpack = require("webpack");
 const { createFsFromVolume, Volume } = require("memfs");
-const DemoPlugin = require("./demo-plugin");
 
 // The compiler helper accepts filenames should be in the output
 // so it's possible to assert the output easily.
 function compile(config, filenames = []) {
   return new Promise((resolve, reject) => {
     const compiler = webpack(config);
-
     compiler.outputFileSystem = createFsFromVolume(new Volume());
     const memfs = compiler.outputFileSystem;
 
@@ -23,29 +21,24 @@ function compile(config, filenames = []) {
       }
 
       const ret = {};
-
       filenames.forEach((filename) => {
         // The assumption is that webpack outputs behind ./dist.
         ret[filename] = memfs.readFileSync(`./dist/${filename}`, {
           encoding: "utf-8",
         });
       });
-
       return resolve(ret);
     });
   });
 }
 
 async function test() {
-  const result = await compile(
-    {
+  console.log(
+    await compile({
       entry: "./test-entry.js",
-      plugins: [new DemoPlugin({ name: "demo" })],
-    },
+    }),
     ["demo"]
   );
-
-  console.log(result);
 }
 
 test();
