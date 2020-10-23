@@ -20,6 +20,7 @@ const commonConfig = merge([
     },
   },
   parts.clean(),
+  parts.extractCSS({ loaders: cssLoaders }),
   parts.loadImages({
     options: {
       limit: 15000,
@@ -44,7 +45,6 @@ const productionConfig = merge([
       preset: ["default"],
     },
   }),
-  parts.extractCSS({ loaders: cssLoaders }),
   parts.eliminateUnusedCSS(),
   parts.generateSourceMaps({ type: "source-map" }),
   {
@@ -60,10 +60,7 @@ const productionConfig = merge([
   parts.attachRevision(),
 ]);
 
-const developmentConfig = merge([
-  parts.devServer(),
-  parts.extractCSS({ options: { hmr: true }, loaders: cssLoaders }),
-]);
+const developmentConfig = merge([parts.devServer()]);
 
 const getConfig = (mode) => {
   const pages = [

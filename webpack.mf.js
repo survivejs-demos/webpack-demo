@@ -9,16 +9,12 @@ const commonConfig = merge([
   parts.clean(),
   parts.loadJavaScript(),
   parts.loadImages(),
+  parts.extractCSS({ loaders: cssLoaders }),
 ]);
 
 const configs = {
-  development: merge([
-    parts.devServer(),
-    parts.extractCSS({ loaders: cssLoaders }),
-  ]),
-  production: merge([
-    parts.extractCSS({ options: { hmr: true }, loaders: cssLoaders }),
-  ]),
+  development: parts.devServer(),
+  production: {},
 };
 
 const getConfig = (mode) => {
@@ -57,6 +53,10 @@ const getConfig = (mode) => {
       }),
     ]),
   };
+
+  if (!component) {
+    throw new Error("Missing component name");
+  }
 
   return merge(commonConfig, configs[mode], componentConfigs[component], {
     mode,
