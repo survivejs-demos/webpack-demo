@@ -22,10 +22,7 @@ const commonConfig = merge([
   parts.clean(),
   parts.extractCSS({ loaders: cssLoaders }),
   parts.loadImages({
-    options: {
-      limit: 15000,
-      name: "[name].[contenthash:4].[ext]",
-    },
+    limit: 15000,
   }),
   parts.loadJavaScript(),
   parts.setFreeVariable("HELLO", "hello from config"),
@@ -36,6 +33,7 @@ const productionConfig = merge([
     output: {
       chunkFilename: "[name].[contenthash:4].js",
       filename: "[name].[contenthash:4].js",
+      assetModuleFilename: "[name].[contenthash:4][ext][query]",
     },
     recordsPath: path.join(__dirname, "records.json"),
   },

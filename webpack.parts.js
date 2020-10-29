@@ -170,14 +170,16 @@ exports.autoprefix = () => ({
   },
 });
 
-exports.loadImages = ({ options } = {}) => ({
+exports.loadImages = ({ limit } = {}) => ({
   module: {
     rules: [
       {
         test: /\.(png|jpg)$/,
-        use: {
-          loader: "url-loader",
-          options,
+        type: "asset",
+        parser: {
+          dataUrlCondition: {
+            maxSize: limit,
+          },
         },
       },
     ],
