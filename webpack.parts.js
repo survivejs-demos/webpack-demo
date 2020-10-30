@@ -7,7 +7,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const webpack = require("webpack");
 const GitRevisionPlugin = require("git-revision-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const cssnano = require("cssnano");
 const { MiniHtmlWebpackPlugin } = require("mini-html-webpack-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
@@ -60,13 +60,9 @@ exports.setFreeVariable = (key, value) => {
 };
 
 exports.minifyCSS = ({ options }) => ({
-  plugins: [
-    new OptimizeCSSAssetsPlugin({
-      cssProcessor: cssnano,
-      cssProcessorOptions: options,
-      canPrint: false,
-    }),
-  ],
+  optimization: {
+    minimizer: [new CssMinimizerPlugin({ minimizerOptions: options })],
+  },
 });
 
 exports.minifyJavaScript = () => ({
