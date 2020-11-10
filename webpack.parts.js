@@ -21,34 +21,23 @@ exports.federateModule = ({ name, filename, exposes, remotes, shared }) => ({
   ],
 });
 
-exports.page = ({ path = "", template, title, entry, chunks, mode } = {}) => ({
+exports.entry = ({ name, mode, path }) => ({
   entry:
     mode === "development"
-      ? addEntryToAll(entry, "webpack-plugin-serve/client")
-      : entry,
+      ? { [name]: [path, "webpack-plugin-serve/client"] }
+      : { [name]: path },
+});
+
+exports.page = ({ path = "", template, title, chunks } = {}) => ({
   plugins: [
     new MiniHtmlWebpackPlugin({
       chunks,
       filename: `${path && path + "/"}index.html`,
-      context: {
-        title,
-      },
+      context: { title },
       template,
     }),
   ],
 });
-
-function addEntryToAll(entries, entry) {
-  const ret = {};
-
-  Object.keys(entries).forEach((key) => {
-    const e = entries[key];
-
-    ret[key] = (Array.isArray(e) ? e : [e]).concat(entry);
-  });
-
-  return ret;
-}
 
 exports.setFreeVariable = (key, value) => {
   const env = {};

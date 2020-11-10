@@ -62,23 +62,29 @@ const developmentConfig = merge([parts.devServer()]);
 
 const getConfig = (mode) => {
   const pages = [
-    parts.page({
-      title: "Webpack demo",
-      entry: {
-        app: path.join(__dirname, "src", "index.js"),
-      },
-      chunks: ["app", "runtime", "vendor"],
-      mode,
-    }),
-    parts.page({
-      title: "Another demo",
-      path: "another",
-      entry: {
-        another: path.join(__dirname, "src", "another.js"),
-      },
-      chunks: ["another", "runtime", "vendor"],
-      mode,
-    }),
+    merge(
+      parts.entry({
+        name: "app",
+        path: path.join(__dirname, "src", "index.js"),
+        mode,
+      }),
+      parts.page({
+        title: "Webpack demo",
+        chunks: ["app", "runtime", "vendor"],
+      })
+    ),
+    merge(
+      parts.entry({
+        name: "another",
+        path: path.join(__dirname, "src", "another.js"),
+        mode,
+      }),
+      parts.page({
+        title: "Another demo",
+        path: "another",
+        chunks: ["another", "runtime", "vendor"],
+      })
+    ),
   ];
 
   let config;
