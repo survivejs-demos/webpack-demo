@@ -31,9 +31,9 @@ const commonConfig = merge([
 const productionConfig = merge([
   {
     output: {
-      chunkFilename: "[name].[contenthash:4].js",
-      filename: "[name].[contenthash:4].js",
-      assetModuleFilename: "[name].[contenthash:4][ext][query]",
+      chunkFilename: "[name].[contenthash].js",
+      filename: "[name].[contenthash].js",
+      assetModuleFilename: "[name].[contenthash][ext][query]",
     },
     recordsPath: path.join(__dirname, "records.json"),
   },

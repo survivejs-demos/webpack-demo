@@ -130,7 +130,7 @@ exports.extractCSS = ({ options = {}, loaders = [] } = {}) => {
     },
     plugins: [
       new MiniCssExtractPlugin({
-        filename: "[name].[contenthash:4].css",
+        filename: "[name].[contenthash].css",
       }),
     ],
   };
