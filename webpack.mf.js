@@ -25,12 +25,12 @@ const getConfig = (mode) => {
 
   const componentConfigs = {
     app: merge([
-      parts.page({
-        entry: {
-          app: path.join(__dirname, "src", "bootstrap.js"),
-        },
+      parts.entry({
+        name: "app",
+        path: path.join(__dirname, "src", "bootstrap.js"),
         mode,
       }),
+      parts.page(),
       parts.federateModule({
         name: "app",
         remotes: {
