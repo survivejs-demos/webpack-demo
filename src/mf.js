@@ -1,13 +1,11 @@
 import ReactDOM from "react-dom";
 import React from "react";
-import Header from "mf/header";
 import "./main.css";
+import Header from "mf/header";
 
 function App() {
-  const options = ["Hello world", "Hello federation", "Hello webpack"];
-  const [content, setContent] = React.useState(
-    "The content should change based on what's clicked."
-  );
+  const options = ["Hello world", "Hello fed", "Hello webpack"];
+  const [content, setContent] = React.useState("Changes on click.");
 
   return (
     <main className="max-w-md mx-auto space-y-8">
