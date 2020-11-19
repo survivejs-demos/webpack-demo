@@ -9,6 +9,7 @@
         "test:mocha": "mocha tests",
         "build:i18n": "wp --config webpack.i18n.js",
         "build:ssr": "wp --config webpack.ssr.js",
+        "build:multi": "wp --config webpack.multi.js",
         "build:stats": "wp --mode production --json > stats.json",
         "build:mf": "wp --config webpack.mf.js --mode production",
         "start:mf": "wp --config webpack.mf.js --mode development",

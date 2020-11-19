@@ -8,17 +8,21 @@ const cssLoaders = [parts.autoprefix(), parts.tailwind()];
 
 const commonConfig = merge([
   {
-    output: {
-      path: path.resolve(process.cwd(), "dist"),
-      // Tweak this to match your GitHub project name
-      publicPath: "/",
-    },
     resolveLoader: {
       alias: {
         "demo-loader": path.resolve(__dirname, "loaders/demo-loader.js"),
       },
     },
   },
+  {
+    output: {
+      path: path.resolve(process.cwd(), "dist"),
+      // Tweak this to match your GitHub project name
+      publicPath: "/",
+    },
+  },
+  { entry: ["./src"] },
+  parts.page({ title: "Demo" }),
   parts.clean(),
   parts.extractCSS({ loaders: cssLoaders }),
   parts.loadImages({
@@ -61,43 +65,14 @@ const productionConfig = merge([
 const developmentConfig = merge([parts.devServer()]);
 
 const getConfig = (mode) => {
-  const pages = [
-    merge(
-      parts.entry({
-        name: "app",
-        path: path.join(__dirname, "src", "index.js"),
-        mode,
-      }),
-      parts.page({
-        title: "Webpack demo",
-        chunks: ["app", "runtime", "vendor"],
-      })
-    ),
-    merge(
-      parts.entry({
-        name: "another",
-        path: path.join(__dirname, "src", "another.js"),
-        mode,
-      }),
-      parts.page({
-        title: "Another demo",
-        path: "another",
-        chunks: ["another", "runtime", "vendor"],
-      })
-    ),
-  ];
-
-  let config;
   switch (mode) {
     case "production":
-      config = productionConfig;
-      break;
+      return merge(commonConfig, productionConfig, { mode });
     case "development":
+      return merge(commonConfig, developmentConfig, { mode });
     default:
-      config = developmentConfig;
+      throw new Error(`Trying to use an unknown mode, ${mode}`);
   }
-
-  return merge([commonConfig, config, { mode }].concat(pages));
 };
 
 module.exports = getConfig(mode);
