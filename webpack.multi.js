@@ -1,11 +1,8 @@
 const { merge } = require("webpack-merge");
 const parts = require("./webpack.parts");
 
-const mode = "production";
-
 module.exports = merge(
-  { mode },
-  parts.entry({ name: "app", path: "./src/multi.js", mode }),
-  parts.page({ title: "Demo", chunks: [] }),
+  { mode: "production", entry: { app: "./src/multi.js" } },
+  parts.page({ title: "Demo" }),
   parts.page({ title: "Another", url: "another" })
 );

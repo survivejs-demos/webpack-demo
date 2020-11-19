@@ -21,13 +21,6 @@ exports.federateModule = ({ name, filename, exposes, remotes, shared }) => ({
   ],
 });
 
-exports.entry = ({ name, mode, path }) => ({
-  entry:
-    mode === "development"
-      ? { [name]: [path, "webpack-plugin-serve/client"] }
-      : { [name]: path },
-});
-
 exports.page = ({ path = "", template, title, chunks } = {}) => ({
   plugins: [
     new MiniHtmlWebpackPlugin({
