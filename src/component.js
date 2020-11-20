@@ -1,10 +1,9 @@
 import "!demo-loader?name=foo!./main.css";
-import Worker from "worker-loader!./worker";
 
-export default () => {
+export default (text = HELLO) => {
   const element = document.createElement("h1");
-  const worker = new Worker();
-  const state = { text: "foo" };
+  const worker = new Worker(new URL("./worker.js", import.meta.url));
+  const state = { text };
 
   worker.addEventListener("message", ({ data: { text } }) => {
     state.text = text;
