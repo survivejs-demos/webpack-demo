@@ -29,7 +29,6 @@
         "css-loader": "^5.0.0",
         "css-minimizer-webpack-plugin": "^1.1.5",
         "cssnano": "^4.1.10",
-        "embed-i18n-webpack-plugin": "^1.0.1",
         "express": "^4.17.1",
         "gh-pages": "^3.1.0",
         "git-revision-webpack-plugin": "^3.0.6",
