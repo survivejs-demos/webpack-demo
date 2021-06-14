@@ -4,7 +4,7 @@ const path = require("path");
 const glob = require("glob");
 const PurgeCSSPlugin = require("purgecss-webpack-plugin");
 const webpack = require("webpack");
-const Grp = require("git-revision-webpack-plugin");
+const { GitRevisionPlugin } = require("git-revision-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const { MiniHtmlWebpackPlugin } = require("mini-html-webpack-plugin");
@@ -54,7 +54,7 @@ exports.minifyJavaScript = () => ({
 exports.attachRevision = () => ({
   plugins: [
     new webpack.BannerPlugin({
-      banner: new Grp.GitRevisionPlugin(().version(),
+      banner: new GitRevisionPlugin().version(),
     }),
   ],
 });
