@@ -3,12 +3,10 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
 const glob = require("glob");
 const PurgeCSSPlugin = require("purgecss-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const webpack = require("webpack");
-const GitRevisionPlugin = require("git-revision-webpack-plugin");
+const Grp = require("git-revision-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-const cssnano = require("cssnano");
 const { MiniHtmlWebpackPlugin } = require("mini-html-webpack-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
 
@@ -56,13 +54,15 @@ exports.minifyJavaScript = () => ({
 exports.attachRevision = () => ({
   plugins: [
     new webpack.BannerPlugin({
-      banner: new GitRevisionPlugin().version(),
+      banner: new Grp.GitRevisionPlugin(().version(),
     }),
   ],
 });
 
 exports.clean = () => ({
-  plugins: [new CleanWebpackPlugin()],
+  output: {
+    clean: true,
+  },
 });
 
 exports.loadJavaScript = () => ({
