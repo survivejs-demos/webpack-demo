@@ -1,7 +1,7 @@
 const loaderUtils = require("loader-utils");
 
 module.exports = function (content) {
-  const { name } = loaderUtils.getOptions(this);
+  const { name } = this.getOptions();
   const url = loaderUtils.interpolateName(this, name, { content });
 
   this.emitFile(url, content);
