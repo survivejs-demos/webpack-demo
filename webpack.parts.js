@@ -2,7 +2,7 @@ const { WebpackPluginServe } = require("webpack-plugin-serve");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
 const glob = require("glob");
-const PurgeCSSPlugin = require("purgecss-webpack-plugin");
+const { PurgeCSSPlugin } = require("purgecss-webpack-plugin");
 const webpack = require("webpack");
 const { GitRevisionPlugin } = require("git-revision-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
@@ -134,7 +134,7 @@ exports.tailwind = () => ({
   loader: "postcss-loader",
   options: {
     postcssOptions: {
-      plugins: [require("tailwindcss")()],
+      plugins: [require("@tailwindcss/postcss")()],
     },
   },
 });
